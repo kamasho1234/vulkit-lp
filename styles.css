@@ -981,6 +981,7 @@ img {
 }
 
 .feature-grid {
+  grid-template-columns: 1fr;
   overflow: hidden;
   isolation: isolate;
   background:
