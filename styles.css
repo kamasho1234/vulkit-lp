@@ -925,8 +925,6 @@ img {
 
 .image-section {
   position: relative;
-  height: 100svh;
-  overflow: hidden;
   padding: 0;
   background: #050505;
   margin-top: -1px;
@@ -937,12 +935,10 @@ img {
 }
 
 .image-section img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  width: 100vw;
+  max-width: none;
+  margin: 0;
+  object-fit: contain;
   background: #050505;
   box-shadow: none;
 }
@@ -1014,7 +1010,7 @@ img {
 
 .feature-card {
   position: relative;
-  aspect-ratio: 1;
+  min-height: 100%;
   margin: 0;
   overflow: hidden;
   background: #050505;
@@ -1039,7 +1035,7 @@ img {
 
 .scene-grid figure {
   position: relative;
-  aspect-ratio: 9/16;
+  min-height: 100%;
   margin: 0;
   overflow: hidden;
   background: #050505;
@@ -1306,14 +1302,6 @@ img {
   .use-cases,
   .details-grid {
     grid-template-columns: 1fr;
-  }
-
-  .feature-card {
-    aspect-ratio: 4/3;
-  }
-
-  .scene-grid figure {
-    aspect-ratio: 16/9;
   }
 
   .scene-grid figcaption {
