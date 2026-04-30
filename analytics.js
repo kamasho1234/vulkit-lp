@@ -15,6 +15,32 @@ const copyUrlButton = document.querySelector("#copy-url-button");
 
 let latestRows = [];
 
+const CTA_LABELS = {
+  header: "ヘッダーのLINE登録ボタン",
+  footer: "最下部のLINEで情報GETボタン",
+  roulette_coupon: "ルーレット当たり後のクーポン獲得ボタン",
+  "(未設定)": "ボタン位置なし",
+  unknown: "不明なLINE登録ボタン",
+};
+
+const SECTION_LABELS = {
+  top: "TOP画像",
+  "top-showcase": "TOP画像",
+  compression: "拡張・真空圧縮",
+  lock: "TSAロック",
+  waterproof: "防水紹介",
+  "coupon-roulette": "割引ルーレット",
+  features: "機能紹介",
+  brand: "ブランド紹介",
+  scene: "使用シーン",
+  details: "詳細情報",
+  faq: "よくある質問",
+  "closing-section": "最下部LINE登録CTA",
+  "image-section": "画像セクション",
+  "section-intro": "説明テキスト",
+  "(未設定)": "位置情報なし",
+};
+
 function pct(value) {
   return `${(value * 100).toFixed(1)}%`;
 }
@@ -29,6 +55,14 @@ function safe(value) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function ctaLabel(value) {
+  return CTA_LABELS[value] || value || "ボタン位置なし";
+}
+
+function sectionLabel(value) {
+  return SECTION_LABELS[value] || value || "位置情報なし";
 }
 
 function readLocalEvents() {
@@ -138,8 +172,8 @@ function renderInsights(data) {
       ? [`勝ちLP候補: ${safe(bestLpByCvr.lp_variant)}`, `LINEクリックCVRは ${pct(bestLpByCvr.cvr)} です。訪問数が十分に増えたら、このLPを基準に次のABテストを作ります。`]
       : ["まずLP別URLを作成", "上のURL作成欄でMeta広告用URLを作り、広告のウェブサイトURLに設定してください。"],
     bestCta
-      ? [`強いCTA: ${safe(bestCta.cta_location)}`, `${int(bestCta.line_click)}件のLINEクリックがあります。この導線を目立たせる改善が有効です。`]
-      : ["CTA計測待ち", "LINE登録ボタンが押されると、ヘッダー・フッター・ルーレット後CTA別に表示されます。"],
+      ? [`強いLINE登録ボタン: ${safe(ctaLabel(bestCta.cta_location))}`, `${int(bestCta.line_click)}件のLINEクリックがあります。この位置のボタンを目立たせる改善が有効です。`]
+      : ["LINE登録ボタン計測待ち", "LINE登録ボタンが押されると、ヘッダー・フッター・ルーレット後の位置別に表示されます。"],
     bestCampaign
       ? [`良いキャンペーン: ${safe(bestCampaign.utm_campaign)}`, `キャンペーン別CVRは ${pct(bestCampaign.cvr)} です。Meta上のキャンペーン名とUTMを揃えると見やすくなります。`]
       : ["キャンペーン識別待ち", "Meta広告URLに `utm_campaign` を付けると、キャンペーン別に比較できます。"],
@@ -178,7 +212,7 @@ function render(data) {
 
   renderRows("#cta-table", data.by_cta, (row) => `
     <tr>
-      ${cell(row.cta_location)}
+      ${cell(ctaLabel(row.cta_location))}
       ${cell(int(row.line_click), "positive")}
       ${cell(int(row.events))}
     </tr>
@@ -187,7 +221,7 @@ function render(data) {
   renderRows("#lp-cta-table", data.by_lp_cta, (row) => `
     <tr>
       ${cell(row.lp_variant)}
-      ${cell(row.cta_location)}
+      ${cell(ctaLabel(row.cta_location))}
       ${cell(int(row.page_view))}
       ${cell(int(row.line_click), "positive")}
       ${cell(pct(row.cvr))}
@@ -220,7 +254,7 @@ function render(data) {
 
   renderRows("#section-table", data.by_section, (row) => `
     <tr>
-      ${cell(row.section_id)}
+      ${cell(sectionLabel(row.section_id))}
       ${cell(int(row.section_view || row.events))}
     </tr>
   `, 2);
