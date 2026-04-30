@@ -14,12 +14,6 @@ function send(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
-function authorized(req) {
-  const adminKey = process.env.ANALYTICS_ADMIN_KEY;
-  if (!adminKey) return false;
-  return req.headers["x-analytics-key"] === adminKey;
-}
-
 function parseBody(req) {
   return new Promise((resolve, reject) => {
     let data = "";
@@ -129,7 +123,6 @@ module.exports = async function handler(req, res) {
     send(res, 500, {
       ok: false,
       error: "Tracking failed",
-      ...(authorized(req) ? { detail: error.message } : {}),
     });
   }
 };

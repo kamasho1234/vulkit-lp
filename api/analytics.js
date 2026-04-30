@@ -13,10 +13,6 @@ function authorized(req) {
   return provided === adminKey;
 }
 
-function wantsDebug(req) {
-  return req.query?.debug === "1" && authorized(req);
-}
-
 async function fetchSupabaseEvents(days) {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -119,7 +115,6 @@ module.exports = async function handler(req, res) {
     send(res, 500, {
       ok: false,
       error: "Analytics fetch failed",
-      ...(wantsDebug(req) ? { detail: error.message } : {}),
     });
   }
 };
