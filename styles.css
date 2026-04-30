@@ -147,11 +147,13 @@ img {
 
 .top-stage {
   position: relative;
+  display: grid;
   overflow: hidden;
   background: #050505;
 }
 
 .top-visual {
+  grid-area: 1 / 1;
   position: relative;
   width: 100vw;
   max-width: none;
@@ -159,7 +161,7 @@ img {
   object-fit: contain;
   object-position: center;
   opacity: 0;
-  transition: opacity 600ms ease;
+  transition: opacity 1000ms ease;
 }
 
 .top-visual.is-active {

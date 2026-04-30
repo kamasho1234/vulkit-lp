@@ -27,7 +27,7 @@ function nextSection() {
 scrollButton?.addEventListener("click", nextSection);
 
 if (topVisuals.length > 1) {
-  window.setInterval(() => showTop(activeTop + 1), 4200);
+  window.setInterval(() => showTop(activeTop + 1), 2500);
 }
 
 function easeOutQuint(progress) {
