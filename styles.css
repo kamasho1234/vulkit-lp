@@ -90,6 +90,7 @@ img {
 
 .header-line-cta {
   position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -110,6 +111,16 @@ img {
     0 8px 22px rgba(37, 211, 102, 0.24),
     0 0 0 1px rgba(255, 255, 255, 0.18) inset;
   transform: translateY(10%);
+}
+
+.header-line-cta::before {
+  content: "";
+  position: absolute;
+  inset: -70% -35%;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 24%, rgba(255, 255, 255, 0.9) 42%, transparent 58%);
+  transform: translateX(-88%) rotate(8deg);
+  animation: ctaShine 1.8s ease-in-out infinite;
 }
 
 .top-showcase {
