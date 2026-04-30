@@ -85,6 +85,29 @@ img {
   text-transform: uppercase;
 }
 
+.header-line-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 25px;
+  margin-left: auto;
+  padding: 5px 13px;
+  overflow: hidden;
+  color: #06200b;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #08a640 0%, #25d366 48%, #c9ffd8 50%, #16bd4e 72%, #057a2d 100%);
+  border: 1px solid rgba(211, 255, 220, 0.78);
+  border-radius: 999px;
+  box-shadow:
+    0 8px 22px rgba(37, 211, 102, 0.24),
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+}
+
 .top-showcase {
   position: relative;
   display: block;
@@ -1400,11 +1423,12 @@ img {
   }
 
   .site-header {
+    position: sticky;
     align-items: flex-start;
     flex-direction: column;
     gap: 6px;
     min-height: 62px;
-    padding: 7px 14px;
+    padding: 7px 88px 7px 14px;
   }
 
   .logo {
@@ -1420,6 +1444,16 @@ img {
   .site-header nav a {
     font-size: 9px;
     line-height: 1.12;
+  }
+
+  .header-line-cta {
+    position: absolute;
+    top: 7px;
+    right: 14px;
+    min-height: 23px;
+    margin-left: 0;
+    padding: 4px 10px;
+    font-size: 11px;
   }
 
   .section-intro {
