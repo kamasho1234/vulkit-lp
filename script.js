@@ -122,6 +122,10 @@ function showCouponPopup() {
   `;
 
   roulettePanel.append(couponModal);
+
+  couponModal.querySelector(".roulette-line-button")?.addEventListener("click", () => {
+    window.open("https://lin.ee/Qi4NUTn", "_blank", "noopener,noreferrer");
+  });
 }
 
 function spinRoulette(event) {
