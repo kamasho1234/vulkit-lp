@@ -1215,6 +1215,64 @@ img {
   font-weight: 900;
 }
 
+.legal-footer {
+  display: grid;
+  gap: 0;
+  padding: clamp(22px, 4vw, 46px) clamp(20px, 7vw, 110px);
+  color: rgba(255, 248, 232, 0.72);
+  background: #050505;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+.legal-footer details {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.legal-footer summary {
+  cursor: pointer;
+  padding: 18px 0;
+  color: rgba(238, 200, 125, 0.9);
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(15px, 1.45vw, 18px);
+  font-weight: 700;
+  list-style-position: inside;
+}
+
+.legal-content {
+  max-width: 920px;
+  padding: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.legal-content p {
+  margin: 0 0 12px;
+}
+
+.legal-content dl {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.legal-content dl div {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) 1fr;
+  gap: 18px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.legal-content dt {
+  color: rgba(238, 200, 125, 0.82);
+  font-weight: 700;
+}
+
+.legal-content dd {
+  margin: 0;
+}
+
 .use-cases {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1587,6 +1645,26 @@ img {
   .closing-top-link {
     margin-top: 24px;
     padding: 13px 20px;
+  }
+
+  .legal-footer {
+    padding: 22px 20px 34px;
+  }
+
+  .legal-footer summary {
+    padding: 16px 0;
+    font-size: 14px;
+  }
+
+  .legal-content {
+    font-size: 12px;
+    line-height: 1.85;
+  }
+
+  .legal-content dl div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 10px 0;
   }
 
   .scroll-button {
