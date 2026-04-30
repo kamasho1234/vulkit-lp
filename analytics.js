@@ -1,4 +1,5 @@
 const STORAGE_KEY = "vulkit.analytics.events";
+const PRESET_STORAGE_KEY = "vulkit.analytics.urlPresets";
 const SITE_URL = "https://vulkit.kamacrafy.com/";
 
 const statusCard = document.querySelector("#status-card");
@@ -12,6 +13,9 @@ const adsetInput = document.querySelector("#adset-input");
 const adInput = document.querySelector("#ad-input");
 const generatedUrl = document.querySelector("#generated-url");
 const copyUrlButton = document.querySelector("#copy-url-button");
+const presetNameInput = document.querySelector("#preset-name-input");
+const savePresetButton = document.querySelector("#save-preset-button");
+const presetList = document.querySelector("#preset-list");
 
 let latestRows = [];
 
@@ -70,6 +74,105 @@ function readLocalEvents() {
     return JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]");
   } catch (error) {
     return [];
+  }
+}
+
+function readPresets() {
+  try {
+    return JSON.parse(window.localStorage.getItem(PRESET_STORAGE_KEY) || "[]");
+  } catch (error) {
+    return [];
+  }
+}
+
+function writePresets(presets) {
+  window.localStorage.setItem(PRESET_STORAGE_KEY, JSON.stringify(presets));
+}
+
+function currentUrlSettings() {
+  return {
+    name: presetNameInput.value.trim() || `${campaignInput.value.trim() || "campaign"} / ${lpInput.value.trim() || "lp"}`,
+    lp_variant: lpInput.value.trim() || "lp_a",
+    utm_campaign: campaignInput.value.trim() || "vbp101_presale",
+    utm_content: contentInput.value.trim() || "creative_01",
+    adset: adsetInput.value.trim() || "adset_01",
+    ad: adInput.value.trim() || "ad_01",
+    url: generatedUrl.value,
+    updated_at: new Date().toISOString(),
+  };
+}
+
+function applyPreset(preset) {
+  presetNameInput.value = preset.name || "";
+  lpInput.value = preset.lp_variant || "lp_a";
+  campaignInput.value = preset.utm_campaign || "vbp101_presale";
+  contentInput.value = preset.utm_content || "creative_01";
+  adsetInput.value = preset.adset || "adset_01";
+  adInput.value = preset.ad || "ad_01";
+  updateGeneratedUrl();
+}
+
+function renderPresets() {
+  const presets = readPresets();
+  if (!presets.length) {
+    presetList.innerHTML = `<div class="muted">保存済み設定はまだありません。</div>`;
+    return;
+  }
+
+  presetList.innerHTML = presets
+    .map((preset) => `
+      <div class="preset-item" data-preset-id="${safe(preset.id)}">
+        <div>
+          <strong>${safe(preset.name)}</strong>
+          <span>${safe(preset.url)}</span>
+        </div>
+        <button class="preset-load-button" type="button" data-preset-id="${safe(preset.id)}">呼び出し</button>
+        <button class="preset-delete-button" type="button" data-preset-id="${safe(preset.id)}">削除</button>
+      </div>
+    `)
+    .join("");
+}
+
+function saveCurrentPreset() {
+  updateGeneratedUrl();
+  const settings = currentUrlSettings();
+  const presets = readPresets();
+  const existingIndex = presets.findIndex((preset) => preset.name === settings.name);
+  const nextPreset = {
+    id: existingIndex >= 0 ? presets[existingIndex].id : `${Date.now()}-${Math.random()}`,
+    ...settings,
+  };
+
+  if (existingIndex >= 0) {
+    presets[existingIndex] = nextPreset;
+  } else {
+    presets.unshift(nextPreset);
+  }
+
+  writePresets(presets.slice(0, 30));
+  renderPresets();
+  savePresetButton.textContent = "保存しました";
+  window.setTimeout(() => {
+    savePresetButton.textContent = "この設定を保存";
+  }, 1400);
+}
+
+function handlePresetClick(event) {
+  const button = event.target.closest("button[data-preset-id]");
+  if (!button) return;
+
+  const presets = readPresets();
+  const presetId = button.dataset.presetId;
+
+  if (button.classList.contains("preset-load-button")) {
+    const preset = presets.find((item) => item.id === presetId);
+    if (preset) applyPreset(preset);
+    return;
+  }
+
+  if (button.classList.contains("preset-delete-button")) {
+    writePresets(presets.filter((item) => item.id !== presetId));
+    renderPresets();
   }
 }
 
@@ -338,9 +441,12 @@ function exportCsv() {
 
 [lpInput, campaignInput, contentInput, adsetInput, adInput].forEach((input) => input.addEventListener("input", updateGeneratedUrl));
 copyUrlButton.addEventListener("click", copyGeneratedUrl);
+savePresetButton.addEventListener("click", saveCurrentPreset);
+presetList.addEventListener("click", handlePresetClick);
 refreshButton.addEventListener("click", load);
 daysSelect.addEventListener("change", load);
 exportButton.addEventListener("click", exportCsv);
 
 updateGeneratedUrl();
+renderPresets();
 load();

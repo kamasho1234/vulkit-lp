@@ -193,6 +193,82 @@ button:hover {
   gap: 8px;
 }
 
+.preset-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.saved-presets {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.saved-presets-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.saved-presets-title strong {
+  color: var(--gold);
+}
+
+.saved-presets-title span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.preset-list {
+  display: grid;
+  gap: 8px;
+}
+
+.preset-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.preset-item strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text);
+}
+
+.preset-item span {
+  display: block;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preset-item button {
+  min-height: 34px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.preset-delete-button {
+  border-color: rgba(255, 107, 107, 0.34);
+  background: rgba(255, 107, 107, 0.12);
+  color: #ffd8d8;
+}
+
 #generated-url {
   color: #fff9e8;
   font-family: Consolas, "Courier New", monospace;
@@ -426,7 +502,14 @@ td {
   }
 
   .url-builder,
+  .preset-box,
   .copy-row {
+    grid-template-columns: 1fr;
+  }
+
+  .saved-presets-title,
+  .preset-item {
+    align-items: stretch;
     grid-template-columns: 1fr;
   }
 
