@@ -53,6 +53,10 @@
               広告セット
               <input id="adset-input" type="text" value="adset_01" placeholder="例: men_30s_tokyo">
             </label>
+            <label>
+              広告
+              <input id="ad-input" type="text" value="ad_01" placeholder="例: video_ad_01">
+            </label>
             <label class="full">
               Meta広告に設定するURL
               <div class="copy-row">
@@ -151,9 +155,37 @@
         <div class="panel-title">
           <div>
             <p class="eyebrow">MAIN REPORT</p>
+            <h2>広告階層一覧</h2>
+          </div>
+          <span>Meta広告の階層どおりに、キャンペーンからLP成果までを1枚で見ます。</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>キャンペーン</th>
+                <th>広告セット</th>
+                <th>広告</th>
+                <th>LP</th>
+                <th>訪問</th>
+                <th>LINEクリック</th>
+                <th>CVR</th>
+                <th>ルーレット開始</th>
+                <th>クーポン表示</th>
+              </tr>
+            </thead>
+            <tbody id="funnel-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <p class="eyebrow">CTA DETAIL</p>
             <h2>LP × CTA</h2>
           </div>
-          <span>どのLPの、どの登録導線が成果を出しているかを見ます。</span>
+          <span>広告階層で勝ち筋を見たあと、どの登録導線が押されたかを確認します。</span>
         </div>
         <div class="table-wrap">
           <table>
@@ -244,6 +276,10 @@
           <div>
             <dt>utm_content</dt>
             <dd>広告素材や訴求違いを識別するタグです。</dd>
+          </div>
+          <div>
+            <dt>adset / ad</dt>
+            <dd>Meta広告セットと広告を識別するタグです。広告階層一覧で使います。</dd>
           </div>
         </dl>
       </section>

@@ -9,6 +9,7 @@ const lpInput = document.querySelector("#lp-input");
 const campaignInput = document.querySelector("#campaign-input");
 const contentInput = document.querySelector("#content-input");
 const adsetInput = document.querySelector("#adset-input");
+const adInput = document.querySelector("#ad-input");
 const generatedUrl = document.querySelector("#generated-url");
 const copyUrlButton = document.querySelector("#copy-url-button");
 
@@ -81,6 +82,7 @@ function summarizeLocal(events) {
     by_lp: groupBy(events, ["lp_variant"]),
     by_cta: groupBy(events, ["cta_location"]),
     by_campaign: groupBy(events, ["utm_campaign"]),
+    by_funnel: groupBy(events, ["utm_campaign", "adset", "ad", "lp_variant"]),
     by_lp_cta: groupBy(events, ["lp_variant", "cta_location"]),
     by_section: groupBy(events, ["section_id"]),
     recent: events.slice(-100).reverse(),
@@ -193,6 +195,20 @@ function render(data) {
     </tr>
   `, 6);
 
+  renderRows("#funnel-table", data.by_funnel || [], (row) => `
+    <tr>
+      ${cell(row.utm_campaign)}
+      ${cell(row.adset)}
+      ${cell(row.ad)}
+      ${cell(row.lp_variant)}
+      ${cell(int(row.page_view))}
+      ${cell(int(row.line_click), "positive")}
+      ${cell(pct(row.cvr))}
+      ${cell(int(row.roulette_start))}
+      ${cell(int(row.coupon_modal_view))}
+    </tr>
+  `, 9);
+
   renderRows("#campaign-table", data.by_campaign, (row) => `
     <tr>
       ${cell(row.utm_campaign)}
@@ -220,6 +236,7 @@ function updateGeneratedUrl() {
   url.searchParams.set("utm_campaign", campaignInput.value.trim() || "vbp101_presale");
   url.searchParams.set("utm_content", contentInput.value.trim() || "creative_01");
   url.searchParams.set("adset", adsetInput.value.trim() || "adset_01");
+  url.searchParams.set("ad", adInput.value.trim() || "ad_01");
   generatedUrl.value = url.toString();
 }
 
@@ -269,6 +286,7 @@ function exportCsv() {
     "utm_content",
     "utm_source",
     "adset",
+    "ad",
     "device",
     "page_path",
   ];
@@ -282,7 +300,7 @@ function exportCsv() {
   URL.revokeObjectURL(url);
 }
 
-[lpInput, campaignInput, contentInput, adsetInput].forEach((input) => input.addEventListener("input", updateGeneratedUrl));
+[lpInput, campaignInput, contentInput, adsetInput, adInput].forEach((input) => input.addEventListener("input", updateGeneratedUrl));
 copyUrlButton.addEventListener("click", copyGeneratedUrl);
 refreshButton.addEventListener("click", load);
 daysSelect.addEventListener("change", load);
