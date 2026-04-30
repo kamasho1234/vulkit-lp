@@ -3,25 +3,25 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>VULKIT LP Analytics</title>
+    <title>VULKIT広告・LP分析</title>
     <link rel="stylesheet" href="analytics.css">
   </head>
   <body>
     <main class="dashboard">
-      <header class="dashboard-header">
-        <div>
-          <p>VULKIT VBP101</p>
-          <h1>LP Analytics</h1>
-          <span>LP別・CTA別・ルーレット導線を一括確認</span>
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">VULKIT VBP101</p>
+          <h1>広告・LP分析</h1>
+          <span>Meta広告からLP、LINE登録クリックまでを一画面で確認します。</span>
         </div>
-        <div class="dashboard-actions">
+        <div class="hero-actions">
           <label>
-            期間
+            集計期間
             <select id="days-select">
-              <option value="7">7日</option>
-              <option value="14">14日</option>
-              <option value="30" selected>30日</option>
-              <option value="90">90日</option>
+              <option value="7">直近7日</option>
+              <option value="14">直近14日</option>
+              <option value="30" selected>直近30日</option>
+              <option value="90">直近90日</option>
             </select>
           </label>
           <button id="refresh-button" type="button">更新</button>
@@ -29,17 +29,83 @@
         </div>
       </header>
 
-      <section class="status-card" id="status-card">
-        読み込み中...
+      <section class="status-card" id="status-card">読み込み中...</section>
+
+      <section class="guide-grid">
+        <article class="guide-card is-primary">
+          <span class="step">STEP 1</span>
+          <h2>Meta広告に入れるURLを作る</h2>
+          <p>キャンペーン名・LPパターン・広告素材名を入力すると、Meta広告の遷移先URLを作成できます。</p>
+          <div class="url-builder">
+            <label>
+              LPパターン
+              <input id="lp-input" type="text" value="lp_a" placeholder="例: lp_a">
+            </label>
+            <label>
+              キャンペーン
+              <input id="campaign-input" type="text" value="vbp101_presale" placeholder="例: vbp101_presale">
+            </label>
+            <label>
+              広告素材
+              <input id="content-input" type="text" value="creative_01" placeholder="例: video_01">
+            </label>
+            <label>
+              広告セット
+              <input id="adset-input" type="text" value="adset_01" placeholder="例: men_30s_tokyo">
+            </label>
+            <label class="full">
+              Meta広告に設定するURL
+              <div class="copy-row">
+                <input id="generated-url" type="text" readonly>
+                <button id="copy-url-button" type="button">コピー</button>
+              </div>
+            </label>
+          </div>
+        </article>
+
+        <article class="guide-card">
+          <span class="step">STEP 2</span>
+          <h2>Meta広告側の設定</h2>
+          <ol class="setup-list">
+            <li>広告の「ウェブサイトURL」に左のURLを貼る</li>
+            <li>キャンペーンごとに `utm_campaign` を変える</li>
+            <li>LP比較ごとに `lp_variant` を変える</li>
+            <li>素材比較ごとに `utm_content` を変える</li>
+          </ol>
+          <p class="note">Meta API連携なしでも、LP到達後の行動はこのURLタグで識別できます。</p>
+        </article>
+
+        <article class="guide-card">
+          <span class="step">STEP 3</span>
+          <h2>見る順番</h2>
+          <ol class="setup-list">
+            <li>LP別のLINEクリックCVRを見る</li>
+            <li>CTA別で押されている場所を見る</li>
+            <li>キャンペーン別で広告の質を見る</li>
+            <li>セクション到達で離脱箇所を見る</li>
+          </ol>
+          <p class="note">広告費を入れる前の今は「LINEクリック率」を勝ち負けの主指標にします。</p>
+        </article>
       </section>
 
       <section class="kpi-grid" id="kpi-grid"></section>
 
+      <section class="insight-panel">
+        <div>
+          <p class="eyebrow">Quick Insight</p>
+          <h2>まず見るべき結論</h2>
+        </div>
+        <div class="insight-list" id="insight-list"></div>
+      </section>
+
       <section class="panel-grid">
         <section class="panel">
           <div class="panel-title">
-            <h2>LP別</h2>
-            <span>訪問からLINEクリックまで</span>
+            <div>
+              <p class="eyebrow">A/B TEST</p>
+              <h2>LP別成果</h2>
+            </div>
+            <span>LPパターンごとのLINEクリック率を比較します。</span>
           </div>
           <div class="table-wrap">
             <table>
@@ -50,7 +116,7 @@
                   <th>LINEクリック</th>
                   <th>CVR</th>
                   <th>ルーレット開始</th>
-                  <th>当たり</th>
+                  <th>当たり表示</th>
                 </tr>
               </thead>
               <tbody id="lp-table"></tbody>
@@ -60,8 +126,11 @@
 
         <section class="panel">
           <div class="panel-title">
-            <h2>CTA別</h2>
-            <span>どの登録ボタンが効いたか</span>
+            <div>
+              <p class="eyebrow">CTA</p>
+              <h2>CTA別成果</h2>
+            </div>
+            <span>どのLINEボタンが押されているかを確認します。</span>
           </div>
           <div class="table-wrap">
             <table>
@@ -69,7 +138,7 @@
                 <tr>
                   <th>CTA</th>
                   <th>LINEクリック</th>
-                  <th>イベント</th>
+                  <th>総イベント</th>
                 </tr>
               </thead>
               <tbody id="cta-table"></tbody>
@@ -80,8 +149,11 @@
 
       <section class="panel">
         <div class="panel-title">
-          <h2>LP × CTA</h2>
-          <span>ABテストで見るべき主テーブル</span>
+          <div>
+            <p class="eyebrow">MAIN REPORT</p>
+            <h2>LP × CTA</h2>
+          </div>
+          <span>どのLPの、どの登録導線が成果を出しているかを見ます。</span>
         </div>
         <div class="table-wrap">
           <table>
@@ -100,42 +172,80 @@
         </div>
       </section>
 
-      <section class="panel">
-        <div class="panel-title">
-          <h2>広告キャンペーン別</h2>
-          <span>UTM campaign単位の比較</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Campaign</th>
-                <th>訪問</th>
-                <th>LINEクリック</th>
-                <th>CVR</th>
-              </tr>
-            </thead>
-            <tbody id="campaign-table"></tbody>
-          </table>
-        </div>
+      <section class="panel-grid">
+        <section class="panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">META UTM</p>
+              <h2>キャンペーン別</h2>
+            </div>
+            <span>`utm_campaign`ごとの成果です。</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Campaign</th>
+                  <th>訪問</th>
+                  <th>LINEクリック</th>
+                  <th>CVR</th>
+                </tr>
+              </thead>
+              <tbody id="campaign-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">SCROLL</p>
+              <h2>セクション到達</h2>
+            </div>
+            <span>どこまで見られたかを確認します。</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>セクション</th>
+                  <th>到達数</th>
+                </tr>
+              </thead>
+              <tbody id="section-table"></tbody>
+            </table>
+          </div>
+        </section>
       </section>
 
-      <section class="panel">
-        <div class="panel-title">
-          <h2>セクション到達</h2>
-          <span>ヒートマップと合わせて見る到達データ</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>セクション</th>
-                <th>到達イベント</th>
-              </tr>
-            </thead>
-            <tbody id="section-table"></tbody>
-          </table>
-        </div>
+      <section class="dictionary">
+        <h2>用語の見方</h2>
+        <dl>
+          <div>
+            <dt>LP訪問</dt>
+            <dd>ページが開かれた数。広告クリック数とはズレることがあります。</dd>
+          </div>
+          <div>
+            <dt>LINEクリック</dt>
+            <dd>LINE登録ボタンを押した数。現時点の主要CVです。</dd>
+          </div>
+          <div>
+            <dt>CVR</dt>
+            <dd>LINEクリック ÷ LP訪問。LPの勝ち負けを見る指標です。</dd>
+          </div>
+          <div>
+            <dt>lp_variant</dt>
+            <dd>LPのパターン名。A/Bテストではここを変えます。</dd>
+          </div>
+          <div>
+            <dt>utm_campaign</dt>
+            <dd>Meta広告キャンペーンを識別するタグです。</dd>
+          </div>
+          <div>
+            <dt>utm_content</dt>
+            <dd>広告素材や訴求違いを識別するタグです。</dd>
+          </div>
+        </dl>
       </section>
     </main>
 

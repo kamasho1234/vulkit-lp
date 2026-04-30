@@ -1,8 +1,16 @@
 const STORAGE_KEY = "vulkit.analytics.events";
+const SITE_URL = "https://vulkit.kamacrafy.com/";
+
 const statusCard = document.querySelector("#status-card");
 const daysSelect = document.querySelector("#days-select");
 const refreshButton = document.querySelector("#refresh-button");
 const exportButton = document.querySelector("#export-button");
+const lpInput = document.querySelector("#lp-input");
+const campaignInput = document.querySelector("#campaign-input");
+const contentInput = document.querySelector("#content-input");
+const adsetInput = document.querySelector("#adset-input");
+const generatedUrl = document.querySelector("#generated-url");
+const copyUrlButton = document.querySelector("#copy-url-button");
 
 let latestRows = [];
 
@@ -12,6 +20,14 @@ function pct(value) {
 
 function int(value) {
   return new Intl.NumberFormat("ja-JP").format(value || 0);
+}
+
+function safe(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function readLocalEvents() {
@@ -25,8 +41,8 @@ function readLocalEvents() {
 function groupBy(events, keys) {
   const rows = new Map();
   events.forEach((event) => {
-    const id = keys.map((key) => event[key] || "(none)").join("||");
-    const row = rows.get(id) || Object.fromEntries(keys.map((key) => [key, event[key] || "(none)"]));
+    const id = keys.map((key) => event[key] || "(未設定)").join("||");
+    const row = rows.get(id) || Object.fromEntries(keys.map((key) => [key, event[key] || "(未設定)"]));
     row.events = (row.events || 0) + 1;
     row.page_view = (row.page_view || 0) + (event.event_name === "page_view" ? 1 : 0);
     row.line_click = (row.line_click || 0) + (event.event_name === "line_click" ? 1 : 0);
@@ -37,7 +53,7 @@ function groupBy(events, keys) {
     row.cvr = row.page_view ? row.line_click / row.page_view : 0;
     rows.set(id, row);
   });
-  return [...rows.values()].sort((a, b) => b.line_click - a.line_click || b.events - a.events);
+  return [...rows.values()].sort((a, b) => b.line_click - a.line_click || b.page_view - a.page_view || b.events - a.events);
 }
 
 function summarizeLocal(events) {
@@ -55,10 +71,12 @@ function summarizeLocal(events) {
     if (Object.prototype.hasOwnProperty.call(totals, event.event_name)) totals[event.event_name] += 1;
   });
   totals.line_click_cvr = totals.page_view ? totals.line_click / totals.page_view : 0;
-  totals.roulette_win_rate = totals.roulette_start ? totals.roulette_win / totals.roulette_start : 0;
+  totals.roulette_start_rate = totals.page_view ? totals.roulette_start / totals.page_view : 0;
+  totals.coupon_view_rate = totals.roulette_win ? totals.coupon_modal_view / totals.roulette_win : 0;
 
   return {
     stored: false,
+    days: Number(daysSelect.value),
     totals,
     by_lp: groupBy(events, ["lp_variant"]),
     by_cta: groupBy(events, ["cta_location"]),
@@ -70,13 +88,13 @@ function summarizeLocal(events) {
 }
 
 function cell(value, className = "") {
-  return `<td class="${className}">${value}</td>`;
+  return `<td class="${className}">${safe(value)}</td>`;
 }
 
 function renderRows(target, rows, template, emptyColumns) {
   const body = document.querySelector(target);
   if (!rows.length) {
-    body.innerHTML = `<tr><td class="muted" colspan="${emptyColumns}">データがありません</td></tr>`;
+    body.innerHTML = `<tr><td class="muted" colspan="${emptyColumns}">まだデータがありません</td></tr>`;
     return;
   }
   body.innerHTML = rows.map(template).join("");
@@ -84,26 +102,66 @@ function renderRows(target, rows, template, emptyColumns) {
 
 function renderKpis(totals) {
   document.querySelector("#kpi-grid").innerHTML = [
-    ["LP訪問", int(totals.page_view)],
-    ["LINEクリック", int(totals.line_click)],
-    ["LINEクリックCVR", pct(totals.line_click_cvr || 0)],
-    ["ルーレット開始", int(totals.roulette_start)],
-    ["当たり表示", int(totals.roulette_win)],
-    ["クーポン表示", int(totals.coupon_modal_view)],
-    ["セクション到達", int(totals.section_view)],
-    ["総イベント", int(totals.events)],
+    ["LP訪問", int(totals.page_view), "広告からLPに到達した回数"],
+    ["LINEクリック", int(totals.line_click), "LINE登録ボタンを押した回数"],
+    ["LINEクリックCVR", pct(totals.line_click_cvr || 0), "LINEクリック ÷ LP訪問"],
+    ["ルーレット開始", int(totals.roulette_start), "抽選ボタンが押された回数"],
+    ["当たり表示", int(totals.roulette_win), "2回目当たりまで到達した回数"],
+    ["クーポン表示", int(totals.coupon_modal_view), "クーポン画面が表示された回数"],
+    ["セクション到達", int(totals.section_view), "各セクションが見られた回数"],
+    ["総イベント", int(totals.events), "保存された計測イベント総数"],
   ]
-    .map(([label, value]) => `
+    .map(([label, value, help]) => `
       <article class="kpi-card">
         <p>${label}</p>
         <strong>${value}</strong>
+        <small>${help}</small>
       </article>
+    `)
+    .join("");
+}
+
+function bestRow(rows, metric) {
+  return [...rows].filter((row) => row[metric] > 0).sort((a, b) => b[metric] - a[metric])[0];
+}
+
+function renderInsights(data) {
+  const bestLpByCvr = [...data.by_lp].filter((row) => row.page_view > 0).sort((a, b) => b.cvr - a.cvr)[0];
+  const bestCta = bestRow(data.by_cta, "line_click");
+  const bestCampaign = [...data.by_campaign].filter((row) => row.page_view > 0 && row.utm_campaign !== "(未設定)").sort((a, b) => b.cvr - a.cvr)[0];
+  const lineCvr = data.totals.line_click_cvr || 0;
+
+  const items = [
+    bestLpByCvr
+      ? [`勝ちLP候補: ${safe(bestLpByCvr.lp_variant)}`, `LINEクリックCVRは ${pct(bestLpByCvr.cvr)} です。訪問数が十分に増えたら、このLPを基準に次のABテストを作ります。`]
+      : ["まずLP別URLを作成", "上のURL作成欄でMeta広告用URLを作り、広告のウェブサイトURLに設定してください。"],
+    bestCta
+      ? [`強いCTA: ${safe(bestCta.cta_location)}`, `${int(bestCta.line_click)}件のLINEクリックがあります。この導線を目立たせる改善が有効です。`]
+      : ["CTA計測待ち", "LINE登録ボタンが押されると、ヘッダー・フッター・ルーレット後CTA別に表示されます。"],
+    bestCampaign
+      ? [`良いキャンペーン: ${safe(bestCampaign.utm_campaign)}`, `キャンペーン別CVRは ${pct(bestCampaign.cvr)} です。Meta上のキャンペーン名とUTMを揃えると見やすくなります。`]
+      : ["キャンペーン識別待ち", "Meta広告URLに `utm_campaign` を付けると、キャンペーン別に比較できます。"],
+    lineCvr >= 0.08
+      ? ["CVR良好", `全体のLINEクリックCVRは ${pct(lineCvr)} です。次は広告費を入れてCPAを見ます。`]
+      : ["改善ポイント", `全体のLINEクリックCVRは ${pct(lineCvr)} です。FV訴求・ルーレット導線・CTA位置を優先して検証します。`],
+  ];
+
+  document.querySelector("#insight-list").innerHTML = items
+    .map(([title, body]) => `
+      <div class="insight-item">
+        <i class="insight-dot" aria-hidden="true"></i>
+        <div>
+          <strong>${title}</strong>
+          <span>${body}</span>
+        </div>
+      </div>
     `)
     .join("");
 }
 
 function render(data) {
   renderKpis(data.totals);
+  renderInsights(data);
 
   renderRows("#lp-table", data.by_lp, (row) => `
     <tr>
@@ -154,6 +212,30 @@ function render(data) {
   latestRows = data.recent || [];
 }
 
+function updateGeneratedUrl() {
+  const url = new URL(SITE_URL);
+  url.searchParams.set("lp_variant", lpInput.value.trim() || "lp_a");
+  url.searchParams.set("utm_source", "meta");
+  url.searchParams.set("utm_medium", "paid_social");
+  url.searchParams.set("utm_campaign", campaignInput.value.trim() || "vbp101_presale");
+  url.searchParams.set("utm_content", contentInput.value.trim() || "creative_01");
+  url.searchParams.set("adset", adsetInput.value.trim() || "adset_01");
+  generatedUrl.value = url.toString();
+}
+
+async function copyGeneratedUrl() {
+  updateGeneratedUrl();
+  try {
+    await navigator.clipboard.writeText(generatedUrl.value);
+    copyUrlButton.textContent = "コピー済み";
+    window.setTimeout(() => {
+      copyUrlButton.textContent = "コピー";
+    }, 1400);
+  } catch (error) {
+    generatedUrl.select();
+  }
+}
+
 async function load() {
   statusCard.textContent = "読み込み中...";
   const days = daysSelect.value;
@@ -167,12 +249,12 @@ async function load() {
     render(data);
     statusCard.textContent = data.stored
       ? `Supabase保存データを表示中。直近${data.days}日 / ${int(data.totals.events)}イベント`
-      : "保存先が未設定です。現在はこのブラウザ内のローカル確認データを表示します。";
+      : "保存先が未設定です。このブラウザ内のローカル確認データを表示します。";
     if (!data.stored) render(summarizeLocal(readLocalEvents()));
   } catch (error) {
     const local = summarizeLocal(readLocalEvents());
     render(local);
-    statusCard.textContent = "API未接続のため、このブラウザ内のローカル確認データを表示しています。";
+    statusCard.textContent = "APIに接続できないため、このブラウザ内のローカル確認データを表示しています。";
   }
 }
 
@@ -184,7 +266,9 @@ function exportCsv() {
     "cta_location",
     "section_id",
     "utm_campaign",
+    "utm_content",
     "utm_source",
+    "adset",
     "device",
     "page_path",
   ];
@@ -198,7 +282,11 @@ function exportCsv() {
   URL.revokeObjectURL(url);
 }
 
+[lpInput, campaignInput, contentInput, adsetInput].forEach((input) => input.addEventListener("input", updateGeneratedUrl));
+copyUrlButton.addEventListener("click", copyGeneratedUrl);
 refreshButton.addEventListener("click", load);
 daysSelect.addEventListener("change", load);
 exportButton.addEventListener("click", exportCsv);
+
+updateGeneratedUrl();
 load();
