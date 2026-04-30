@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VULKIT LP Analytics</title>
+    <link rel="stylesheet" href="analytics.css">
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p>VULKIT VBP101</p>
+          <h1>LP Analytics</h1>
+          <span>LP別・CTA別・ルーレット導線を一括確認</span>
+        </div>
+        <div class="dashboard-actions">
+          <label>
+            期間
+            <select id="days-select">
+              <option value="7">7日</option>
+              <option value="14">14日</option>
+              <option value="30" selected>30日</option>
+              <option value="90">90日</option>
+            </select>
+          </label>
+          <button id="refresh-button" type="button">更新</button>
+          <button id="export-button" type="button">CSV出力</button>
+        </div>
+      </header>
+
+      <section class="status-card" id="status-card">
+        読み込み中...
+      </section>
+
+      <section class="kpi-grid" id="kpi-grid"></section>
+
+      <section class="panel-grid">
+        <section class="panel">
+          <div class="panel-title">
+            <h2>LP別</h2>
+            <span>訪問からLINEクリックまで</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>LP</th>
+                  <th>訪問</th>
+                  <th>LINEクリック</th>
+                  <th>CVR</th>
+                  <th>ルーレット開始</th>
+                  <th>当たり</th>
+                </tr>
+              </thead>
+              <tbody id="lp-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <h2>CTA別</h2>
+            <span>どの登録ボタンが効いたか</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>CTA</th>
+                  <th>LINEクリック</th>
+                  <th>イベント</th>
+                </tr>
+              </thead>
+              <tbody id="cta-table"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>LP × CTA</h2>
+          <span>ABテストで見るべき主テーブル</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>LP</th>
+                <th>CTA</th>
+                <th>訪問</th>
+                <th>LINEクリック</th>
+                <th>CVR</th>
+                <th>クーポン表示</th>
+              </tr>
+            </thead>
+            <tbody id="lp-cta-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>広告キャンペーン別</h2>
+          <span>UTM campaign単位の比較</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Campaign</th>
+                <th>訪問</th>
+                <th>LINEクリック</th>
+                <th>CVR</th>
+              </tr>
+            </thead>
+            <tbody id="campaign-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>セクション到達</h2>
+          <span>ヒートマップと合わせて見る到達データ</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>セクション</th>
+                <th>到達イベント</th>
+              </tr>
+            </thead>
+            <tbody id="section-table"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="analytics.js"></script>
+  </body>
+</html>

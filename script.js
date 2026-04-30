@@ -100,6 +100,9 @@ function showCouponPopup() {
   if (!roulettePanel) return;
 
   hideCouponPopup();
+  window.VulkitAnalytics?.track("coupon_modal_view", {
+    cta_location: "roulette_coupon",
+  });
 
   const couponModal = document.createElement("div");
   couponModal.className = "roulette-coupon-modal";
@@ -124,7 +127,9 @@ function showCouponPopup() {
   roulettePanel.append(couponModal);
 
   couponModal.querySelector(".roulette-line-button")?.addEventListener("click", () => {
-    window.open("https://lin.ee/Qi4NUTn", "_blank", "noopener,noreferrer");
+    window.VulkitAnalytics?.openLine({
+      ctaLocation: "roulette_coupon",
+    });
   });
 }
 
@@ -134,6 +139,10 @@ function spinRoulette(event) {
 
   rouletteAttempts += 1;
   const isWinningSpin = rouletteAttempts >= 2;
+  window.VulkitAnalytics?.track("roulette_start", {
+    attempt: rouletteAttempts,
+    result_target: isWinningSpin ? "win" : "miss",
+  });
 
   rouletteRunning = true;
   roulettePanel.hidden = false;
@@ -173,6 +182,9 @@ function spinRoulette(event) {
 
     if (isWinningSpin) {
       rouletteCompleted = true;
+      window.VulkitAnalytics?.track("roulette_win", {
+        attempt: rouletteAttempts,
+      });
       roulettePanel.classList.add("is-complete");
       if (rouletteResult) rouletteResult.hidden = false;
       celebrateRoulette();
@@ -181,6 +193,9 @@ function spinRoulette(event) {
       rouletteButton?.setAttribute("aria-disabled", "true");
       rouletteButton?.querySelector("span")?.replaceChildren(document.createTextNode("抽選済み"));
     } else {
+      window.VulkitAnalytics?.track("roulette_miss", {
+        attempt: rouletteAttempts,
+      });
       roulettePanel.classList.add("is-miss");
       showRetryPopup();
     }
