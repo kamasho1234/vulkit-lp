@@ -19,6 +19,7 @@ html {
 body {
   margin: 0;
   min-height: 100%;
+  padding-top: 40px;
   overflow-x: hidden;
   overflow-y: auto;
   color: var(--white);
@@ -48,8 +49,10 @@ img {
 }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 20;
   display: flex;
   align-items: center;
@@ -106,6 +109,7 @@ img {
   box-shadow:
     0 8px 22px rgba(37, 211, 102, 0.24),
     0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+  transform: translateY(10%);
 }
 
 .top-showcase {
@@ -1422,8 +1426,12 @@ img {
     scroll-padding-top: 64px;
   }
 
+  body {
+    padding-top: 62px;
+  }
+
   .site-header {
-    position: sticky;
+    position: fixed;
     align-items: flex-start;
     flex-direction: column;
     gap: 6px;
@@ -1454,6 +1462,7 @@ img {
     margin-left: 0;
     padding: 4px 10px;
     font-size: 11px;
+    transform: translateY(10%);
   }
 
   .section-intro {
