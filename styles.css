@@ -1093,13 +1093,36 @@ img {
     linear-gradient(90deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.58) 44%, rgba(0, 0, 0, 0.24) 100%),
     url("assets/lp/sections/closing-smile.png") center / cover;
   margin-top: -1px;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+.closing-section p,
+.details-section .section-kicker p,
+.faq-section .section-kicker p {
+  color: rgba(224, 188, 111, 0.82);
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.closing-section h1,
+.details-section .section-kicker h1,
+.faq-section .section-kicker h1 {
+  color: #f4ead4;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-shadow:
+    0 0 24px rgba(219, 178, 93, 0.18),
+    0 8px 24px rgba(0, 0, 0, 0.58);
 }
 
 .closing-copy {
   display: block;
   max-width: 34em;
   margin-top: 20px;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 248, 232, 0.82);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
   font-size: clamp(14px, 1.5vw, 18px);
   line-height: 1.9;
 }
@@ -1210,11 +1233,13 @@ img {
     radial-gradient(circle at 50% 0%, rgba(255, 216, 116, 0.1), transparent 36%),
     #050505;
   padding-top: clamp(56px, 8vw, 112px);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
 .faq-section {
   color: var(--white);
   background: #050505;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
 .section-kicker {
@@ -1247,7 +1272,11 @@ img {
 
 .details-grid h2 {
   margin: 0 0 22px;
+  color: #f3dfad;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
   font-size: clamp(24px, 2.6vw, 38px);
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 .details-grid dl {
@@ -1263,14 +1292,15 @@ img {
 }
 
 .details-grid dt {
-  color: rgba(255, 221, 148, 0.72);
+  color: rgba(238, 200, 125, 0.86);
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .details-grid dd {
   margin: 0;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 248, 232, 0.84);
   line-height: 1.7;
   overflow-wrap: anywhere;
 }
@@ -1286,8 +1316,10 @@ img {
 .faq-section summary {
   cursor: pointer;
   padding: 26px 0;
+  color: rgba(255, 246, 226, 0.92);
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
   font-size: clamp(20px, 2.2vw, 32px);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.45;
   text-wrap: balance;
 }
@@ -1295,7 +1327,7 @@ img {
 .faq-section details p {
   max-width: 860px;
   margin: -6px 0 28px;
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(255, 248, 232, 0.72);
   line-height: 1.85;
   text-wrap: pretty;
 }
