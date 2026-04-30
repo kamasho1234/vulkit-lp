@@ -110,7 +110,7 @@ img {
   box-shadow:
     0 8px 22px rgba(37, 211, 102, 0.24),
     0 0 0 1px rgba(255, 255, 255, 0.18) inset;
-  transform: translateY(20%);
+  transform: translateY(30%);
 }
 
 .header-line-cta::before {
@@ -1473,7 +1473,7 @@ img {
     margin-left: 0;
     padding: 4px 10px;
     font-size: 11px;
-    transform: translateY(20%);
+    transform: translateY(30%);
   }
 
   .section-intro {
