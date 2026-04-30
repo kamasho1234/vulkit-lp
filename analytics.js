@@ -119,6 +119,7 @@ function summarizeLocal(events) {
     by_funnel: groupBy(events, ["utm_campaign", "adset", "ad", "lp_variant"]),
     by_lp_cta: groupBy(events, ["lp_variant", "cta_location"]),
     by_section: groupBy(events, ["section_id"]),
+    by_lp_section: groupBy(events, ["lp_variant", "section_id"]),
     recent: events.slice(-100).reverse(),
   };
 }
@@ -252,12 +253,13 @@ function render(data) {
     </tr>
   `, 4);
 
-  renderRows("#section-table", data.by_section, (row) => `
+  renderRows("#lp-section-table", data.by_lp_section || [], (row) => `
     <tr>
+      ${cell(row.lp_variant)}
       ${cell(sectionLabel(row.section_id))}
       ${cell(int(row.section_view || row.events))}
     </tr>
-  `, 2);
+  `, 3);
 
   latestRows = data.recent || [];
 }

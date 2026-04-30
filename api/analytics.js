@@ -87,6 +87,7 @@ function summarize(events) {
     by_funnel: groupBy(events, ["utm_campaign", "adset", "ad", "lp_variant"]),
     by_lp_cta: groupBy(events, ["lp_variant", "cta_location"]),
     by_section: groupBy(events, ["section_id"]),
+    by_lp_section: groupBy(events, ["lp_variant", "section_id"]),
     recent: events.slice(0, 100),
   };
 }
