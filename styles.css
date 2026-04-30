@@ -83,8 +83,10 @@ img {
 
 .top-showcase {
   position: relative;
-  min-height: calc(100svh - 64px);
   display: block;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   padding: 0;
   background: #050505;
 }
@@ -103,17 +105,16 @@ img {
 
 .top-stage {
   position: relative;
-  min-height: calc(100svh - 64px);
   overflow: hidden;
   background: #050505;
 }
 
 .top-visual {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  position: relative;
+  width: 100vw;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
   object-position: center;
   opacity: 0;
   transition: opacity 600ms ease;
@@ -1361,10 +1362,6 @@ img {
   .site-header nav a {
     font-size: 10px;
     line-height: 1.2;
-  }
-
-  .top-stage {
-    min-height: calc(100svh - 102px);
   }
 
   .section-intro {
