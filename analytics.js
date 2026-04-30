@@ -35,6 +35,7 @@ const SECTION_LABELS = {
   waterproof: "防水紹介",
   "coupon-roulette": "割引ルーレット",
   features: "機能紹介",
+  "seo-guide": "SEO説明",
   brand: "ブランド紹介",
   scene: "使用シーン",
   details: "詳細情報",

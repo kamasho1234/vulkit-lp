@@ -1434,6 +1434,64 @@ img {
   text-wrap: pretty;
 }
 
+.seo-section {
+  padding: clamp(56px, 8vw, 106px) clamp(22px, 7vw, 110px);
+  color: var(--white);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(216, 178, 96, 0.12), transparent 34%),
+    linear-gradient(180deg, #050505 0%, #0b1016 54%, #050505 100%);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+.seo-section .section-kicker {
+  max-width: 980px;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.seo-grid article {
+  min-height: 100%;
+  padding: clamp(20px, 2.6vw, 34px);
+  border: 1px solid rgba(220, 183, 101, 0.2);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.seo-grid h2 {
+  margin: 0 0 14px;
+  color: #f4ead4;
+  font-size: clamp(20px, 2.2vw, 30px);
+  line-height: 1.35;
+}
+
+.seo-grid p {
+  margin: 0;
+  color: rgba(255, 248, 232, 0.74);
+  font-size: 15px;
+  line-height: 1.95;
+}
+
+.seo-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.seo-keywords span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid rgba(220, 183, 101, 0.24);
+  color: rgba(244, 234, 212, 0.78);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
 .scroll-button {
   position: fixed;
   z-index: 30;
@@ -1453,7 +1511,8 @@ img {
   .scene-grid,
   .visual-grid,
   .use-cases,
-  .details-grid {
+  .details-grid,
+  .seo-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1578,7 +1637,8 @@ img {
   }
 
   .details-section,
-  .faq-section {
+  .faq-section,
+  .seo-section {
     padding: 48px 20px;
   }
 
