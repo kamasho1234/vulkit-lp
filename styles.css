@@ -34,6 +34,10 @@ img {
   max-width: 100%;
 }
 
+.sp-break {
+  display: none;
+}
+
 .image-section,
 .launch-banner,
 .visual-grid,
@@ -1337,6 +1341,10 @@ img {
 }
 
 @media (max-width: 620px) {
+  .sp-break {
+    display: block;
+  }
+
   html {
     scroll-padding-top: 102px;
   }
@@ -1383,19 +1391,20 @@ img {
   .section-intro h1,
   .closing-section h1,
   .section-kicker h1 {
-    font-size: 29px;
-    line-height: 1.24;
+    font-size: 28px;
+    line-height: 1.32;
   }
 
   .image-tone-intro h1,
   .feature-intro h1 {
-    font-size: 28px;
+    font-size: 27px;
   }
 
   .section-intro span {
     margin-top: 16px;
     font-size: 14px;
-    line-height: 1.85;
+    line-height: 1.78;
+    max-width: 24em;
   }
 
   .scene-grid figcaption {
@@ -1437,19 +1446,20 @@ img {
 
   .details-grid dd {
     font-size: 14px;
-    line-height: 1.75;
+    line-height: 1.8;
   }
 
   .faq-section summary {
     padding: 20px 0;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.55;
+    letter-spacing: 0;
   }
 
   .faq-section details p {
     margin: -2px 0 24px;
     font-size: 14px;
-    line-height: 1.9;
+    line-height: 1.85;
   }
 
   .closing-section {
@@ -1460,7 +1470,7 @@ img {
   .closing-copy {
     margin-top: 16px;
     font-size: 14px;
-    line-height: 1.75;
+    line-height: 1.8;
   }
 
   .closing-line-cta {
