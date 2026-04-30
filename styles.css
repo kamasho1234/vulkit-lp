@@ -1492,6 +1492,32 @@ img {
   letter-spacing: 0.04em;
 }
 
+.seo-article-links {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.seo-article-links a {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding: 12px 14px;
+  border: 1px solid rgba(220, 183, 101, 0.2);
+  color: rgba(255, 248, 232, 0.8);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 13px;
+  line-height: 1.55;
+  text-decoration: none;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+
+.seo-article-links a:hover {
+  border-color: rgba(220, 183, 101, 0.48);
+  background: rgba(255, 255, 255, 0.055);
+}
+
 .scroll-button {
   position: fixed;
   z-index: 30;
@@ -1512,7 +1538,8 @@ img {
   .visual-grid,
   .use-cases,
   .details-grid,
-  .seo-grid {
+  .seo-grid,
+  .seo-article-links {
     grid-template-columns: 1fr;
   }
 
