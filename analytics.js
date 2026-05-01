@@ -46,6 +46,25 @@ const SECTION_LABELS = {
   "(未設定)": "位置情報なし",
 };
 
+const SECTION_ORDER = [
+  "top",
+  "top-showcase",
+  "compression",
+  "lock",
+  "waterproof",
+  "coupon-roulette",
+  "features",
+  "brand",
+  "scene",
+  "details",
+  "faq",
+  "seo-guide",
+  "closing-section",
+  "image-section",
+  "section-intro",
+  "(未設定)",
+];
+
 function pct(value) {
   return `${(value * 100).toFixed(1)}%`;
 }
@@ -68,6 +87,11 @@ function ctaLabel(value) {
 
 function sectionLabel(value) {
   return SECTION_LABELS[value] || value || "位置情報なし";
+}
+
+function sectionOrder(value) {
+  const index = SECTION_ORDER.indexOf(value || "(未設定)");
+  return index >= 0 ? index : SECTION_ORDER.length;
 }
 
 function readLocalEvents() {
@@ -368,7 +392,15 @@ function render(data) {
     </tr>
   `, 4);
 
-  renderRows("#lp-section-table", data.by_lp_section || [], (row) => `
+  const lpSectionRows = [...(data.by_lp_section || [])].sort((a, b) => {
+    const lpCompare = String(a.lp_variant || "").localeCompare(String(b.lp_variant || ""), "ja");
+    if (lpCompare !== 0) return lpCompare;
+    const orderCompare = sectionOrder(a.section_id) - sectionOrder(b.section_id);
+    if (orderCompare !== 0) return orderCompare;
+    return String(a.section_id || "").localeCompare(String(b.section_id || ""), "ja");
+  });
+
+  renderRows("#lp-section-table", lpSectionRows, (row) => `
     <tr>
       ${cell(row.lp_variant)}
       ${cell(sectionLabel(row.section_id))}
