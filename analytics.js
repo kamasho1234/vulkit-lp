@@ -7,11 +7,19 @@ const LP_DESTINATIONS = {
   "lp-b": "/lp-b/",
   "lp-c": "/lp-c/",
 };
+const AD_SOURCES = {
+  meta: { label: "Meta", medium: "paid_social" },
+  tiktok: { label: "TikTok", medium: "paid_social" },
+  google: { label: "Google", medium: "cpc" },
+  x: { label: "X", medium: "paid_social" },
+  other: { label: "Other", medium: "paid" },
+};
 
 const statusCard = document.querySelector("#status-card");
 const daysSelect = document.querySelector("#days-select");
 const refreshButton = document.querySelector("#refresh-button");
 const exportButton = document.querySelector("#export-button");
+const sourceInput = document.querySelector("#source-input");
 const lpInput = document.querySelector("#lp-input");
 const campaignInput = document.querySelector("#campaign-input");
 const contentInput = document.querySelector("#content-input");
@@ -129,10 +137,21 @@ function lpDestinationPath(value) {
   return LP_DESTINATIONS[normalizeLpVariant(value)] || "/";
 }
 
+function normalizeAdSource(value) {
+  const normalized = String(value || "").trim().toLowerCase();
+  return AD_SOURCES[normalized] ? normalized : "meta";
+}
+
+function adMedium(value) {
+  return AD_SOURCES[normalizeAdSource(value)]?.medium || "paid_social";
+}
+
 function currentUrlSettings() {
   const lpVariant = normalizeLpVariant(lpInput.value);
+  const adSource = normalizeAdSource(sourceInput?.value);
   return {
     name: presetNameInput.value.trim() || `${campaignInput.value.trim() || "campaign"} / ${lpVariant}`,
+    utm_source: adSource,
     lp_variant: lpVariant,
     utm_campaign: campaignInput.value.trim() || "vbp101_presale",
     utm_content: contentInput.value.trim() || "creative_01",
@@ -145,6 +164,7 @@ function currentUrlSettings() {
 
 function applyPreset(preset) {
   presetNameInput.value = preset.name || "";
+  if (sourceInput) sourceInput.value = normalizeAdSource(preset.utm_source || preset.source || "meta");
   lpInput.value = normalizeLpVariant(preset.lp_variant || preset.lp_destination || "lp-a");
   campaignInput.value = preset.utm_campaign || "vbp101_presale";
   contentInput.value = preset.utm_content || "creative_01";
@@ -259,6 +279,7 @@ function summarizeLocal(events) {
     totals,
     by_lp: groupBy(events, ["lp_variant"]),
     by_cta: groupBy(events, ["cta_location"]),
+    by_source: groupBy(events, ["utm_source"]),
     by_campaign: groupBy(events, ["utm_campaign"]),
     by_creative: groupBy(events, ["utm_content"]),
     by_funnel: groupBy(events, ["utm_campaign", "adset", "utm_content", "ad", "lp_variant"]),
@@ -399,6 +420,15 @@ function render(data) {
     </tr>
   `, 4);
 
+  renderRows("#source-table", data.by_source || [], (row) => `
+    <tr>
+      ${cell(row.utm_source)}
+      ${cell(int(row.page_view))}
+      ${cell(int(row.line_click), "positive")}
+      ${cell(pct(row.cvr))}
+    </tr>
+  `, 4);
+
   renderRows("#creative-table", data.by_creative || [], (row) => `
     <tr>
       ${cell(row.utm_content)}
@@ -429,10 +459,11 @@ function render(data) {
 
 function updateGeneratedUrl() {
   const lpVariant = normalizeLpVariant(lpInput.value);
+  const adSource = normalizeAdSource(sourceInput?.value);
   const url = new URL(lpDestinationPath(lpVariant), SITE_URL);
   url.searchParams.set("lp_variant", lpVariant);
-  url.searchParams.set("utm_source", "meta");
-  url.searchParams.set("utm_medium", "paid_social");
+  url.searchParams.set("utm_source", adSource);
+  url.searchParams.set("utm_medium", adMedium(adSource));
   url.searchParams.set("utm_campaign", campaignInput.value.trim() || "vbp101_presale");
   url.searchParams.set("utm_content", contentInput.value.trim() || "creative_01");
   url.searchParams.set("adset", adsetInput.value.trim() || "adset_01");
@@ -500,7 +531,7 @@ function exportCsv() {
   URL.revokeObjectURL(url);
 }
 
-[lpInput, campaignInput, contentInput, adsetInput, adInput].forEach((input) => {
+[sourceInput, lpInput, campaignInput, contentInput, adsetInput, adInput].filter(Boolean).forEach((input) => {
   input.addEventListener("input", updateGeneratedUrl);
   input.addEventListener("change", updateGeneratedUrl);
 });

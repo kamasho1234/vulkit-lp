@@ -35,9 +35,19 @@
       <section class="guide-grid">
         <article class="guide-card is-primary">
           <span class="step">STEP 1</span>
-          <h2>Meta広告に入れるURLを作る</h2>
-          <p>遷移先LP・キャンペーン名・広告素材名を入力すると、Meta広告の遷移先URLを作成できます。</p>
+          <h2>広告に入れるURLを作る</h2>
+          <p>広告媒体・遷移先LP・キャンペーン名・広告素材名を入力すると、広告の遷移先URLを作成できます。</p>
           <div class="url-builder">
+            <label>
+              広告媒体
+              <select id="source-input">
+                <option value="meta" selected>Meta</option>
+                <option value="tiktok">TikTok</option>
+                <option value="google">Google</option>
+                <option value="x">X</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
             <label>
               遷移先LP
               <select id="lp-input">
@@ -64,7 +74,7 @@
               <input id="ad-input" type="text" value="ad_01" placeholder="例: video_ad_01">
             </label>
             <label class="full">
-              Meta広告に設定するURL
+              広告に設定するURL
               <div class="copy-row">
                 <input id="generated-url" type="text" readonly>
                 <button id="copy-url-button" type="button">コピー</button>
@@ -89,14 +99,14 @@
 
         <article class="guide-card">
           <span class="step">STEP 2</span>
-          <h2>Meta広告側の設定</h2>
+          <h2>広告媒体側の設定</h2>
           <ol class="setup-list">
             <li>広告の「ウェブサイトURL」に左のURLを貼る</li>
             <li>キャンペーンごとに `utm_campaign` を変える</li>
             <li>LP比較ごとに `lp_variant` を変える</li>
             <li>素材比較ごとに `utm_content` を変える</li>
           </ol>
-          <p class="note">Meta API連携なしでも、LP到達後の行動はこのURLタグで識別できます。</p>
+          <p class="note">Meta・TikTokなどのAPI連携なしでも、LP到達後の行動はこのURLタグで識別できます。</p>
         </article>
 
         <article class="guide-card">
@@ -229,7 +239,7 @@
         <section class="panel">
           <div class="panel-title">
             <div>
-              <p class="eyebrow">META UTM</p>
+              <p class="eyebrow">UTM</p>
               <h2>キャンペーン別</h2>
             </div>
             <span>`utm_campaign`ごとの成果です。</span>
@@ -245,6 +255,29 @@
                 </tr>
               </thead>
               <tbody id="campaign-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">SOURCE</p>
+              <h2>広告媒体別</h2>
+            </div>
+            <span>`utm_source`ごとの成果です。Meta・TikTokなど媒体別に比較します。</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>媒体</th>
+                  <th>訪問</th>
+                  <th>LINEクリック</th>
+                  <th>CVR</th>
+                </tr>
+              </thead>
+              <tbody id="source-table"></tbody>
             </table>
           </div>
         </section>
