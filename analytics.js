@@ -1,6 +1,12 @@
 const STORAGE_KEY = "vulkit.analytics.events";
 const PRESET_STORAGE_KEY = "vulkit.analytics.urlPresets";
 const SITE_URL = "https://vulkit.kamacrafy.com/";
+const LP_DESTINATIONS = {
+  control: "/",
+  "lp-a": "/lp-a/",
+  "lp-b": "/lp-b/",
+  "lp-c": "/lp-c/",
+};
 
 const statusCard = document.querySelector("#status-card");
 const daysSelect = document.querySelector("#days-select");
@@ -114,10 +120,20 @@ function writePresets(presets) {
   window.localStorage.setItem(PRESET_STORAGE_KEY, JSON.stringify(presets));
 }
 
+function normalizeLpVariant(value) {
+  const normalized = String(value || "").trim().replace(/_/g, "-").toLowerCase();
+  return LP_DESTINATIONS[normalized] ? normalized : "control";
+}
+
+function lpDestinationPath(value) {
+  return LP_DESTINATIONS[normalizeLpVariant(value)] || "/";
+}
+
 function currentUrlSettings() {
+  const lpVariant = normalizeLpVariant(lpInput.value);
   return {
-    name: presetNameInput.value.trim() || `${campaignInput.value.trim() || "campaign"} / ${lpInput.value.trim() || "lp"}`,
-    lp_variant: lpInput.value.trim() || "lp_a",
+    name: presetNameInput.value.trim() || `${campaignInput.value.trim() || "campaign"} / ${lpVariant}`,
+    lp_variant: lpVariant,
     utm_campaign: campaignInput.value.trim() || "vbp101_presale",
     utm_content: contentInput.value.trim() || "creative_01",
     adset: adsetInput.value.trim() || "adset_01",
@@ -129,7 +145,7 @@ function currentUrlSettings() {
 
 function applyPreset(preset) {
   presetNameInput.value = preset.name || "";
-  lpInput.value = preset.lp_variant || "lp_a";
+  lpInput.value = normalizeLpVariant(preset.lp_variant || preset.lp_destination || "lp-a");
   campaignInput.value = preset.utm_campaign || "vbp101_presale";
   contentInput.value = preset.utm_content || "creative_01";
   adsetInput.value = preset.adset || "adset_01";
@@ -412,8 +428,9 @@ function render(data) {
 }
 
 function updateGeneratedUrl() {
-  const url = new URL(SITE_URL);
-  url.searchParams.set("lp_variant", lpInput.value.trim() || "lp_a");
+  const lpVariant = normalizeLpVariant(lpInput.value);
+  const url = new URL(lpDestinationPath(lpVariant), SITE_URL);
+  url.searchParams.set("lp_variant", lpVariant);
   url.searchParams.set("utm_source", "meta");
   url.searchParams.set("utm_medium", "paid_social");
   url.searchParams.set("utm_campaign", campaignInput.value.trim() || "vbp101_presale");
@@ -483,7 +500,10 @@ function exportCsv() {
   URL.revokeObjectURL(url);
 }
 
-[lpInput, campaignInput, contentInput, adsetInput, adInput].forEach((input) => input.addEventListener("input", updateGeneratedUrl));
+[lpInput, campaignInput, contentInput, adsetInput, adInput].forEach((input) => {
+  input.addEventListener("input", updateGeneratedUrl);
+  input.addEventListener("change", updateGeneratedUrl);
+});
 copyUrlButton.addEventListener("click", copyGeneratedUrl);
 savePresetButton.addEventListener("click", saveCurrentPreset);
 presetList.addEventListener("click", handlePresetClick);

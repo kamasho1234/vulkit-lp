@@ -36,11 +36,16 @@
         <article class="guide-card is-primary">
           <span class="step">STEP 1</span>
           <h2>Meta広告に入れるURLを作る</h2>
-          <p>キャンペーン名・LPパターン・広告素材名を入力すると、Meta広告の遷移先URLを作成できます。</p>
+          <p>遷移先LP・キャンペーン名・広告素材名を入力すると、Meta広告の遷移先URLを作成できます。</p>
           <div class="url-builder">
             <label>
-              LPパターン
-              <input id="lp-input" type="text" value="lp_a" placeholder="例: lp_a">
+              遷移先LP
+              <select id="lp-input">
+                <option value="control">control</option>
+                <option value="lp-a" selected>lp-a</option>
+                <option value="lp-b">lp-b</option>
+                <option value="lp-c">lp-c</option>
+              </select>
             </label>
             <label>
               キャンペーン
