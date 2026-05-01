@@ -172,7 +172,7 @@
             <p class="eyebrow">MAIN REPORT</p>
             <h2>広告階層一覧</h2>
           </div>
-          <span>Meta広告の階層どおりに、キャンペーンからLP成果までを1枚で見ます。</span>
+          <span>Meta広告の階層どおりに、キャンペーンから広告素材・LP成果までを1枚で見ます。</span>
         </div>
         <div class="table-wrap">
           <table>
@@ -180,6 +180,7 @@
               <tr>
                 <th>キャンペーン</th>
                 <th>広告セット</th>
+                <th>広告素材</th>
                 <th>広告</th>
                 <th>LP</th>
                 <th>訪問</th>
@@ -246,6 +247,32 @@
         <section class="panel">
           <div class="panel-title">
             <div>
+              <p class="eyebrow">CREATIVE</p>
+              <h2>広告素材別</h2>
+            </div>
+            <span>`utm_content`ごとの成果です。画像・動画・訴求違いを比較します。</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>広告素材</th>
+                  <th>訪問</th>
+                  <th>LINEクリック</th>
+                  <th>CVR</th>
+                </tr>
+              </thead>
+              <tbody id="creative-table"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel-grid">
+
+        <section class="panel">
+          <div class="panel-title">
+            <div>
             <p class="eyebrow">SCROLL</p>
               <h2>ページ到達位置</h2>
             </div>
@@ -299,7 +326,7 @@
           </div>
           <div>
             <dt>utm_content</dt>
-            <dd>広告素材や訴求違いを識別するタグです。</dd>
+            <dd>広告素材や訴求違いを識別するタグです。広告素材別の表で使います。</dd>
           </div>
           <div>
             <dt>adset / ad</dt>

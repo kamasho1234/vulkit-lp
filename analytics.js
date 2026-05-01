@@ -220,7 +220,8 @@ function summarizeLocal(events) {
     by_lp: groupBy(events, ["lp_variant"]),
     by_cta: groupBy(events, ["cta_location"]),
     by_campaign: groupBy(events, ["utm_campaign"]),
-    by_funnel: groupBy(events, ["utm_campaign", "adset", "ad", "lp_variant"]),
+    by_creative: groupBy(events, ["utm_content"]),
+    by_funnel: groupBy(events, ["utm_campaign", "adset", "utm_content", "ad", "lp_variant"]),
     by_lp_cta: groupBy(events, ["lp_variant", "cta_location"]),
     by_section: groupBy(events, ["section_id"]),
     by_lp_section: groupBy(events, ["lp_variant", "section_id"]),
@@ -338,6 +339,7 @@ function render(data) {
     <tr>
       ${cell(row.utm_campaign)}
       ${cell(row.adset)}
+      ${cell(row.utm_content)}
       ${cell(row.ad)}
       ${cell(row.lp_variant)}
       ${cell(int(row.page_view))}
@@ -346,11 +348,20 @@ function render(data) {
       ${cell(int(row.roulette_start))}
       ${cell(int(row.coupon_modal_view))}
     </tr>
-  `, 9);
+  `, 10);
 
   renderRows("#campaign-table", data.by_campaign, (row) => `
     <tr>
       ${cell(row.utm_campaign)}
+      ${cell(int(row.page_view))}
+      ${cell(int(row.line_click), "positive")}
+      ${cell(pct(row.cvr))}
+    </tr>
+  `, 4);
+
+  renderRows("#creative-table", data.by_creative || [], (row) => `
+    <tr>
+      ${cell(row.utm_content)}
       ${cell(int(row.page_view))}
       ${cell(int(row.line_click), "positive")}
       ${cell(pct(row.cvr))}
