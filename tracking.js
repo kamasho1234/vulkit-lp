@@ -119,29 +119,21 @@
     return event;
   }
 
-  function buildLineRedirectUrl(ctaLocation) {
-    const params = new URLSearchParams();
-    const context = getUtmContext();
-    Object.entries(context).forEach(([key, value]) => {
-      if (value && !["page_url", "user_agent"].includes(key)) params.set(key, value);
-    });
-    params.set("cta_location", ctaLocation || "unknown");
-
-    if (!/^https?:$/.test(window.location.protocol)) return LINE_URL;
-    return `/api/line-redirect?${params.toString()}`;
+  function buildLineRedirectUrl() {
+    return LINE_URL;
   }
 
   function openLine({ ctaLocation = "unknown" } = {}) {
-    track("line_click", { cta_location: ctaLocation }, { skipServer: true });
-    window.open(buildLineRedirectUrl(ctaLocation), "_blank", "noopener,noreferrer");
+    track("line_click", { cta_location: ctaLocation });
+    window.open(buildLineRedirectUrl(), "_blank", "noopener,noreferrer");
   }
 
   function setupLineLinks() {
     document.querySelectorAll("[data-line-cta]").forEach((link) => {
       const ctaLocation = link.dataset.lineCta || "unknown";
-      link.href = buildLineRedirectUrl(ctaLocation);
+      link.href = buildLineRedirectUrl();
       link.addEventListener("click", () => {
-        track("line_click", { cta_location: ctaLocation }, { skipServer: true });
+        track("line_click", { cta_location: ctaLocation });
       });
     });
   }
