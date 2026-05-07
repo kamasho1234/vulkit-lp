@@ -112,11 +112,11 @@ function showCouponPopup() {
       <h2>LINE&#30331;&#37682;&#12391;<br>&#38480;&#23450;&#12463;&#12540;&#12509;&#12531;&#12434;&#21463;&#12369;&#21462;&#12427;</h2>
       <div class="coupon-code-list">
         <div class="coupon-ticket">
-          <strong>10,000&#20870;&#21106;&#24341;</strong>
+          <strong>5,000&#20870;&#21106;&#24341;</strong>
           <span>1&#20491;&#36092;&#20837;</span>
         </div>
         <div class="coupon-ticket">
-          <strong>25,000&#20870;&#21106;&#24341;</strong>
+          <strong>15,000&#20870;&#21106;&#24341;</strong>
           <span>2&#20491;&#36092;&#20837;</span>
         </div>
       </div>

@@ -1275,6 +1275,10 @@ img {
   margin: 0;
 }
 
+.legal-commerce dd {
+  line-height: 1.85;
+}
+
 .use-cases {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1327,6 +1331,109 @@ img {
 .details-section,
 .faq-section {
   padding: clamp(56px, 8vw, 112px) clamp(22px, 7vw, 110px);
+}
+
+.price-offer-section {
+  padding: clamp(54px, 8vw, 104px) clamp(22px, 7vw, 110px);
+  color: var(--white);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 218, 128, 0.16), transparent 34%),
+    linear-gradient(180deg, #050505 0%, #11100b 42%, #050505 100%);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+.price-offer-section .section-kicker p,
+.price-offer-section .section-kicker h1 {
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+.price-offer-section .section-kicker p {
+  color: rgba(224, 188, 111, 0.86);
+  font-weight: 700;
+}
+
+.price-offer-section .section-kicker h1 {
+  color: #f7ecd2;
+  text-shadow: 0 0 26px rgba(214, 173, 91, 0.18);
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+  max-width: 1160px;
+}
+
+.offer-card {
+  position: relative;
+  min-height: 100%;
+  padding: clamp(22px, 3.2vw, 38px);
+  overflow: hidden;
+  border: 1px solid rgba(232, 195, 111, 0.3);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+    rgba(10, 10, 9, 0.92);
+  box-shadow:
+    0 24px 68px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.offer-card-primary {
+  border-color: rgba(255, 214, 124, 0.58);
+  background:
+    linear-gradient(145deg, rgba(202, 149, 42, 0.22), rgba(255, 255, 255, 0.035)),
+    rgba(10, 10, 9, 0.94);
+}
+
+.offer-label {
+  display: inline-grid;
+  place-items: center;
+  min-height: 30px;
+  padding: 5px 12px;
+  color: #171009;
+  background: linear-gradient(135deg, #fff1b0, #bd8221);
+  border-radius: 999px;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.offer-regular {
+  margin: 24px 0 8px;
+  color: rgba(255, 248, 232, 0.66);
+  font-size: clamp(14px, 1.25vw, 17px);
+  line-height: 1.7;
+}
+
+.offer-card h2 {
+  margin: 0;
+  color: #f9e7ad;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(42px, 5.4vw, 72px);
+  line-height: 1;
+}
+
+.offer-discount {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(15px, 1.45vw, 20px);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.offer-note-card p {
+  margin: 24px 0 18px;
+  color: rgba(255, 248, 232, 0.82);
+  line-height: 1.9;
+}
+
+.offer-note-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 1.1em;
+  color: rgba(238, 200, 125, 0.9);
+  line-height: 1.7;
 }
 
 .details-section {
@@ -1665,12 +1772,26 @@ img {
 
   .details-section,
   .faq-section,
+  .price-offer-section,
   .seo-section {
     padding: 48px 20px;
   }
 
   .section-kicker {
     margin-bottom: 28px;
+  }
+
+  .offer-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .offer-card {
+    padding: 22px 20px;
+  }
+
+  .offer-card h2 {
+    font-size: 42px;
   }
 
   .details-grid {
