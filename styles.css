@@ -1776,6 +1776,10 @@ img {
   font-size: 22px;
 }
 
+.mobile-sticky-cta {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .scene-grid,
   .visual-grid,
@@ -1828,6 +1832,7 @@ img {
 
   body {
     padding-top: 62px;
+    padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 
   .site-header {
@@ -1863,6 +1868,59 @@ img {
     padding: 4px 10px;
     font-size: 11px;
     transform: translateY(30%);
+  }
+
+  .mobile-sticky-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 42;
+    display: grid;
+    grid-template-columns: 1fr 0.86fr;
+    gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background:
+      linear-gradient(180deg, rgba(5, 5, 5, 0), rgba(5, 5, 5, 0.86) 18%),
+      rgba(5, 5, 5, 0.94);
+    border-top: 1px solid rgba(232, 195, 111, 0.22);
+    backdrop-filter: blur(14px);
+  }
+
+  .mobile-sticky-cta a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 11px 12px;
+    border-radius: 999px;
+    font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.15;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  }
+
+  .mobile-sticky-reserve {
+    color: #171009;
+    background: linear-gradient(135deg, #fff1aa 0%, #dba743 42%, #9a6414 100%);
+    border: 1px solid rgba(255, 231, 151, 0.74);
+  }
+
+  .mobile-sticky-line {
+    color: rgba(255, 242, 209, 0.94);
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(232, 195, 111, 0.38);
+  }
+
+  .scroll-button {
+    bottom: calc(88px + env(safe-area-inset-bottom));
+    width: 40px;
+    height: 40px;
+    font-size: 19px;
   }
 
   .section-intro {
