@@ -138,6 +138,15 @@
     });
   }
 
+  function setupCtaLinks() {
+    document.querySelectorAll("[data-cta-location]").forEach((link) => {
+      const ctaLocation = link.dataset.ctaLocation || "unknown";
+      link.addEventListener("click", () => {
+        track("cta_click", { cta_location: ctaLocation });
+      });
+    });
+  }
+
   function setupSectionTracking() {
     if (!("IntersectionObserver" in window)) return;
 
@@ -173,6 +182,7 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     setupLineLinks();
+    setupCtaLinks();
     setupSectionTracking();
     track("page_view");
   });

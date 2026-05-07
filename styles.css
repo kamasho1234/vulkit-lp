@@ -243,6 +243,67 @@ img {
   transform: translateY(1px) scale(0.99);
 }
 
+.feature-cta-strip {
+  width: 100vw;
+  margin: -1px 0 -1px calc(50% - 50vw);
+  padding: clamp(18px, 3vw, 34px) 20px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(226, 183, 91, 0.14), transparent 42%),
+    #050505;
+  text-align: center;
+}
+
+.feature-cta-strip a {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: min(320px, 86vw);
+  min-height: 54px;
+  padding: 13px 30px;
+  overflow: hidden;
+  color: #1b1206;
+  background: linear-gradient(135deg, #fff0aa 0%, #d8a23e 44%, #986214 100%);
+  border: 1px solid rgba(255, 231, 151, 0.68);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16) inset,
+    0 14px 36px rgba(218, 164, 52, 0.24);
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(17px, 1.8vw, 22px);
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.feature-cta-strip a::before {
+  content: "";
+  position: absolute;
+  inset: -90% -40%;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 36%, rgba(255, 255, 255, 0.6) 48%, transparent 62%);
+  transform: translateX(-72%);
+  animation: ctaShine 3.8s ease-in-out infinite;
+}
+
+.feature-cta-strip a:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 0 0 1px rgba(255, 226, 134, 0.34) inset,
+    0 18px 44px rgba(218, 164, 52, 0.3);
+}
+
+.feature-cta-strip a:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.feature-cta-strip-final {
+  padding-bottom: clamp(28px, 5vw, 56px);
+}
+
 .launch-banner {
   position: relative;
   padding: 0;
@@ -1821,6 +1882,17 @@ img {
   .hero-secondary-cta {
     min-height: 54px;
     padding: 14px 18px;
+    font-size: 17px;
+  }
+
+  .feature-cta-strip {
+    padding: 16px 16px 22px;
+  }
+
+  .feature-cta-strip a {
+    width: min(320px, 88vw);
+    min-height: 50px;
+    padding: 12px 22px;
     font-size: 17px;
   }
 
