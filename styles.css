@@ -168,6 +168,81 @@ img {
   opacity: 1;
 }
 
+.hero-cta-section {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: clamp(20px, 3.4vw, 42px) clamp(18px, 5vw, 72px);
+  background:
+    radial-gradient(circle at 50% -20%, rgba(236, 194, 96, 0.18), transparent 42%),
+    linear-gradient(180deg, #050505 0%, #0a0907 100%);
+}
+
+.hero-cta-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(12px, 2vw, 22px);
+  width: min(940px, 100%);
+  margin: 0 auto;
+}
+
+.hero-primary-cta,
+.hero-secondary-cta {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(56px, 6vw, 74px);
+  padding: 16px clamp(18px, 3.2vw, 34px);
+  overflow: hidden;
+  border-radius: 999px;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.hero-primary-cta {
+  color: #170f06;
+  background:
+    linear-gradient(135deg, #fff1aa 0%, #dba743 38%, #9a6414 100%);
+  border: 1px solid rgba(255, 231, 151, 0.72);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+    0 18px 44px rgba(218, 164, 52, 0.34);
+}
+
+.hero-primary-cta::before {
+  content: "";
+  position: absolute;
+  inset: -80% -36%;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 36%, rgba(255, 255, 255, 0.66) 48%, transparent 62%);
+  transform: translateX(-70%);
+  animation: ctaShine 3.2s ease-in-out infinite;
+}
+
+.hero-secondary-cta {
+  color: rgba(255, 242, 209, 0.94);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(232, 195, 111, 0.42);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.hero-primary-cta:hover,
+.hero-secondary-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+.hero-primary-cta:active,
+.hero-secondary-cta:active {
+  transform: translateY(1px) scale(0.99);
+}
+
 .launch-banner {
   position: relative;
   padding: 0;
@@ -1731,6 +1806,22 @@ img {
 
   .section-intro {
     padding: 40px 20px 44px;
+  }
+
+  .hero-cta-section {
+    padding: 18px 16px 24px;
+  }
+
+  .hero-cta-inner {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .hero-primary-cta,
+  .hero-secondary-cta {
+    min-height: 54px;
+    padding: 14px 18px;
+    font-size: 17px;
   }
 
   .section-intro::before {
