@@ -348,6 +348,60 @@ img {
   background: #050505;
 }
 
+.solution-declare-section {
+  position: relative;
+  width: 100vw;
+  margin: -1px 0 -1px calc(50% - 50vw);
+  padding: clamp(48px, 7vw, 92px) clamp(22px, 7vw, 110px);
+  color: #fff8e8;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(232, 195, 111, 0.16), transparent 38%),
+    linear-gradient(180deg, #050505 0%, #0c0b09 48%, #050505 100%);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+.solution-declare-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: clamp(22px, 7vw, 110px);
+  width: clamp(70px, 8vw, 124px);
+  height: 1px;
+  background: rgba(224, 188, 111, 0.72);
+}
+
+.solution-declare-section p {
+  margin: 0 0 18px;
+  color: rgba(224, 188, 111, 0.86);
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.solution-declare-section h1 {
+  max-width: 980px;
+  margin: 0;
+  color: #f8eed7;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(34px, 5vw, 74px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.solution-declare-section span {
+  display: block;
+  max-width: 860px;
+  margin-top: 24px;
+  color: rgba(255, 248, 232, 0.78);
+  font-size: clamp(15px, 1.7vw, 21px);
+  line-height: 1.95;
+  text-wrap: pretty;
+}
+
 .launch-banner {
   position: relative;
   padding: 0;
@@ -2004,6 +2058,32 @@ img {
 
   .hero-video-frame {
     width: min(360px, 92vw);
+  }
+
+  .solution-declare-section {
+    padding: 42px 20px 46px;
+  }
+
+  .solution-declare-section::before {
+    left: 20px;
+    width: 58px;
+  }
+
+  .solution-declare-section p {
+    margin-bottom: 12px;
+    font-size: 11px;
+  }
+
+  .solution-declare-section h1 {
+    font-size: 28px;
+    line-height: 1.32;
+  }
+
+  .solution-declare-section span {
+    margin-top: 16px;
+    max-width: 24em;
+    font-size: 14px;
+    line-height: 1.82;
   }
 
   .section-intro::before {
