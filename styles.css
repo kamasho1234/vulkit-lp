@@ -1352,9 +1352,9 @@ img {
 
 .feature-card {
   position: relative;
-  min-height: 100%;
+  min-height: auto;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
   background: #050505;
 }
 
@@ -1366,9 +1366,13 @@ img {
   display: none;
 }
 
-.feature-grid img {
+.feature-grid .feature-card > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
   filter: contrast(1.04) saturate(0.95);
-  transform: scale(1.006);
+  transform: none;
 }
 
 .feature-grid .feature-detail-gif {
