@@ -44,7 +44,8 @@ img {
 .visual-grid,
 .brand-story-section,
 .problem-section,
-.airline-table-section {
+.airline-table-section,
+.competitor-comparison-section {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
@@ -406,6 +407,22 @@ img {
 }
 
 .airline-table-section img {
+  display: block;
+  width: 100vw;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  background: #050505;
+}
+
+.competitor-comparison-section {
+  padding: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(218, 170, 55, 0.16), transparent 38%),
+    #050505;
+}
+
+.competitor-comparison-section img {
   display: block;
   width: 100vw;
   max-width: none;
