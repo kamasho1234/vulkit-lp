@@ -275,7 +275,8 @@ img {
   background: #050505;
 }
 
-.hero-gif-section img {
+.hero-gif-section img,
+.hero-gif-section video {
   display: block;
   width: 100vw;
   max-width: none;
@@ -284,7 +285,8 @@ img {
   background: #050505;
 }
 
-.feature-demo-gif-section img {
+.feature-demo-gif-section img,
+.feature-demo-gif-section video {
   display: block;
   width: 100vw;
   max-width: none;
@@ -1375,7 +1377,8 @@ img {
   transform: none;
 }
 
-.feature-grid .feature-detail-gif {
+.feature-grid .feature-detail-gif,
+.feature-grid .feature-detail-video {
   display: block;
   width: 100%;
   height: auto;
