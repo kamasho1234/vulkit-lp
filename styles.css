@@ -43,7 +43,8 @@ img {
 .launch-banner,
 .visual-grid,
 .brand-story-section,
-.problem-section {
+.problem-section,
+.airline-table-section {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
@@ -392,6 +393,20 @@ img {
 }
 
 .problem-section img {
+  width: 100vw;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  background: #050505;
+}
+
+.airline-table-section {
+  padding: 0;
+  background: #050505;
+}
+
+.airline-table-section img {
+  display: block;
   width: 100vw;
   max-width: none;
   height: auto;
