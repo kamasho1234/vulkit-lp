@@ -211,33 +211,3 @@ function spinRoulette(event) {
 }
 
 rouletteButton?.addEventListener("click", spinRoulette);
-
-function initLazyEmbeds() {
-  const embeds = [...document.querySelectorAll("iframe[data-src]")];
-  if (!embeds.length) return;
-
-  const loadEmbed = (embed) => {
-    if (!embed.dataset.src || embed.src) return;
-    embed.src = embed.dataset.src;
-  };
-
-  if (!("IntersectionObserver" in window)) {
-    embeds.forEach(loadEmbed);
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        loadEmbed(entry.target);
-        observer.unobserve(entry.target);
-      });
-    },
-    { rootMargin: "900px 0px" },
-  );
-
-  embeds.forEach((embed) => observer.observe(embed));
-}
-
-initLazyEmbeds();
