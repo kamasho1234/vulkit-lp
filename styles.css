@@ -881,6 +881,19 @@ img {
   box-shadow: none;
 }
 
+.capacity-guide-section {
+  background: #f4f2ee;
+}
+
+.capacity-guide-section::before,
+.capacity-guide-section::after {
+  display: none;
+}
+
+.capacity-guide-section img {
+  background: #f4f2ee;
+}
+
 .image-section::before,
 .image-section::after,
 .visual-grid::before,
