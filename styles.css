@@ -895,6 +895,7 @@ img {
 
 .capacity-guide-section img {
   background: #f4f2ee;
+  height: auto;
   position: relative;
   z-index: 1;
 }
