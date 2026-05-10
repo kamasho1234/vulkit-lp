@@ -883,6 +883,9 @@ img {
 
 .capacity-guide-section {
   background: #f4f2ee;
+  margin-top: clamp(-34px, -2.6vw, -14px);
+  margin-bottom: clamp(-40px, -3vw, -16px);
+  z-index: 3;
 }
 
 .capacity-guide-section::before,
@@ -892,6 +895,8 @@ img {
 
 .capacity-guide-section img {
   background: #f4f2ee;
+  position: relative;
+  z-index: 1;
 }
 
 .image-section::before,
