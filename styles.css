@@ -1348,6 +1348,8 @@ img {
 }
 
 .brand-story-label {
+  position: relative;
+  z-index: 1;
   margin: 0 0 18px;
   color: #9d6d18;
   font-size: clamp(12px, 1.4vw, 15px);
@@ -1357,34 +1359,40 @@ img {
 }
 
 .brand-developer-story h2 {
-  max-width: 760px;
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
   margin: 0;
   color: #1f1710;
-  font-size: clamp(29px, 4.3vw, 56px);
+  font-size: clamp(31px, 4.1vw, 52px);
   font-weight: 700;
-  line-height: 1.22;
+  line-height: 1.28;
   letter-spacing: 0;
   text-wrap: balance;
 }
 
 .brand-story-copy {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 18px;
-  max-width: 820px;
+  gap: 20px;
+  max-width: 38em;
   margin-top: clamp(24px, 3.2vw, 36px);
 }
 
 .brand-story-copy p {
   margin: 0;
   color: rgba(31, 23, 16, 0.88);
-  font-size: clamp(15px, 1.7vw, 19px);
-  line-height: 1.98;
-  letter-spacing: 0;
+  font-size: clamp(16px, 1.55vw, 18px);
+  line-height: 2.08;
+  letter-spacing: 0.018em;
   text-align: left;
   text-wrap: pretty;
 }
 
 .brand-story-signature {
+  position: relative;
+  z-index: 1;
   margin: clamp(26px, 4vw, 44px) 0 0;
   color: rgba(105, 71, 22, 0.82);
   font-size: clamp(13px, 1.6vw, 18px);
@@ -2306,6 +2314,55 @@ img {
     font-size: 14px;
     line-height: 1.78;
     max-width: 24em;
+  }
+
+  .brand-developer-story {
+    width: calc(100vw - 28px);
+    margin-top: 34px;
+    margin-bottom: 58px;
+    padding: 34px 22px 36px;
+  }
+
+  .brand-developer-story::before {
+    inset: 10px;
+  }
+
+  .brand-developer-story::after {
+    right: 16px;
+    bottom: 18px;
+    width: 86px;
+    height: 86px;
+    opacity: 0.22;
+  }
+
+  .brand-story-label {
+    margin-bottom: 14px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .brand-developer-story h2 {
+    max-width: 12em;
+    font-size: 26px;
+    line-height: 1.42;
+  }
+
+  .brand-story-copy {
+    gap: 15px;
+    max-width: 100%;
+    margin-top: 22px;
+  }
+
+  .brand-story-copy p {
+    font-size: 15px;
+    line-height: 1.92;
+    letter-spacing: 0.01em;
+  }
+
+  .brand-story-signature {
+    margin-top: 28px;
+    font-size: 12px;
+    line-height: 1.45;
   }
 
   .scene-grid figcaption {
