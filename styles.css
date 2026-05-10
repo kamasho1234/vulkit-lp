@@ -180,43 +180,17 @@ img {
 }
 
 .exclusive-badge-row {
-  display: grid;
-  gap: 6px;
-  width: min(720px, 100%);
+  display: block;
+  width: min(980px, 100%);
   margin: 0 auto clamp(16px, 2.4vw, 26px);
-  padding: clamp(12px, 1.7vw, 16px) clamp(16px, 2.8vw, 28px);
-  color: #fff7ee;
-  background:
-    linear-gradient(135deg, rgba(255, 73, 63, 0.38), rgba(255, 228, 170, 0.08) 42%, rgba(80, 0, 0, 0.2)),
-    linear-gradient(180deg, #8f0e0e 0%, #4d0505 100%);
-  border: 1px solid rgba(255, 195, 121, 0.72);
-  border-radius: 999px;
-  box-shadow:
-    0 16px 42px rgba(144, 12, 12, 0.36),
-    0 0 0 1px rgba(255, 255, 255, 0.14) inset,
-    0 0 34px rgba(255, 48, 48, 0.18);
-  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  text-align: center;
 }
 
-.exclusive-badge-row span,
-.offer-exclusive-note span {
-  color: rgba(255, 244, 224, 0.88);
-  font-size: clamp(12px, 1.35vw, 15px);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.exclusive-badge-row strong,
-.offer-exclusive-note strong {
-  color: #fff4bf;
-  font-size: clamp(18px, 2.35vw, 30px);
-  font-weight: 900;
-  line-height: 1.25;
-  letter-spacing: 0.04em;
-  text-shadow:
-    0 1px 0 rgba(86, 0, 0, 0.7),
-    0 0 22px rgba(255, 198, 91, 0.48);
+.exclusive-badge-row img,
+.offer-exclusive-note img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.38));
 }
 
 .hero-cta-inner {
@@ -344,18 +318,6 @@ img {
     radial-gradient(circle at 50% 0%, rgba(226, 183, 91, 0.14), transparent 42%),
     #050505;
   text-align: center;
-}
-
-.feature-cta-strip::after {
-  content: "Amazon・楽天では買えません ／ このページ限定";
-  display: block;
-  margin-top: 12px;
-  color: #ffd6c7;
-  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  font-size: clamp(12px, 1.2vw, 14px);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-shadow: 0 0 16px rgba(205, 0, 0, 0.5);
 }
 
 .feature-cta-strip a {
@@ -1368,22 +1330,9 @@ img {
 }
 
 .offer-exclusive-note {
-  display: grid;
-  gap: 7px;
-  width: min(760px, 100%);
+  display: block;
+  width: min(920px, 100%);
   margin: 0 auto clamp(22px, 3.8vw, 42px);
-  padding: clamp(14px, 2vw, 20px) clamp(18px, 3vw, 34px);
-  color: #fff7ee;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(255, 216, 145, 0.2), transparent 56%),
-    linear-gradient(135deg, rgba(155, 16, 16, 0.82), rgba(63, 5, 5, 0.88));
-  border: 1px solid rgba(255, 187, 118, 0.62);
-  border-radius: 8px;
-  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  text-align: center;
-  box-shadow:
-    0 22px 58px rgba(0, 0, 0, 0.32),
-    0 0 32px rgba(204, 23, 23, 0.16);
 }
 
 .offer-note-card p {
@@ -1761,25 +1710,8 @@ img {
   }
 
   .exclusive-badge-row {
-    gap: 4px;
     width: 100%;
     margin-bottom: 14px;
-    padding: 11px 14px;
-    border-radius: 18px;
-  }
-
-  .exclusive-badge-row span,
-  .offer-exclusive-note span {
-    font-size: 11px;
-    line-height: 1.35;
-    letter-spacing: 0.05em;
-  }
-
-  .exclusive-badge-row strong,
-  .offer-exclusive-note strong {
-    font-size: 18px;
-    line-height: 1.32;
-    letter-spacing: 0.02em;
   }
 
   .hero-cta-inner {
@@ -1803,13 +1735,6 @@ img {
     min-height: 50px;
     padding: 12px 22px;
     font-size: 17px;
-  }
-
-  .feature-cta-strip::after {
-    max-width: 20em;
-    margin: 11px auto 0;
-    font-size: 11px;
-    line-height: 1.55;
   }
 
   .hero-video-section {
@@ -1954,8 +1879,6 @@ img {
 
   .offer-exclusive-note {
     margin-bottom: 18px;
-    padding: 13px 16px;
-    border-radius: 6px;
   }
 
   .offer-card h2 {
