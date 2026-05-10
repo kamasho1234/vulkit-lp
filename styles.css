@@ -1302,36 +1302,54 @@ img {
 .brand-developer-story {
   position: relative;
   width: min(100%, 980px);
-  margin: clamp(34px, 6vw, 72px) auto clamp(54px, 8vw, 104px);
-  padding: clamp(34px, 5.6vw, 70px) clamp(22px, 5.4vw, 76px);
+  margin: clamp(34px, 6vw, 72px) auto clamp(58px, 8vw, 108px);
+  padding: clamp(36px, 5.8vw, 76px) clamp(22px, 5.4vw, 78px);
   overflow: hidden;
-  color: #f5edde;
+  color: #241d13;
   background:
-    linear-gradient(135deg, rgba(219, 177, 91, 0.13), transparent 22%),
-    radial-gradient(circle at 88% 0%, rgba(65, 112, 145, 0.24), transparent 38%),
-    linear-gradient(180deg, rgba(8, 16, 25, 0.98), rgba(4, 7, 11, 0.98));
-  border: 1px solid rgba(213, 173, 88, 0.48);
-  border-right: 0;
-  border-left: 0;
+    linear-gradient(90deg, rgba(176, 133, 54, 0.14) 0 1px, transparent 1px 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.12)),
+    radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.9), transparent 32%),
+    linear-gradient(135deg, #fbf3e1 0%, #efe0c2 48%, #f7edda 100%);
+  background-size: 26px 100%, auto, auto, auto;
+  border: 1px solid rgba(211, 172, 91, 0.72);
+  border-radius: 2px;
   font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
   box-shadow:
-    0 28px 72px rgba(0, 0, 0, 0.42),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    0 34px 92px rgba(0, 0, 0, 0.46),
+    0 0 0 1px rgba(255, 255, 255, 0.58) inset,
+    0 0 42px rgba(220, 178, 91, 0.18);
 }
 
 .brand-developer-story::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: clamp(22px, 5.4vw, 76px);
-  width: clamp(72px, 9vw, 130px);
-  height: 1px;
-  background: rgba(231, 190, 105, 0.86);
+  inset: clamp(12px, 2vw, 20px);
+  pointer-events: none;
+  border: 1px solid rgba(164, 118, 38, 0.28);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.34) inset;
+}
+
+.brand-developer-story::after {
+  content: "";
+  position: absolute;
+  right: clamp(22px, 5vw, 68px);
+  bottom: clamp(20px, 4vw, 54px);
+  width: clamp(92px, 16vw, 180px);
+  height: clamp(92px, 16vw, 180px);
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(148, 36, 24, 0.15) 0 34%, transparent 35%),
+    radial-gradient(circle, rgba(175, 137, 61, 0.22), transparent 62%);
+  border: 1px solid rgba(148, 36, 24, 0.18);
+  border-radius: 50%;
+  opacity: 0.34;
+  transform: rotate(-10deg);
 }
 
 .brand-story-label {
   margin: 0 0 18px;
-  color: #d6b56d;
+  color: #9d6d18;
   font-size: clamp(12px, 1.4vw, 15px);
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -1341,7 +1359,7 @@ img {
 .brand-developer-story h2 {
   max-width: 760px;
   margin: 0;
-  color: #fff7e8;
+  color: #1f1710;
   font-size: clamp(29px, 4.3vw, 56px);
   font-weight: 700;
   line-height: 1.22;
@@ -1358,12 +1376,21 @@ img {
 
 .brand-story-copy p {
   margin: 0;
-  color: rgba(255, 248, 232, 0.84);
+  color: rgba(31, 23, 16, 0.88);
   font-size: clamp(15px, 1.7vw, 19px);
   line-height: 1.98;
   letter-spacing: 0;
   text-align: left;
   text-wrap: pretty;
+}
+
+.brand-story-signature {
+  margin: clamp(26px, 4vw, 44px) 0 0;
+  color: rgba(105, 71, 22, 0.82);
+  font-size: clamp(13px, 1.6vw, 18px);
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-align: right;
 }
 
 .image-section {
