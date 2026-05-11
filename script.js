@@ -6,6 +6,8 @@ const countdownBlocks = [...document.querySelectorAll("[data-countdown-target]")
 const stockAlerts = [...document.querySelectorAll("[data-benefit-stock-remaining]")];
 let activeTop = 0;
 let floatingCouponTimer;
+let floatingCouponDrag;
+let floatingCouponWasDragged = false;
 
 function showTop(index) {
   topVisuals[activeTop]?.classList.remove("is-active");
@@ -29,6 +31,86 @@ floatingCouponClose?.addEventListener("click", () => {
     floatingCoupon?.classList.remove("is-hidden");
   }, 60000);
 });
+
+function keepCouponInViewport(left, top, width, height) {
+  const padding = 8;
+  const maxLeft = Math.max(padding, window.innerWidth - width - padding);
+  const maxTop = Math.max(padding, window.innerHeight - height - padding);
+
+  return {
+    left: Math.min(Math.max(padding, left), maxLeft),
+    top: Math.min(Math.max(padding, top), maxTop),
+  };
+}
+
+floatingCoupon?.addEventListener("pointerdown", (event) => {
+  if (event.target.closest(".mobile-floating-coupon__close")) return;
+
+  const rect = floatingCoupon.getBoundingClientRect();
+  floatingCouponDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    offsetX: event.clientX - rect.left,
+    offsetY: event.clientY - rect.top,
+    width: rect.width,
+    height: rect.height,
+    moved: false,
+  };
+  floatingCoupon.setPointerCapture?.(event.pointerId);
+  floatingCoupon.classList.add("is-dragging");
+});
+
+floatingCoupon?.addEventListener("pointermove", (event) => {
+  if (!floatingCouponDrag || floatingCouponDrag.pointerId !== event.pointerId) return;
+
+  const deltaX = event.clientX - floatingCouponDrag.startX;
+  const deltaY = event.clientY - floatingCouponDrag.startY;
+  if (Math.hypot(deltaX, deltaY) < 6 && !floatingCouponDrag.moved) return;
+
+  event.preventDefault();
+  floatingCouponDrag.moved = true;
+  floatingCouponWasDragged = true;
+
+  const position = keepCouponInViewport(
+    event.clientX - floatingCouponDrag.offsetX,
+    event.clientY - floatingCouponDrag.offsetY,
+    floatingCouponDrag.width,
+    floatingCouponDrag.height
+  );
+
+  floatingCoupon.classList.add("is-positioned");
+  floatingCoupon.style.left = `${position.left}px`;
+  floatingCoupon.style.top = `${position.top}px`;
+  floatingCoupon.style.right = "auto";
+  floatingCoupon.style.bottom = "auto";
+});
+
+function endFloatingCouponDrag(event) {
+  if (!floatingCouponDrag || floatingCouponDrag.pointerId !== event.pointerId) return;
+  floatingCoupon.releasePointerCapture?.(event.pointerId);
+  floatingCoupon.classList.remove("is-dragging");
+  floatingCouponDrag = null;
+
+  if (floatingCouponWasDragged) {
+    window.setTimeout(() => {
+      floatingCouponWasDragged = false;
+    }, 0);
+  }
+}
+
+floatingCoupon?.addEventListener("pointerup", endFloatingCouponDrag);
+floatingCoupon?.addEventListener("pointercancel", endFloatingCouponDrag);
+
+floatingCoupon?.addEventListener(
+  "click",
+  (event) => {
+    if (!floatingCouponWasDragged) return;
+    event.preventDefault();
+    event.stopPropagation();
+  },
+  true
+);
 
 if (topVisuals.length > 1) {
   window.setInterval(() => showTop(activeTop + 1), 2500);
