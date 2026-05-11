@@ -1856,6 +1856,143 @@ img {
   margin: 0;
 }
 
+.checkout-options {
+  width: min(980px, 100%);
+  margin: 0 auto clamp(24px, 4vw, 48px);
+  padding: clamp(22px, 3.8vw, 42px);
+  border: 1px solid rgba(232, 195, 111, 0.36);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 218, 128, 0.14), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+    rgba(8, 8, 7, 0.94);
+  box-shadow: 0 26px 76px rgba(0, 0, 0, 0.38);
+}
+
+.checkout-options__head {
+  text-align: center;
+}
+
+.checkout-options__head p {
+  margin: 0 0 8px;
+  color: #e6bc63;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.checkout-options__head h2 {
+  margin: 0;
+  color: #f7ecd2;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(28px, 4.4vw, 54px);
+  line-height: 1.2;
+}
+
+.checkout-options__head span,
+.checkout-options__note {
+  display: block;
+  margin-top: 12px;
+  color: rgba(255, 248, 232, 0.76);
+  font-size: clamp(14px, 1.4vw, 17px);
+  line-height: 1.8;
+}
+
+.checkout-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+  margin-top: clamp(20px, 3vw, 34px);
+}
+
+.checkout-plan-card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  min-height: 280px;
+  padding: clamp(22px, 3vw, 34px);
+  overflow: hidden;
+  color: #fff8e5;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(232, 195, 111, 0.34);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    #070707;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.checkout-plan-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 225, 142, 0.82);
+  box-shadow: 0 22px 58px rgba(222, 170, 64, 0.18);
+}
+
+.checkout-plan-card:disabled {
+  cursor: wait;
+  opacity: 0.74;
+}
+
+.checkout-plan-card--best::before {
+  content: "まとめ買いでさらにお得";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 18px;
+  color: #150c00;
+  background: linear-gradient(135deg, #fff0aa, #d8a23e 52%, #9c6714);
+  border-radius: 0 0 999px 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.checkout-plan-card span {
+  margin-top: 18px;
+  color: rgba(255, 248, 232, 0.9);
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 800;
+}
+
+.checkout-plan-card strong {
+  color: #f8df8d;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(42px, 6vw, 74px);
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(225, 177, 74, 0.3);
+}
+
+.checkout-plan-card small {
+  color: rgba(255, 248, 232, 0.76);
+  font-size: clamp(13px, 1.4vw, 16px);
+  line-height: 1.7;
+}
+
+.checkout-plan-card em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 0 22px;
+  color: #fff;
+  font-style: normal;
+  font-weight: 900;
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, #ff4b4b 0%, #d80000 42%, #ffb3a9 50%, #b50000 72%, #6f0000 100%);
+  box-shadow: 0 13px 34px rgba(216, 0, 0, 0.34);
+}
+
+.checkout-options__note {
+  margin: clamp(16px, 2.4vw, 24px) 0 0;
+  text-align: center;
+}
+
 .launch-offer-reason {
   width: min(980px, 100%);
   margin: 0 auto clamp(22px, 3.6vw, 42px);
@@ -1866,6 +2003,79 @@ img {
     linear-gradient(145deg, rgba(255, 232, 167, 0.1), rgba(255, 255, 255, 0.025)),
     rgba(8, 8, 7, 0.92);
   box-shadow: 0 24px 68px rgba(0, 0, 0, 0.32);
+}
+
+.checkout-status-page {
+  min-height: 100vh;
+  padding: clamp(28px, 8vw, 80px);
+  color: #fff;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(225, 177, 74, 0.2), transparent 42%),
+    #050505;
+}
+
+.checkout-status {
+  display: grid;
+  gap: 18px;
+  width: min(760px, 100%);
+  margin: min(12vh, 120px) auto 0;
+  padding: clamp(28px, 5vw, 58px);
+  border: 1px solid rgba(232, 195, 111, 0.34);
+  border-radius: 12px;
+  background: rgba(9, 8, 6, 0.9);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+.checkout-status__eyebrow {
+  margin: 0;
+  color: #e6bc63;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.checkout-status h1 {
+  margin: 0;
+  color: #f7ecd2;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(34px, 6vw, 64px);
+  line-height: 1.18;
+}
+
+.checkout-status p {
+  margin: 0;
+  color: rgba(255, 248, 232, 0.8);
+  line-height: 1.9;
+}
+
+.checkout-status__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.checkout-status__primary,
+.checkout-status__line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 20px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 900;
+}
+
+.checkout-status__primary {
+  background: linear-gradient(135deg, #ff4b4b 0%, #d80000 42%, #6f0000 100%);
+}
+
+.checkout-status__line {
+  color: #06200b;
+  background: linear-gradient(135deg, #08a640 0%, #25d366 48%, #057a2d 100%);
 }
 
 .launch-offer-reason h2 {
@@ -2581,6 +2791,31 @@ img {
   .launch-countdown__note {
     font-size: 13px;
     line-height: 1.65;
+  }
+
+  .checkout-options {
+    padding: 20px 14px 22px;
+    border-radius: 8px;
+  }
+
+  .checkout-plan-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .checkout-plan-card {
+    min-height: 238px;
+    padding: 26px 16px 20px;
+  }
+
+  .checkout-plan-card strong {
+    font-size: 44px;
+  }
+
+  .checkout-plan-card em {
+    width: min(280px, 100%);
+    min-height: 46px;
+    font-size: 15px;
   }
 
   .benefit-stock-alert {

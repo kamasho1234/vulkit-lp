@@ -6,6 +6,9 @@ const ALLOWED_EVENTS = new Set([
   "roulette_win",
   "coupon_modal_view",
   "line_click",
+  "checkout_start",
+  "checkout_error",
+  "checkout_completed",
 ]);
 
 function send(res, status, body) {

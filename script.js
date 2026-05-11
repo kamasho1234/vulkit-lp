@@ -4,6 +4,7 @@ const floatingCoupon = document.querySelector(".mobile-floating-coupon");
 const floatingCouponClose = document.querySelector(".mobile-floating-coupon__close");
 const countdownBlocks = [...document.querySelectorAll("[data-countdown-target]")];
 const stockAlerts = [...document.querySelectorAll("[data-benefit-stock-remaining]")];
+const checkoutButtons = [...document.querySelectorAll("[data-checkout-plan]")];
 let activeTop = 0;
 let floatingCouponTimer;
 let floatingCouponDrag;
@@ -165,4 +166,92 @@ stockAlerts.forEach((alert) => {
 
   if (count) count.textContent = String(remaining);
   if (bar) bar.style.width = `${percentage}%`;
+});
+
+function getTrackingParams() {
+  const params = new URLSearchParams(window.location.search);
+  const path = window.location.pathname;
+  const variantFromPath = path.includes("/lp-a")
+    ? "lp-a"
+    : path.includes("/lp-b")
+      ? "lp-b"
+      : path.includes("/lp-c")
+        ? "lp-c"
+        : "control";
+
+  return {
+    lp_variant: params.get("lp_variant") || variantFromPath,
+    page_path: path,
+    page_url: window.location.href,
+    referrer: document.referrer,
+    device: window.matchMedia("(max-width: 767px)").matches ? "mobile" : "desktop",
+    utm_source: params.get("utm_source") || "",
+    utm_medium: params.get("utm_medium") || "",
+    utm_campaign: params.get("utm_campaign") || "",
+    utm_content: params.get("utm_content") || "",
+    utm_term: params.get("utm_term") || "",
+    utm_id: params.get("utm_id") || "",
+    adset: params.get("adset") || "",
+    ad: params.get("ad") || "",
+    creative: params.get("creative") || "",
+  };
+}
+
+async function trackCheckoutEvent(eventName, payload) {
+  try {
+    await fetch("/api/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      keepalive: true,
+      body: JSON.stringify({
+        event_id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        event_name: eventName,
+        occurred_at: new Date().toISOString(),
+        ...payload,
+      }),
+    });
+  } catch (error) {
+    // Analytics must never block checkout.
+  }
+}
+
+checkoutButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    const originalText = button.querySelector("em")?.textContent || "";
+    const payload = {
+      ...getTrackingParams(),
+      plan: button.dataset.checkoutPlan || "single",
+      cta_location: button.dataset.ctaLocation || "checkout",
+    };
+
+    checkoutButtons.forEach((item) => {
+      item.disabled = true;
+      item.classList.add("is-loading");
+    });
+    const label = button.querySelector("em");
+    if (label) label.textContent = "決済画面を準備中...";
+
+    await trackCheckoutEvent("checkout_start", payload);
+
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!response.ok || !data.url) {
+        throw new Error(data.message || data.error || "Checkout failed");
+      }
+      window.location.href = data.url;
+    } catch (error) {
+      await trackCheckoutEvent("checkout_error", payload);
+      checkoutButtons.forEach((item) => {
+        item.disabled = false;
+        item.classList.remove("is-loading");
+      });
+      if (label) label.textContent = originalText;
+      window.alert("決済画面の準備に失敗しました。時間をおいて再度お試しください。");
+    }
+  });
 });
