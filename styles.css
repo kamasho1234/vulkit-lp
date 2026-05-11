@@ -144,7 +144,7 @@ img {
   right: 0;
   bottom: -1px;
   z-index: 3;
-  height: clamp(52px, 10vw, 120px);
+  height: clamp(24px, 5vw, 64px);
   pointer-events: none;
   background: linear-gradient(0deg, #050505, rgba(5, 5, 5, 0));
 }
@@ -1198,8 +1198,12 @@ img {
 }
 
 .image-section img {
+  position: relative;
+  z-index: 1;
+  display: block;
   width: 100vw;
   max-width: none;
+  height: auto;
   margin: 0;
   object-fit: contain;
   background: #050505;
@@ -1234,20 +1238,20 @@ img {
   left: 0;
   right: 0;
   z-index: 2;
-  height: clamp(36px, 8vw, 96px);
+  height: clamp(14px, 3.5vw, 42px);
   pointer-events: none;
 }
 
 .image-section::before,
 .visual-grid::before {
   top: 0;
-  background: linear-gradient(180deg, rgba(5, 5, 5, 0.68), rgba(5, 5, 5, 0));
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0.34), rgba(5, 5, 5, 0));
 }
 
 .image-section::after,
 .scene-grid::after {
   bottom: 0;
-  background: linear-gradient(0deg, rgba(5, 5, 5, 0.68), rgba(5, 5, 5, 0));
+  background: linear-gradient(0deg, rgba(5, 5, 5, 0.34), rgba(5, 5, 5, 0));
 }
 
 #waterproof::before {
@@ -1339,10 +1343,17 @@ img {
 
 .scene-grid figure {
   position: relative;
-  min-height: 100%;
+  min-height: auto;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
   background: #050505;
+}
+
+.scene-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 .scene-grid figure::before {
