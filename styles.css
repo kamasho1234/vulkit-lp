@@ -79,15 +79,17 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 8px;
+  gap: 10px 14px;
 }
 
 .site-header nav a {
   color: rgba(255, 255, 255, 0.78);
   text-decoration: none;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 900;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  white-space: nowrap;
 }
 
 .header-line-cta {
@@ -1718,11 +1720,11 @@ img {
 
   .site-header nav {
     justify-content: flex-start;
-    gap: 5px 10px;
+    gap: 5px 12px;
   }
 
   .site-header nav a {
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.12;
   }
 
