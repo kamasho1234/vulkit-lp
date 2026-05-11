@@ -6,40 +6,4 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://vulkit.kamacrafy.com/columns/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vulkit.kamacrafy.com/columns/vacuum-compression-backpack.html</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vulkit.kamacrafy.com/columns/carry-on-large-backpack.html</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vulkit.kamacrafy.com/columns/business-trip-backpack.html</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vulkit.kamacrafy.com/columns/tsa-lock-backpack.html</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://vulkit.kamacrafy.com/columns/waterproof-business-backpack.html</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
 </urlset>

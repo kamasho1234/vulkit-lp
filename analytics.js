@@ -1,4 +1,4 @@
-const STORAGE_KEY = "vulkit.analytics.events";
+﻿const STORAGE_KEY = "vulkit.analytics.events";
 const PRESET_STORAGE_KEY = "vulkit.analytics.urlPresets";
 const SITE_URL = "https://vulkit.kamacrafy.com/";
 const LP_DESTINATIONS = {
@@ -49,7 +49,6 @@ const SECTION_LABELS = {
   waterproof: "防水紹介",
   "coupon-roulette": "割引ルーレット",
   features: "機能紹介",
-  "seo-guide": "SEO説明",
   brand: "ブランド紹介",
   scene: "使用シーン",
   details: "詳細情報",
@@ -72,7 +71,6 @@ const SECTION_ORDER = [
   "scene",
   "details",
   "faq",
-  "seo-guide",
   "closing-section",
   "image-section",
   "section-intro",

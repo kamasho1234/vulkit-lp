@@ -321,7 +321,7 @@
           <p>Details</p>
           <h1>詳細情報</h1>
         </div>
-        <div class="details-grid">
+        <details class="details-collapse"><summary>詳細情報を開く</summary><div class="details-grid">
           <article>
             <h2>サイズ・仕様</h2>
             <dl>
@@ -345,6 +345,7 @@
             </dl>
           </article>
         </div>
+        </details>
       </section>
 
       <section class="price-offer-section" id="discount" aria-label="価格と先行販売情報">
@@ -435,69 +436,33 @@
         </details>
       </section>
 
-      <section class="seo-section" id="seo-guide" aria-label="VULKIT VBP101の特徴">
-        <div class="section-kicker">
-          <p>Guide</p>
-          <h1>真空圧縮リュックで、出張と旅行を身軽に。</h1>
-        </div>
-        <div class="seo-grid">
-          <article>
-            <h2>VULKIT VBP101とは</h2>
-            <p>VULKIT VBP101は、真空圧縮機能と大容量収納を備えたビジネスリュックです。衣類を圧縮して収納できるため、3〜5泊の出張や旅行でも荷物をすっきりまとめやすく、スーツケースを使わない移動にも適しています。</p>
-          </article>
-          <article>
-            <h2>出張・旅行に向いている理由</h2>
-            <p>最大約60Lまで拡張できる容量、機内持ち込みを想定したサイズ、TSAロック、防水性のある外装素材、スーツケース固定ベルトを搭載。空港・駅・ホテル・オフィスを移動するビジネスパーソンに使いやすい設計です。</p>
-          </article>
-          <article>
-            <h2>こんな方におすすめ</h2>
-            <p>出張用の大容量ビジネスリュックを探している方、機内持ち込みできる旅行リュックを選びたい方、衣類やPC、ガジェットをまとめて持ち運びたい方におすすめです。</p>
-          </article>
-        </div>
-        <div class="seo-keywords" aria-label="関連キーワード">
-          <span>真空圧縮リュック</span>
-          <span>大容量ビジネスリュック</span>
-          <span>機内持ち込みリュック</span>
-          <span>出張リュック</span>
-          <span>TSAロック付きバックパック</span>
-          <span>防水ビジネスリュック</span>
-        </div>
-        <div class="seo-article-links" aria-label="関連ガイド記事">
-          <a href="/columns/vacuum-compression-backpack.html">真空圧縮リュックとは？</a>
-          <a href="/columns/carry-on-large-backpack.html">機内持ち込みできる大容量リュック</a>
-          <a href="/columns/business-trip-backpack.html">3〜5泊の出張リュック</a>
-          <a href="/columns/tsa-lock-backpack.html">TSAロック付きリュック</a>
-          <a href="/columns/waterproof-business-backpack.html">防水ビジネスリュック</a>
-        </div>
-      </section>
-
       <section class="closing-section">
         <p>VULKIT VBP101</p>
         <h1>次の移動を、<br class="sp-break">もっとスマートに。</h1>
         <span class="closing-copy">101個限定の先行販売。<br class="sp-break">特典枠は、なくなり次第終了します。</span>
-        <div class="closing-cta-row" aria-label="最終CTA">
-          <a class="closing-reserve-cta" href="#discount" data-cta-location="footer_reserve">【特典付き】先行予約する</a>
-          <a class="closing-line-cta" href="https://lin.ee/Qi4NUTn" target="_blank" rel="noopener noreferrer" aria-label="LINEで先行情報を受け取る" data-line-cta="footer">LINEで先行情報を受け取る</a>
-        </div>
-        <div class="closing-countdown" data-countdown-target="2026-05-31T21:00:00+09:00" aria-label="5月31日21時までのカウントダウン">
-          <p class="closing-countdown__eyebrow">5月31日 21:00 先行販売開始まで</p>
-          <div class="closing-countdown__timer" aria-live="polite">
-            <span><strong data-countdown-days>00</strong><small>日</small></span>
-            <span><strong data-countdown-hours>00</strong><small>時間</small></span>
-            <span><strong data-countdown-minutes>00</strong><small>分</small></span>
-            <span><strong data-countdown-seconds>00</strong><small>秒</small></span>
-          </div>
-        </div>
-        <div class="benefit-stock-alert closing-benefit-stock" data-benefit-stock-total="55" data-benefit-stock-remaining="55" aria-label="先着特典の残り枠">
-          <p class="benefit-stock-alert__label">先着55個限定 特典割引</p>
-          <div class="benefit-stock-alert__count"><span>残り</span><strong data-benefit-stock-count>55</strong><span>個</span></div>
-          <div class="benefit-stock-alert__bar" aria-hidden="true"><span style="width: 100%"></span></div>
-          <p class="benefit-stock-alert__note">販売開始後、特典枠はなくなり次第終了します。</p>
-          <a class="benefit-stock-alert__cta" href="#discount" data-cta-location="footer_stock_reserve">今すぐ先行予約する</a>
-        </div>
         <a class="closing-top-link" href="#top">TOPへ戻る</a>
       </section>
 
+      <section class="footer-conversion-section" aria-label="先行販売カウントダウンとLINE登録">
+        <div class="footer-conversion-inner">
+          <div class="closing-countdown" data-countdown-target="2026-05-31T21:00:00+09:00" aria-label="5月31日21時までのカウントダウン">
+            <p class="closing-countdown__eyebrow">5月31日 21:00 先行販売開始まで</p>
+            <div class="closing-countdown__timer" aria-live="polite">
+              <span><strong data-countdown-days>00</strong><small>日</small></span>
+              <span><strong data-countdown-hours>00</strong><small>時間</small></span>
+              <span><strong data-countdown-minutes>00</strong><small>分</small></span>
+              <span><strong data-countdown-seconds>00</strong><small>秒</small></span>
+            </div>
+          </div>
+          <div class="benefit-stock-alert closing-benefit-stock" data-benefit-stock-total="55" data-benefit-stock-remaining="55" aria-label="先着特典の残り枠">
+            <p class="benefit-stock-alert__label">先着55個限定 特典割引</p>
+            <div class="benefit-stock-alert__count"><span>残り</span><strong data-benefit-stock-count>55</strong><span>個</span></div>
+            <div class="benefit-stock-alert__bar" aria-hidden="true"><span style="width: 100%"></span></div>
+            <p class="benefit-stock-alert__note">販売開始後、特典枠はなくなり次第終了します。</p>
+          </div>
+          <a class="closing-line-cta footer-line-cta" href="https://lin.ee/Qi4NUTn" target="_blank" rel="noopener noreferrer" aria-label="LINEで先行情報を受け取る" data-line-cta="footer_final">LINEで先行情報を受け取る</a>
+        </div>
+      </section>
       <footer class="legal-footer" aria-label="法務情報">
         <details>
           <summary>プライバシーポリシー</summary>
