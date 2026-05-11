@@ -388,6 +388,101 @@ img {
   line-height: 1.65;
 }
 
+.benefit-stock-alert {
+  position: relative;
+  width: 100vw;
+  max-width: none;
+  margin: 0;
+  padding: clamp(24px, 4vw, 48px) clamp(18px, 5vw, 56px);
+  color: #fff;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(220, 28, 28, 0.28), transparent 36%),
+    linear-gradient(180deg, #050505 0%, #1a0505 52%, #050505 100%);
+  border-top: 1px solid rgba(226, 43, 43, 0.56);
+  border-bottom: 1px solid rgba(230, 185, 82, 0.4);
+  box-shadow: inset 0 0 34px rgba(255, 37, 37, 0.13);
+  overflow: hidden;
+}
+
+.benefit-stock-alert::before {
+  content: "";
+  position: absolute;
+  inset: 8px clamp(12px, 4vw, 46px);
+  border: 1px solid rgba(231, 190, 95, 0.52);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.benefit-stock-alert__label {
+  position: relative;
+  margin: 0 0 10px;
+  color: #f4d77f;
+  font-family: "Times New Roman", "Noto Serif JP", serif;
+  font-size: clamp(15px, 2.2vw, 24px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 18px rgba(239, 41, 41, 0.36);
+}
+
+.benefit-stock-alert__count {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(8px, 1.8vw, 16px);
+  margin: 0 auto;
+  padding: 6px clamp(16px, 4vw, 42px) 8px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c40000, #6f0000 52%, #2a0000);
+  box-shadow: 0 0 0 1px rgba(255, 214, 126, 0.55), 0 14px 36px rgba(157, 0, 0, 0.4);
+}
+
+.benefit-stock-alert__count span {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(17px, 2.4vw, 30px);
+  font-weight: 800;
+}
+
+.benefit-stock-alert__count strong {
+  min-width: 1.4em;
+  color: #ffe18a;
+  font-family: "Times New Roman", "Noto Serif JP", serif;
+  font-size: clamp(46px, 8vw, 92px);
+  line-height: 0.95;
+  font-weight: 800;
+  text-shadow: 0 0 18px rgba(255, 196, 74, 0.55);
+  animation: stockPulse 1.9s ease-in-out infinite;
+}
+
+.benefit-stock-alert__bar {
+  position: relative;
+  width: min(640px, 82vw);
+  height: 10px;
+  margin: clamp(16px, 2.6vw, 26px) auto 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.benefit-stock-alert__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff2a2a, #d9a53a 64%, #fff0a8);
+  box-shadow: 0 0 18px rgba(255, 57, 57, 0.48);
+}
+
+.benefit-stock-alert__note {
+  position: relative;
+  margin: clamp(12px, 2vw, 20px) 0 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(13px, 1.8vw, 18px);
+  font-weight: 700;
+  line-height: 1.65;
+}
+
 .hero-gif-section {
   width: 100vw;
   margin: -1px 0 -1px calc(50% - 50vw);
@@ -653,6 +748,18 @@ img {
   }
   100% {
     transform: translateX(130%);
+  }
+}
+
+@keyframes stockPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.16);
   }
 }
 

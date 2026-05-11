@@ -3,6 +3,7 @@ const scrollButton = document.querySelector(".scroll-button");
 const floatingCoupon = document.querySelector(".mobile-floating-coupon");
 const floatingCouponClose = document.querySelector(".mobile-floating-coupon__close");
 const countdownBlocks = [...document.querySelectorAll("[data-countdown-target]")];
+const stockAlerts = [...document.querySelectorAll("[data-benefit-stock-remaining]")];
 let activeTop = 0;
 let floatingCouponTimer;
 
@@ -72,3 +73,14 @@ if (countdownBlocks.length) {
   tickCountdowns();
   window.setInterval(tickCountdowns, 1000);
 }
+
+stockAlerts.forEach((alert) => {
+  const total = Number(alert.dataset.benefitStockTotal || 50);
+  const remaining = Math.max(0, Number(alert.dataset.benefitStockRemaining || 0));
+  const count = alert.querySelector("[data-benefit-stock-count]");
+  const bar = alert.querySelector(".benefit-stock-alert__bar span");
+  const percentage = total > 0 ? Math.min(100, Math.round((remaining / total) * 100)) : 0;
+
+  if (count) count.textContent = String(remaining);
+  if (bar) bar.style.width = `${percentage}%`;
+});
