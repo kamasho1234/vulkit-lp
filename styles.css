@@ -302,6 +302,14 @@ img {
   background: #050505;
 }
 
+.hero-offer-visuals .top-benefit-image {
+  width: min(760px, 100%);
+  max-width: 100%;
+  margin: clamp(16px, 3vw, 34px) auto 0;
+  border: 1px solid rgba(232, 195, 111, 0.18);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
+
 .launch-countdown {
   width: 100vw;
   max-width: none;
@@ -1593,16 +1601,17 @@ img {
 }
 
 .footer-conversion-section .closing-countdown,
-.footer-conversion-section .footer-benefit-image,
 .footer-conversion-section .footer-benefit-stock,
 .footer-conversion-section .footer-line-cta {
   width: min(680px, 100%);
   margin-top: 0;
 }
 
-.footer-conversion-section .footer-benefit-image {
+.reason-benefit-image {
   display: block;
+  width: min(920px, 100%);
   height: auto;
+  margin: 0 auto clamp(24px, 4vw, 48px);
   border: 1px solid rgba(232, 195, 111, 0.22);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
 }
