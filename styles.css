@@ -683,10 +683,10 @@ img {
   width: 100vw;
   margin: -1px 0 -1px calc(50% - 50vw);
   padding: clamp(48px, 7vw, 92px) clamp(22px, 7vw, 110px);
-  color: #fff8e8;
+  color: var(--white);
   background:
-    radial-gradient(circle at 50% 0%, rgba(232, 195, 111, 0.16), transparent 38%),
-    linear-gradient(180deg, #050505 0%, #0c0b09 48%, #050505 100%);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+    #050505;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
@@ -697,23 +697,23 @@ img {
   left: clamp(22px, 7vw, 110px);
   width: clamp(70px, 8vw, 124px);
   height: 1px;
-  background: rgba(224, 188, 111, 0.72);
+  background: rgba(255, 255, 255, 0.72);
 }
 
 .solution-declare-section p {
   margin: 0 0 18px;
-  color: rgba(224, 188, 111, 0.86);
-  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  color: var(--muted);
+  font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
   font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
+  font-weight: 900;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 .solution-declare-section h1 {
   max-width: 980px;
   margin: 0;
-  color: #f8eed7;
+  color: var(--white);
   font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
   font-size: clamp(34px, 5vw, 74px);
   line-height: 1.15;
@@ -726,7 +726,7 @@ img {
   display: block;
   max-width: 860px;
   margin-top: 24px;
-  color: rgba(255, 248, 232, 0.78);
+  color: rgba(255, 255, 255, 0.72);
   font-size: clamp(15px, 1.7vw, 21px);
   line-height: 1.95;
   text-wrap: pretty;
