@@ -764,6 +764,40 @@ img {
   }
 }
 
+@keyframes ctaTremble {
+  0%,
+  74%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  77% {
+    translate: -1.5px 0;
+    rotate: -0.45deg;
+  }
+
+  80% {
+    translate: 1.5px 0;
+    rotate: 0.45deg;
+  }
+
+  83% {
+    translate: -1px 0;
+    rotate: -0.3deg;
+  }
+
+  86% {
+    translate: 1px 0;
+    rotate: 0.3deg;
+  }
+
+  89% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+}
+
 @keyframes lineCtaPulse {
   0%,
   100% {
@@ -772,6 +806,44 @@ img {
 
   50% {
     transform: translateY(-2px) scale(1.025);
+  }
+}
+
+.hero-primary-cta,
+.hero-secondary-cta,
+.benefit-stock-alert__cta,
+.feature-cta-strip a,
+.checkout-plan-card em,
+.closing-reserve-cta {
+  animation: ctaTremble 2.8s ease-in-out infinite;
+  transform-origin: center;
+  will-change: translate, rotate;
+}
+
+.hero-secondary-cta,
+.feature-cta-strip a,
+.checkout-plan-card em {
+  animation-delay: 0.16s;
+}
+
+.benefit-stock-alert__cta,
+.closing-reserve-cta {
+  animation-delay: 0.28s;
+}
+
+.checkout-plan-card:disabled em {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-primary-cta,
+  .hero-secondary-cta,
+  .benefit-stock-alert__cta,
+  .feature-cta-strip a,
+  .checkout-plan-card em,
+  .closing-reserve-cta,
+  .closing-line-cta {
+    animation: none;
   }
 }
 
@@ -1481,7 +1553,11 @@ img {
   box-shadow:
     0 18px 48px rgba(37, 211, 102, 0.28),
     0 0 0 1px rgba(255, 255, 255, 0.22) inset;
-  animation: lineCtaPulse 1200ms ease-in-out infinite;
+  animation:
+    lineCtaPulse 1200ms ease-in-out infinite,
+    ctaTremble 2.8s ease-in-out 0.2s infinite;
+  transform-origin: center;
+  will-change: transform, translate, rotate;
 }
 
 .closing-reserve-cta::before,
