@@ -1546,16 +1546,18 @@ img {
 .launch-offer-visual-stack {
   display: grid;
   gap: 0;
-  width: min(980px, 100%);
-  margin: 0 auto clamp(24px, 4vw, 48px);
+  width: 100vw;
+  max-width: none;
+  margin: 0 0 clamp(24px, 4vw, 48px) calc(50% - 50vw);
   background: #050505;
-  border: 1px solid rgba(232, 195, 111, 0.32);
-  box-shadow: 0 26px 74px rgba(0, 0, 0, 0.42);
+  border: 0;
+  box-shadow: none;
 }
 
 .launch-offer-visual-stack img {
   display: block;
-  width: 100%;
+  width: 100vw;
+  max-width: none;
   height: auto;
   margin: 0;
 }
@@ -2330,7 +2332,8 @@ img {
   }
 
   .launch-offer-visual-stack {
-    width: calc(100vw - 24px);
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
     margin-bottom: 22px;
   }
 
