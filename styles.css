@@ -488,6 +488,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: min(320px, 86vw);
   min-height: 48px;
   margin: clamp(14px, 2.2vw, 22px) auto 0;
   padding: 12px clamp(26px, 5vw, 54px);
@@ -2133,11 +2134,11 @@ img {
   }
 
   html {
-    scroll-padding-top: 64px;
+    scroll-padding-top: 84px;
   }
 
   body {
-    padding-top: 62px;
+    padding-top: 76px;
     padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 
@@ -2145,24 +2146,33 @@ img {
     position: fixed;
     align-items: flex-start;
     flex-direction: column;
-    gap: 6px;
-    min-height: 62px;
-    padding: 7px 88px 7px 14px;
+    gap: 7px;
+    min-height: 76px;
+    padding: 8px 14px 9px;
   }
 
   .logo {
-    font-size: 16px;
-    letter-spacing: 5px;
+    font-size: 15px;
+    letter-spacing: 4px;
   }
 
   .site-header nav {
     justify-content: flex-start;
-    gap: 5px 12px;
+    gap: 6px 10px;
+    width: 100%;
   }
 
   .site-header nav a {
-    font-size: 10px;
-    line-height: 1.12;
+    font-size: 10.5px;
+    line-height: 1.18;
+    letter-spacing: 0;
+  }
+
+  .image-section,
+  .visual-grid,
+  .details-section,
+  .faq-section {
+    scroll-margin-top: 84px;
   }
 
   .header-line-cta {
@@ -2229,7 +2239,7 @@ img {
     z-index: 44;
     display: grid;
     gap: 5px;
-    width: min(152px, 39vw);
+    width: min(142px, 37vw);
     padding: 14px 4px 4px;
     background: rgba(6, 5, 4, 0.56);
     border: 1px solid rgba(255, 219, 132, 0.34);
@@ -2336,9 +2346,70 @@ img {
 
   .hero-primary-cta,
   .hero-secondary-cta {
-    min-height: 54px;
-    padding: 14px 18px;
-    font-size: 17px;
+    min-height: 52px;
+    padding: 13px 16px;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .launch-countdown {
+    padding: 20px 12px 22px;
+  }
+
+  .launch-countdown__eyebrow {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .launch-countdown__timer {
+    gap: 6px;
+    width: min(100%, 340px);
+  }
+
+  .launch-countdown__timer span {
+    min-height: 64px;
+    padding: 8px 5px 7px;
+  }
+
+  .launch-countdown__timer strong {
+    font-size: 30px;
+  }
+
+  .launch-countdown__timer small {
+    font-size: 10px;
+  }
+
+  .launch-countdown__note {
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .benefit-stock-alert {
+    padding: 22px 16px 28px;
+  }
+
+  .benefit-stock-alert__label {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .benefit-stock-alert__count {
+    padding: 5px 18px 7px;
+  }
+
+  .benefit-stock-alert__count span {
+    font-size: 16px;
+  }
+
+  .benefit-stock-alert__count strong {
+    font-size: 44px;
+  }
+
+  .benefit-stock-alert__cta {
+    min-height: 46px;
+    padding: 11px 18px;
+    font-size: 15px;
+    line-height: 1.35;
   }
 
   .feature-cta-strip {
@@ -2375,8 +2446,8 @@ img {
   }
 
   .solution-declare-section h1 {
-    font-size: 28px;
-    line-height: 1.32;
+    font-size: 27px;
+    line-height: 1.34;
   }
 
   .solution-declare-section span {
@@ -2401,13 +2472,13 @@ img {
   .section-intro h1,
   .closing-section h1,
   .section-kicker h1 {
-    font-size: 28px;
-    line-height: 1.32;
+    font-size: 27px;
+    line-height: 1.34;
   }
 
   .image-tone-intro h1,
   .feature-intro h1 {
-    font-size: 27px;
+    font-size: 26px;
   }
 
   .section-intro span {
@@ -2585,10 +2656,10 @@ img {
 
   .closing-reserve-cta,
   .closing-line-cta {
-    width: min(310px, 86vw);
+    width: min(320px, 88vw);
     min-height: 46px;
     padding: 10px 14px;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.28;
   }
 
@@ -2684,4 +2755,78 @@ img {
     font-size: 20px;
   }
 
+}
+
+@media (max-width: 380px) {
+  body {
+    padding-top: 84px;
+    padding-bottom: calc(78px + env(safe-area-inset-bottom));
+  }
+
+  html {
+    scroll-padding-top: 92px;
+  }
+
+  .site-header {
+    min-height: 84px;
+  }
+
+  .image-section,
+  .visual-grid,
+  .details-section,
+  .faq-section {
+    scroll-margin-top: 92px;
+  }
+
+  .site-header nav {
+    gap: 5px 8px;
+  }
+
+  .site-header nav a {
+    font-size: 10px;
+  }
+
+  .hero-primary-cta,
+  .hero-secondary-cta,
+  .feature-cta-strip a,
+  .closing-reserve-cta,
+  .closing-line-cta {
+    font-size: 14px;
+  }
+
+  .section-intro h1,
+  .closing-section h1,
+  .section-kicker h1,
+  .solution-declare-section h1 {
+    font-size: 25px;
+  }
+
+  .section-intro span,
+  .solution-declare-section span,
+  .closing-copy,
+  .faq-section details p,
+  .details-grid dd {
+    font-size: 13.5px;
+  }
+
+  .launch-countdown__timer strong {
+    font-size: 26px;
+  }
+
+  .benefit-stock-alert__count strong {
+    font-size: 38px;
+  }
+
+  .mobile-floating-coupon {
+    width: min(126px, 35vw);
+  }
+
+  .mobile-sticky-cta {
+    padding: 8px 9px calc(8px + env(safe-area-inset-bottom));
+  }
+
+  .mobile-sticky-cta a {
+    min-height: 42px;
+    font-size: 14px;
+  }
 }
