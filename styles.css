@@ -12,14 +12,14 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 46px;
+  scroll-padding-top: 40px;
   overflow-y: auto;
 }
 
 body {
   margin: 0;
   min-height: 100%;
-  padding-top: 40px;
+  padding-top: 36px;
   overflow-x: hidden;
   overflow-y: auto;
   color: var(--white);
@@ -60,8 +60,8 @@ img {
   align-items: center;
   justify-content: flex-start;
   gap: clamp(12px, 2.2vw, 28px);
-  min-height: 40px;
-  padding: 6px clamp(14px, 3.4vw, 36px);
+  min-height: 36px;
+  padding: 4px clamp(14px, 3.4vw, 36px);
   background: rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
@@ -2134,11 +2134,11 @@ img {
   }
 
   html {
-    scroll-padding-top: 84px;
+    scroll-padding-top: 72px;
   }
 
   body {
-    padding-top: 76px;
+    padding-top: 66px;
     padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 
@@ -2146,9 +2146,9 @@ img {
     position: fixed;
     align-items: flex-start;
     flex-direction: column;
-    gap: 7px;
-    min-height: 76px;
-    padding: 8px 14px 9px;
+    gap: 5px;
+    min-height: 66px;
+    padding: 6px 14px 6px;
   }
 
   .logo {
@@ -2172,7 +2172,7 @@ img {
   .visual-grid,
   .details-section,
   .faq-section {
-    scroll-margin-top: 84px;
+    scroll-margin-top: 72px;
   }
 
   .header-line-cta {
@@ -2759,23 +2759,23 @@ img {
 
 @media (max-width: 380px) {
   body {
-    padding-top: 84px;
+    padding-top: 76px;
     padding-bottom: calc(78px + env(safe-area-inset-bottom));
   }
 
   html {
-    scroll-padding-top: 92px;
+    scroll-padding-top: 84px;
   }
 
   .site-header {
-    min-height: 84px;
+    min-height: 76px;
   }
 
   .image-section,
   .visual-grid,
   .details-section,
   .faq-section {
-    scroll-margin-top: 92px;
+    scroll-margin-top: 84px;
   }
 
   .site-header nav {
