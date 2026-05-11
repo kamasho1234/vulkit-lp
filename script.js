@@ -1,6 +1,9 @@
 const topVisuals = [...document.querySelectorAll(".top-visual")];
 const scrollButton = document.querySelector(".scroll-button");
+const floatingCoupon = document.querySelector(".mobile-floating-coupon");
+const floatingCouponClose = document.querySelector(".mobile-floating-coupon__close");
 let activeTop = 0;
+let floatingCouponTimer;
 
 function showTop(index) {
   topVisuals[activeTop]?.classList.remove("is-active");
@@ -16,6 +19,14 @@ function nextSection() {
 }
 
 scrollButton?.addEventListener("click", nextSection);
+
+floatingCouponClose?.addEventListener("click", () => {
+  floatingCoupon?.classList.add("is-hidden");
+  window.clearTimeout(floatingCouponTimer);
+  floatingCouponTimer = window.setTimeout(() => {
+    floatingCoupon?.classList.remove("is-hidden");
+  }, 60000);
+});
 
 if (topVisuals.length > 1) {
   window.setInterval(() => showTop(activeTop + 1), 2500);
