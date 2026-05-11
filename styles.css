@@ -483,6 +483,33 @@ img {
   line-height: 1.65;
 }
 
+.benefit-stock-alert__cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin: clamp(14px, 2.2vw, 22px) auto 0;
+  padding: 12px clamp(26px, 5vw, 54px);
+  border-radius: 999px;
+  color: #fff;
+  font-size: clamp(15px, 2vw, 21px);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  background: linear-gradient(135deg, #ff1f1f 0%, #c40000 48%, #780000 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 226, 138, 0.62),
+    0 14px 34px rgba(220, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.benefit-stock-alert__cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
 .hero-gif-section {
   width: 100vw;
   margin: -1px 0 -1px calc(50% - 50vw);
