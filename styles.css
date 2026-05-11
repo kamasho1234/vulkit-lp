@@ -521,7 +521,7 @@ img {
 .feature-demo-gif-section {
   width: 100vw;
   margin: -1px 0 -1px calc(50% - 50vw);
-  padding: 0;
+  padding: clamp(10px, 1.8vw, 24px) 0;
   background: #050505;
 }
 
@@ -685,9 +685,11 @@ img {
   margin: -1px 0 -1px calc(50% - 50vw);
   padding: clamp(48px, 7vw, 92px) clamp(22px, 7vw, 110px);
   color: var(--white);
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
-    #050505;
+  overflow: hidden;
+  background: #050505;
+  box-shadow:
+    inset 0 46px 52px -42px #050505,
+    inset 0 -58px 62px -48px #050505;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
@@ -699,6 +701,17 @@ img {
   width: clamp(70px, 8vw, 124px);
   height: 1px;
   background: rgba(255, 255, 255, 0.72);
+}
+
+.solution-declare-section::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: clamp(34px, 6vw, 86px);
+  background: linear-gradient(0deg, #050505 0%, rgba(5, 5, 5, 0));
+  pointer-events: none;
 }
 
 .solution-declare-section p {
@@ -954,6 +967,7 @@ img {
 
 .feature-intro {
   color: #090909;
+  border-top: clamp(12px, 2vw, 24px) solid #050505;
   background:
     linear-gradient(180deg, #ffffff 0%, #f7f7f4 100%);
 }
@@ -990,6 +1004,15 @@ img {
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
+.comparison-intro p,
+.comparison-intro h1,
+.comparison-intro span,
+.carryon-intro p,
+.carryon-intro h1,
+.carryon-intro span {
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
 .scene-intro {
   padding-bottom: clamp(54px, 8vw, 110px);
   background:
@@ -998,7 +1021,7 @@ img {
 }
 
 .brand-story-section {
-  padding: clamp(46px, 7vw, 96px) 0 0;
+  padding: 0;
   color: var(--white);
   background:
     radial-gradient(circle at 50% 0%, rgba(213, 173, 88, 0.09), transparent 34%),
@@ -1185,8 +1208,8 @@ img {
 
 .capacity-guide-section {
   background: #f4f2ee;
-  margin-top: clamp(-34px, -2.6vw, -14px);
-  margin-bottom: clamp(-40px, -3vw, -16px);
+  margin-top: clamp(10px, 1.8vw, 24px);
+  margin-bottom: clamp(10px, 1.8vw, 24px);
   z-index: 3;
 }
 
@@ -1227,6 +1250,10 @@ img {
   background: linear-gradient(0deg, rgba(5, 5, 5, 0.68), rgba(5, 5, 5, 0));
 }
 
+#waterproof::before {
+  height: clamp(12px, 3vw, 34px);
+}
+
 .visual-grid {
   position: relative;
   display: grid;
@@ -1249,9 +1276,7 @@ img {
   grid-template-columns: 1fr;
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07), transparent 26%),
-    #050505;
+  background: #ffffff;
 }
 
 .feature-grid::before {
@@ -1272,7 +1297,7 @@ img {
   min-height: auto;
   margin: 0;
   overflow: visible;
-  background: #050505;
+  background: #ffffff;
 }
 
 .feature-card + .feature-card {
@@ -1294,6 +1319,7 @@ img {
   object-fit: contain;
   filter: contrast(1.04) saturate(0.95);
   transform: none;
+  background: #ffffff;
 }
 
 .feature-grid .feature-detail-gif,
@@ -1304,6 +1330,7 @@ img {
   object-fit: contain;
   filter: contrast(1.04) saturate(0.95);
   transform: none;
+  background: #ffffff;
 }
 
 .scene-grid {
@@ -1651,7 +1678,7 @@ img {
 }
 
 .price-offer-section {
-  padding: clamp(54px, 8vw, 104px) clamp(22px, 7vw, 110px);
+  padding: 0 clamp(22px, 7vw, 110px) clamp(54px, 8vw, 104px);
   color: var(--white);
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 218, 128, 0.16), transparent 34%),
@@ -2552,6 +2579,10 @@ img {
   .price-offer-section,
   .seo-section {
     padding: 48px 20px;
+  }
+
+  .price-offer-section {
+    padding-top: 0;
   }
 
   .section-kicker {
