@@ -1274,6 +1274,10 @@ img {
   background: #050505;
 }
 
+.feature-card + .feature-card {
+  margin-top: clamp(10px, 1.8vw, 22px);
+}
+
 .feature-card::before {
   display: none;
 }
