@@ -59,9 +59,9 @@ img {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: clamp(12px, 2.2vw, 28px);
-  min-height: 36px;
-  padding: 4px clamp(14px, 3.4vw, 36px);
+  gap: clamp(10px, 1.8vw, 22px);
+  min-height: 34px;
+  padding: 3px clamp(14px, 3vw, 32px);
   background: rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
@@ -70,7 +70,7 @@ img {
 .logo {
   color: var(--white);
   text-decoration: none;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 900;
   letter-spacing: 7px;
 }
@@ -79,13 +79,13 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 10px 14px;
+  gap: 8px 12px;
 }
 
 .site-header nav a {
   color: rgba(255, 255, 255, 0.78);
   text-decoration: none;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 900;
   letter-spacing: 0.04em;
   text-transform: none;
@@ -1593,10 +1593,18 @@ img {
 }
 
 .footer-conversion-section .closing-countdown,
+.footer-conversion-section .footer-benefit-image,
 .footer-conversion-section .footer-benefit-stock,
 .footer-conversion-section .footer-line-cta {
   width: min(680px, 100%);
   margin-top: 0;
+}
+
+.footer-conversion-section .footer-benefit-image {
+  display: block;
+  height: auto;
+  border: 1px solid rgba(232, 195, 111, 0.22);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
 }
 
 .footer-conversion-section .closing-countdown {
@@ -2317,11 +2325,11 @@ img {
   }
 
   html {
-    scroll-padding-top: 72px;
+    scroll-padding-top: 64px;
   }
 
   body {
-    padding-top: 66px;
+    padding-top: 58px;
     padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 
@@ -2329,25 +2337,25 @@ img {
     position: fixed;
     align-items: flex-start;
     flex-direction: column;
-    gap: 5px;
-    min-height: 66px;
-    padding: 6px 14px 6px;
+    gap: 4px;
+    min-height: 58px;
+    padding: 5px 12px 5px;
   }
 
   .logo {
-    font-size: 15px;
-    letter-spacing: 4px;
+    font-size: 14px;
+    letter-spacing: 3.4px;
   }
 
   .site-header nav {
     justify-content: flex-start;
-    gap: 6px 10px;
+    gap: 5px 8px;
     width: 100%;
   }
 
   .site-header nav a {
-    font-size: 10.5px;
-    line-height: 1.18;
+    font-size: 10px;
+    line-height: 1.1;
     letter-spacing: 0;
   }
 
@@ -2355,7 +2363,7 @@ img {
   .visual-grid,
   .details-section,
   .faq-section {
-    scroll-margin-top: 72px;
+    scroll-margin-top: 64px;
   }
 
   .header-line-cta {
@@ -2404,15 +2412,23 @@ img {
   }
 
   .mobile-sticky-reserve {
-    color: #171009;
-    background: linear-gradient(135deg, #fff1aa 0%, #dba743 42%, #9a6414 100%);
-    border: 1px solid rgba(255, 231, 151, 0.74);
+    color: var(--white);
+    background:
+      linear-gradient(135deg, #ff4b4b 0%, #d80000 42%, #ffb3a9 50%, #b50000 72%, #6f0000 100%);
+    border: 1px solid rgba(255, 178, 168, 0.86);
+    box-shadow:
+      0 13px 34px rgba(216, 0, 0, 0.34),
+      0 0 0 1px rgba(255, 255, 255, 0.16) inset;
   }
 
   .mobile-sticky-line {
-    color: rgba(255, 242, 209, 0.94);
-    background: rgba(255, 255, 255, 0.055);
-    border: 1px solid rgba(232, 195, 111, 0.38);
+    color: #06200b;
+    background:
+      linear-gradient(135deg, #08a640 0%, #25d366 48%, #c9ffd8 50%, #16bd4e 72%, #057a2d 100%);
+    border: 1px solid rgba(211, 255, 220, 0.78);
+    box-shadow:
+      0 13px 34px rgba(37, 211, 102, 0.28),
+      0 0 0 1px rgba(255, 255, 255, 0.18) inset;
   }
 
   .mobile-floating-coupon {
@@ -2952,23 +2968,23 @@ img {
 
 @media (max-width: 380px) {
   body {
-    padding-top: 76px;
+    padding-top: 64px;
     padding-bottom: calc(78px + env(safe-area-inset-bottom));
   }
 
   html {
-    scroll-padding-top: 84px;
+    scroll-padding-top: 70px;
   }
 
   .site-header {
-    min-height: 76px;
+    min-height: 64px;
   }
 
   .image-section,
   .visual-grid,
   .details-section,
   .faq-section {
-    scroll-margin-top: 84px;
+    scroll-margin-top: 70px;
   }
 
   .site-header nav {
