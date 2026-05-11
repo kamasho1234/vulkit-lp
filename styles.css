@@ -193,6 +193,11 @@ img {
   filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.38));
 }
 
+.exclusive-badge-row-after-cta {
+  margin-top: clamp(14px, 2.2vw, 24px);
+  margin-bottom: 0;
+}
+
 .hero-cta-inner {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
