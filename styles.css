@@ -534,6 +534,17 @@ img {
   }
 }
 
+@keyframes couponFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+}
+
 .image-section,
 .visual-grid {
   scroll-margin-top: 70px;
@@ -1577,6 +1588,10 @@ img {
   display: none;
 }
 
+.mobile-floating-coupon {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .scene-grid,
   .visual-grid,
@@ -1711,6 +1726,77 @@ img {
     color: rgba(255, 242, 209, 0.94);
     background: rgba(255, 255, 255, 0.055);
     border: 1px solid rgba(232, 195, 111, 0.38);
+  }
+
+  .mobile-floating-coupon {
+    position: fixed;
+    left: 12px;
+    bottom: calc(82px + env(safe-area-inset-bottom));
+    z-index: 44;
+    display: grid;
+    place-items: center;
+    width: 112px;
+    min-height: 58px;
+    padding: 8px 12px;
+    color: #fff8dc;
+    background:
+      radial-gradient(circle at 18% 50%, transparent 0 7px, rgba(0, 0, 0, 0.72) 8px 9px, transparent 10px),
+      radial-gradient(circle at 82% 50%, transparent 0 7px, rgba(0, 0, 0, 0.72) 8px 9px, transparent 10px),
+      linear-gradient(135deg, #8c0909 0%, #d91919 42%, #7a0404 100%);
+    border: 1px solid rgba(255, 222, 143, 0.86);
+    border-radius: 12px;
+    font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    text-align: center;
+    text-decoration: none;
+    box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+      0 0 22px rgba(255, 0, 0, 0.22);
+    transform-origin: center;
+    animation: couponFloat 2.4s ease-in-out infinite;
+  }
+
+  .mobile-floating-coupon::before,
+  .mobile-floating-coupon::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(255, 226, 151, 0.72) 0 4px,
+      transparent 4px 8px
+    );
+  }
+
+  .mobile-floating-coupon::before {
+    left: 15px;
+  }
+
+  .mobile-floating-coupon::after {
+    right: 15px;
+  }
+
+  .mobile-floating-coupon__amount {
+    display: block;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-shadow:
+      0 1px 0 rgba(70, 0, 0, 0.85),
+      0 0 12px rgba(255, 217, 126, 0.54);
+  }
+
+  .mobile-floating-coupon__label {
+    display: block;
+    margin-top: 4px;
+    color: rgba(255, 243, 209, 0.9);
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.08em;
   }
 
   .scroll-button {
