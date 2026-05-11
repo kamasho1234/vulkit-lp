@@ -2406,10 +2406,10 @@ img {
   }
 
   .brand-developer-story {
-    width: calc(100vw - 28px);
+    width: calc(100vw - 24px);
     margin-top: 34px;
     margin-bottom: 58px;
-    padding: 34px 22px 36px;
+    padding: 32px 20px 36px;
   }
 
   .brand-developer-story::before {
@@ -2431,21 +2431,25 @@ img {
   }
 
   .brand-developer-story h2 {
-    max-width: 12em;
-    font-size: 26px;
-    line-height: 1.42;
+    max-width: 100%;
+    font-size: clamp(22px, 6.2vw, 28px);
+    line-height: 1.48;
+    text-wrap: pretty;
   }
 
   .brand-story-copy {
-    gap: 15px;
+    gap: 17px;
     max-width: 100%;
-    margin-top: 22px;
+    margin-top: 24px;
   }
 
   .brand-story-copy p {
     font-size: 15px;
-    line-height: 1.92;
-    letter-spacing: 0.01em;
+    line-height: 1.86;
+    letter-spacing: 0;
+    text-align: left;
+    text-wrap: pretty;
+    line-break: strict;
   }
 
   .brand-story-signature {
