@@ -572,6 +572,34 @@ img {
   }
 }
 
+@keyframes couponImageSway {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.7deg) scale(1);
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(0.7deg) scale(1.015);
+  }
+}
+
+@keyframes couponImageShine {
+  0% {
+    transform: translateX(-130%) rotate(12deg);
+    opacity: 0;
+  }
+
+  28% {
+    opacity: 0.72;
+  }
+
+  58%,
+  100% {
+    transform: translateX(130%) rotate(12deg);
+    opacity: 0;
+  }
+}
+
 .image-section,
 .visual-grid {
   scroll-margin-top: 70px;
@@ -1798,8 +1826,22 @@ img {
   }
 
   .mobile-floating-coupon a {
+    position: relative;
+    overflow: hidden;
     display: block;
     text-decoration: none;
+  }
+
+  .mobile-floating-coupon a::after {
+    content: "";
+    position: absolute;
+    top: -30%;
+    bottom: -30%;
+    left: -22%;
+    width: 34%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    pointer-events: none;
+    animation: couponImageShine 3.2s ease-in-out infinite;
   }
 
   .mobile-floating-coupon img {
@@ -1807,6 +1849,13 @@ img {
     width: 100%;
     height: auto;
     filter: drop-shadow(0 7px 12px rgba(0, 0, 0, 0.32));
+    transform-origin: center;
+    animation: couponImageSway 2.6s ease-in-out infinite;
+  }
+
+  .mobile-floating-coupon a:nth-of-type(2) img,
+  .mobile-floating-coupon a:nth-of-type(2)::after {
+    animation-delay: 0.35s;
   }
 
   .scroll-button {
