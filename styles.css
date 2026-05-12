@@ -60,9 +60,9 @@ img {
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  gap: clamp(10px, 1.4vw, 18px);
+  gap: clamp(12px, 1.6vw, 22px);
   min-height: 46px;
-  padding: 5px clamp(14px, 2.5vw, 28px) 6px;
+  padding: 4px clamp(14px, 2.5vw, 28px) 6px;
   background: rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
@@ -77,15 +77,16 @@ img {
   font-weight: 900;
   letter-spacing: clamp(6px, 0.7vw, 9px);
   line-height: 0.96;
+  transform: translateY(-3px);
 }
 
 .site-header nav {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex: 0 1 auto;
   align-items: flex-end;
   justify-content: flex-start;
-  gap: 0 clamp(12px, 1.8vw, 24px);
+  gap: clamp(10px, 1.45vw, 20px);
   min-width: 0;
 }
 
@@ -900,6 +901,10 @@ img {
   .closing-line-cta {
     animation: none;
   }
+
+  .secure-checkout-plan-card em::before {
+    animation: none;
+  }
 }
 
 @keyframes ctaShine {
@@ -913,6 +918,21 @@ img {
   52%,
   100% {
     transform: translateX(88%) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes checkoutButtonShine {
+  0% {
+    transform: translateX(-120%) rotate(12deg);
+    opacity: 0;
+  }
+  22% {
+    opacity: 0.9;
+  }
+  54%,
+  100% {
+    transform: translateX(430%) rotate(12deg);
     opacity: 0;
   }
 }
@@ -2309,6 +2329,9 @@ img {
 }
 
 .secure-checkout-plan-card em {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   width: min(420px, 92%);
   min-height: clamp(52px, 5.4vw, 64px);
   margin: 0 auto clamp(6px, 1vw, 10px);
@@ -2316,7 +2339,22 @@ img {
   font-size: clamp(18px, 2.2vw, 26px);
   letter-spacing: 0.08em;
   background: linear-gradient(135deg, #ff3838 0%, #d90000 42%, #ffaaa0 50%, #a80000 76%, #670000 100%);
-  box-shadow: 0 14px 34px rgba(210, 0, 0, 0.32);
+  box-shadow:
+    0 14px 34px rgba(210, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 228, 188, 0.34) inset,
+    0 0 24px rgba(255, 218, 120, 0.16);
+}
+
+.secure-checkout-plan-card em::before {
+  content: "";
+  position: absolute;
+  inset: -34% auto -34% -42%;
+  z-index: -1;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.82), transparent);
+  filter: blur(1px);
+  transform: translateX(-120%) rotate(12deg);
+  animation: checkoutButtonShine 2.35s ease-in-out infinite;
 }
 
 .secure-checkout-page .checkout-options__note {
@@ -2689,13 +2727,38 @@ img {
 
 .faq-section summary {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
   padding: 26px 0;
   color: rgba(255, 246, 226, 0.92);
   font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
   font-size: clamp(20px, 2.2vw, 32px);
   font-weight: 700;
-  line-height: 1.45;
-  text-wrap: balance;
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  list-style: none;
+  text-wrap: auto;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.faq-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-section summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  color: rgba(232, 195, 111, 0.92);
+  font-family: "Times New Roman", serif;
+  font-size: 0.9em;
+  line-height: 1;
+}
+
+.faq-section details[open] summary::after {
+  content: "-";
 }
 
 .faq-section details p {
@@ -2872,10 +2935,10 @@ img {
     position: fixed;
     align-items: stretch;
     flex-direction: column;
-    justify-content: flex-end;
-    gap: 4px;
+    justify-content: center;
+    gap: 2px;
     min-height: 66px;
-    padding: 6px 10px 6px;
+    padding: 5px 10px 7px;
   }
 
   .logo {
@@ -2883,19 +2946,27 @@ img {
     padding-bottom: 0;
     font-size: clamp(20px, 5.8vw, 25px);
     letter-spacing: clamp(4.5px, 1.45vw, 6.5px);
+    transform: translateY(-2px);
   }
 
   .site-header nav {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    justify-content: stretch;
-    gap: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: clamp(9px, 3vw, 13px);
     width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-header nav::-webkit-scrollbar {
+    display: none;
   }
 
   .site-header nav a {
-    text-align: center;
-    font-size: clamp(10px, 2.75vw, 12px);
+    flex: 0 0 auto;
+    text-align: left;
+    font-size: clamp(10px, 2.65vw, 11px);
     line-height: 1.1;
     letter-spacing: 0;
   }
@@ -3556,11 +3627,11 @@ img {
   }
 
   .site-header nav {
-    gap: 0;
+    gap: 8px;
   }
 
   .site-header nav a {
-    font-size: 10px;
+    font-size: 9.6px;
   }
 
   .hero-primary-cta,
