@@ -4,6 +4,7 @@ const floatingCoupon = document.querySelector(".mobile-floating-coupon");
 const floatingCouponClose = document.querySelector(".mobile-floating-coupon__close");
 const countdownBlocks = [...document.querySelectorAll("[data-countdown-target]")];
 const stockAlerts = [...document.querySelectorAll("[data-benefit-stock-remaining]")];
+const checkoutEntryLinks = [...document.querySelectorAll("[data-checkout-entry]")];
 const checkoutButtons = [...document.querySelectorAll("[data-checkout-plan]")];
 let activeTop = 0;
 let floatingCouponTimer;
@@ -196,6 +197,35 @@ function getTrackingParams() {
     creative: params.get("creative") || "",
   };
 }
+
+function buildSecureCheckoutUrl(link) {
+  const destination = new URL(link.getAttribute("href") || "/secure-checkout.html", window.location.origin);
+  const currentParams = new URLSearchParams(window.location.search);
+  const tracking = getTrackingParams();
+
+  currentParams.forEach((value, key) => {
+    if (!destination.searchParams.has(key)) {
+      destination.searchParams.set(key, value);
+    }
+  });
+
+  if (!destination.searchParams.has("lp_variant")) {
+    destination.searchParams.set("lp_variant", tracking.lp_variant);
+  }
+
+  if (link.dataset.ctaLocation) {
+    destination.searchParams.set("cta_location", link.dataset.ctaLocation);
+  }
+
+  destination.searchParams.set("from", tracking.page_path || "/");
+  return destination.toString();
+}
+
+checkoutEntryLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    link.href = buildSecureCheckoutUrl(link);
+  });
+});
 
 async function trackCheckoutEvent(eventName, payload) {
   try {
