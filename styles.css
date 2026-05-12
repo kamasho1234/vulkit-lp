@@ -12,14 +12,14 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 40px;
+  scroll-padding-top: 48px;
   overflow-y: auto;
 }
 
 body {
   margin: 0;
   min-height: 100%;
-  padding-top: 36px;
+  padding-top: 44px;
   overflow-x: hidden;
   overflow-y: auto;
   color: var(--white);
@@ -59,9 +59,9 @@ img {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: clamp(10px, 1.8vw, 22px);
-  min-height: 34px;
-  padding: 3px clamp(14px, 3vw, 32px);
+  gap: clamp(14px, 2vw, 26px);
+  min-height: 44px;
+  padding: 5px clamp(14px, 3vw, 32px);
   background: rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
@@ -70,24 +70,28 @@ img {
 .logo {
   color: var(--white);
   text-decoration: none;
-  font-size: 17px;
+  flex: 0 0 auto;
+  font-size: clamp(21px, 2.2vw, 28px);
   font-weight: 900;
-  letter-spacing: 7px;
+  letter-spacing: clamp(6px, 0.72vw, 9px);
+  line-height: 1;
 }
 
 .site-header nav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 8px 12px;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  gap: 8px clamp(10px, 1.5vw, 22px);
+  min-width: 0;
 }
 
 .site-header nav a {
   color: rgba(255, 255, 255, 0.78);
   text-decoration: none;
-  font-size: 10.5px;
+  font-size: clamp(12px, 1.15vw, 15px);
   font-weight: 900;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   text-transform: none;
   white-space: nowrap;
 }
@@ -2620,11 +2624,11 @@ img {
   }
 
   html {
-    scroll-padding-top: 64px;
+    scroll-padding-top: 76px;
   }
 
   body {
-    padding-top: 58px;
+    padding-top: 70px;
     padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 
@@ -2632,24 +2636,24 @@ img {
     position: fixed;
     align-items: flex-start;
     flex-direction: column;
-    gap: 4px;
-    min-height: 58px;
-    padding: 5px 12px 5px;
+    gap: 6px;
+    min-height: 70px;
+    padding: 7px 12px 7px;
   }
 
   .logo {
-    font-size: 14px;
-    letter-spacing: 3.4px;
+    font-size: clamp(18px, 5.2vw, 23px);
+    letter-spacing: clamp(4px, 1.35vw, 6px);
   }
 
   .site-header nav {
-    justify-content: flex-start;
-    gap: 5px 8px;
+    justify-content: space-between;
+    gap: 5px 6px;
     width: 100%;
   }
 
   .site-header nav a {
-    font-size: 10px;
+    font-size: clamp(10.5px, 2.8vw, 12.5px);
     line-height: 1.1;
     letter-spacing: 0;
   }
@@ -3288,16 +3292,16 @@ img {
 
 @media (max-width: 380px) {
   body {
-    padding-top: 64px;
+    padding-top: 72px;
     padding-bottom: calc(78px + env(safe-area-inset-bottom));
   }
 
   html {
-    scroll-padding-top: 70px;
+    scroll-padding-top: 78px;
   }
 
   .site-header {
-    min-height: 64px;
+    min-height: 72px;
   }
 
   .image-section,
@@ -3308,11 +3312,11 @@ img {
   }
 
   .site-header nav {
-    gap: 5px 8px;
+    gap: 5px 4px;
   }
 
   .site-header nav a {
-    font-size: 10px;
+    font-size: 10.5px;
   }
 
   .hero-primary-cta,
