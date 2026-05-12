@@ -3,14 +3,14 @@ const SITE_URL = "https://vulkit.kamacrafy.com";
 const PLANS = {
   single: {
     quantity: 1,
-    label: "VULKIT VBP101 1個購入",
+    label: "VULKIT VBP101 1\u500b\u8cfc\u5165",
     unitAmount: 29800,
     regularAmount: 34800,
     discountAmount: 5000,
   },
   double: {
     quantity: 2,
-    label: "VULKIT VBP101 2個購入",
+    label: "VULKIT VBP101 2\u500b\u8cfc\u5165",
     unitAmount: 54600,
     regularAmount: 69600,
     discountAmount: 15000,
@@ -63,6 +63,12 @@ function getBaseUrl(req) {
   return `${proto}://${host}`.replace(/\/$/, "");
 }
 
+function buildProductDescription(plan) {
+  const regularAmount = plan.regularAmount.toLocaleString("ja-JP");
+  const discountAmount = plan.discountAmount.toLocaleString("ja-JP");
+  return `\u901a\u5e38\u4fa1\u683c${regularAmount}\u5186\u304b\u3089\u5148\u884c\u4e88\u7d04\u7279\u5178${discountAmount}\u5186\u5272\u5f15\u3092\u9069\u7528\u3002${plan.quantity}\u500b\u306e\u5148\u884c\u4e88\u7d04\u3002`;
+}
+
 async function createStripeSession({ req, plan, body }) {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   if (!secretKey) {
@@ -88,7 +94,7 @@ async function createStripeSession({ req, plan, body }) {
   appendParam(params, "shipping_options[0][shipping_rate_data][type]", "fixed_amount");
   appendParam(params, "shipping_options[0][shipping_rate_data][fixed_amount][amount]", "0");
   appendParam(params, "shipping_options[0][shipping_rate_data][fixed_amount][currency]", "jpy");
-  appendParam(params, "shipping_options[0][shipping_rate_data][display_name]", "全国一律送料無料");
+  appendParam(params, "shipping_options[0][shipping_rate_data][display_name]", "\u5168\u56fd\u4e00\u5f8b\u9001\u6599\u7121\u6599");
   appendParam(params, "line_items[0][quantity]", "1");
   appendParam(params, "line_items[0][price_data][currency]", "jpy");
   appendParam(params, "line_items[0][price_data][unit_amount]", plan.unitAmount);
@@ -96,7 +102,7 @@ async function createStripeSession({ req, plan, body }) {
   appendParam(
     params,
     "line_items[0][price_data][product_data][description]",
-    `通常価格${plan.regularAmount.toLocaleString("ja-JP")}円から特典割引${plan.discountAmount.toLocaleString("ja-JP")}円を適用。${plan.quantity}個分の先行予約。`
+    buildProductDescription(plan)
   );
   appendParam(
     params,
