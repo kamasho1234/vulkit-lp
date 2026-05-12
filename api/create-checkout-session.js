@@ -87,7 +87,6 @@ async function createStripeSession({ req, plan, body }) {
   appendParam(params, "mode", "payment");
   appendParam(params, "success_url", successUrl);
   appendParam(params, "cancel_url", cancelUrl);
-  appendParam(params, "automatic_payment_methods[enabled]", "true");
   appendParam(params, "billing_address_collection", "auto");
   appendParam(params, "phone_number_collection[enabled]", "true");
   appendParam(params, "shipping_address_collection[allowed_countries][0]", "JP");
