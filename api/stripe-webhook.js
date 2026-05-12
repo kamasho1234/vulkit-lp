@@ -56,6 +56,13 @@ function cleanText(value, maxLength = 500) {
   return String(value).slice(0, maxLength);
 }
 
+function buildCheckoutEvent(base, overrides = {}) {
+  return {
+    ...base,
+    ...overrides,
+  };
+}
+
 async function insertSupabase(event) {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -94,7 +101,7 @@ module.exports = async function handler(req, res) {
     }
 
     const event = JSON.parse(rawBody.toString("utf8"));
-    const supported = new Set(["checkout.session.completed", "checkout.session.async_payment_succeeded"]);
+    const supported = new Set(["checkout.session.completed"]);
     if (!supported.has(event.type)) {
       send(res, 200, { ok: true, ignored: true });
       return;
@@ -102,12 +109,12 @@ module.exports = async function handler(req, res) {
 
     const session = event.data?.object || {};
     const metadata = session.metadata || {};
-    await insertSupabase({
-      event_id: cleanText(event.id, 80),
+    const baseEvent = {
       event_name: "checkout_completed",
       occurred_at: new Date((event.created || Date.now() / 1000) * 1000).toISOString(),
       lp_variant: cleanText(metadata.lp_variant, 80) || "control",
       cta_location: cleanText(metadata.cta_location, 80) || "stripe_checkout",
+      attempt: Math.max(1, Number(metadata.quantity || 1)),
       page_path: cleanText(metadata.page_path, 240),
       utm_source: cleanText(metadata.utm_source, 120),
       utm_medium: cleanText(metadata.utm_medium, 120),
@@ -120,7 +127,19 @@ module.exports = async function handler(req, res) {
       creative: cleanText(metadata.creative, 180),
       result_target: cleanText(metadata.plan || session.id, 40),
       page_url: cleanText(session.url, 600),
-    });
+    };
+
+    await insertSupabase(
+      buildCheckoutEvent(baseEvent, {
+        event_id: cleanText(session.id || event.id, 80),
+      })
+    );
+    await insertSupabase(
+      buildCheckoutEvent(baseEvent, {
+        event_id: cleanText(`stock_${session.id || event.id}`, 80),
+        event_name: "stock_reserved",
+      })
+    );
 
     send(res, 200, { ok: true });
   } catch (error) {

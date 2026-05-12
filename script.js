@@ -158,16 +158,45 @@ if (countdownBlocks.length) {
   window.setInterval(tickCountdowns, 1000);
 }
 
-stockAlerts.forEach((alert) => {
-  const total = Number(alert.dataset.benefitStockTotal || 50);
-  const remaining = Math.max(0, Number(alert.dataset.benefitStockRemaining || 0));
+function updateStockAlert(alert, total, remaining) {
   const count = alert.querySelector("[data-benefit-stock-count]");
   const bar = alert.querySelector(".benefit-stock-alert__bar span");
   const percentage = total > 0 ? Math.min(100, Math.round((remaining / total) * 100)) : 0;
 
+  alert.dataset.benefitStockTotal = String(total);
+  alert.dataset.benefitStockRemaining = String(remaining);
   if (count) count.textContent = String(remaining);
   if (bar) bar.style.width = `${percentage}%`;
+  alert.classList.toggle("is-sold-out", remaining <= 0);
+}
+
+stockAlerts.forEach((alert) => {
+  const total = Number(alert.dataset.benefitStockTotal || 55);
+  const remaining = Math.max(0, Number(alert.dataset.benefitStockRemaining || 0));
+  updateStockAlert(alert, total, remaining);
 });
+
+async function refreshBenefitStock() {
+  if (!stockAlerts.length) return;
+
+  try {
+    const total = Number(stockAlerts[0]?.dataset.benefitStockTotal || 55);
+    const response = await fetch(`/api/stock?total=${encodeURIComponent(total)}`, {
+      cache: "no-store",
+    });
+    const data = await response.json();
+    if (!response.ok || !data.ok) return;
+
+    const nextTotal = Number(data.total || total);
+    const nextRemaining = Math.max(0, Number(data.remaining || 0));
+    stockAlerts.forEach((alert) => updateStockAlert(alert, nextTotal, nextRemaining));
+  } catch (error) {
+    // Static fallback remains visible if the stock API is unavailable.
+  }
+}
+
+refreshBenefitStock();
+window.setInterval(refreshBenefitStock, 60000);
 
 function getTrackingParams() {
   const params = new URLSearchParams(window.location.search);

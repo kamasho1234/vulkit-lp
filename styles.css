@@ -575,6 +575,20 @@ img {
   filter: brightness(1.08);
 }
 
+.benefit-stock-alert.is-sold-out .benefit-stock-alert__label,
+.benefit-stock-alert.is-sold-out .benefit-stock-alert__note {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.benefit-stock-alert.is-sold-out .benefit-stock-alert__count {
+  background: linear-gradient(135deg, #474747, #171717);
+}
+
+.benefit-stock-alert.is-sold-out .benefit-stock-alert__bar span {
+  background: #777;
+  box-shadow: none;
+}
+
 .hero-gif-section {
   width: 100vw;
   margin: -1px 0 -1px calc(50% - 50vw);
