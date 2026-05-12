@@ -2104,23 +2104,28 @@ img {
 }
 
 .secure-checkout-page {
-  display: grid;
-  align-items: center;
-  padding: clamp(18px, 5vw, 64px);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  color: #171717;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(210, 210, 210, 0.34), transparent 36%),
+    linear-gradient(180deg, #ffffff 0%, #f7f7f4 54%, #ffffff 100%);
 }
 
 .secure-checkout-shell {
   display: grid;
-  gap: clamp(16px, 2.6vw, 26px);
-  width: min(1040px, 100%);
+  gap: clamp(18px, 3vw, 34px);
+  width: min(1160px, 100%);
   margin: 0 auto;
+  padding: clamp(16px, 4vw, 42px);
 }
 
 .secure-checkout-back {
   width: fit-content;
-  color: rgba(255, 248, 232, 0.78);
+  color: #6f560d;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
   text-decoration: none;
   letter-spacing: 0.04em;
 }
@@ -2128,23 +2133,116 @@ img {
 .secure-checkout-back::before {
   content: "<";
   margin-right: 8px;
-  color: #e6bc63;
+}
+
+.secure-checkout-hero {
+  display: grid;
+  justify-items: center;
+  gap: clamp(8px, 2vw, 16px);
+  text-align: center;
+}
+
+.secure-checkout-kicker {
+  margin: 0;
+  color: #a16c12;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(12px, 1.4vw, 15px);
+  font-weight: 900;
+  letter-spacing: 0.22em;
+}
+
+.secure-checkout-hero h1 {
+  margin: 0;
+  color: #111;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(34px, 6vw, 72px);
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.secure-checkout-hero p {
+  margin: 0;
+  color: #555;
+  font-size: clamp(14px, 1.6vw, 17px);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.secure-checkout-hero img {
+  display: block;
+  width: min(660px, 100%);
+  height: auto;
+  margin-top: clamp(6px, 1.6vw, 14px);
+  filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.14));
 }
 
 .secure-checkout-options {
+  width: 100%;
   margin-bottom: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.secure-checkout-plan-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 32px);
+  margin-top: 0;
+}
+
+.secure-checkout-plan-card {
+  display: grid;
+  gap: clamp(12px, 2vw, 18px);
+  min-height: 0;
+  padding: clamp(8px, 1.5vw, 14px);
+  color: #171717;
+  border: 1px solid rgba(183, 127, 26, 0.24);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.12);
+}
+
+.secure-checkout-plan-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(190, 130, 18, 0.52);
+  box-shadow: 0 26px 58px rgba(155, 99, 10, 0.18);
+}
+
+.secure-checkout-plan-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.secure-checkout-plan-card em {
+  width: min(420px, 92%);
+  min-height: clamp(52px, 5.4vw, 64px);
+  margin: 0 auto clamp(6px, 1vw, 10px);
+  color: #fff;
+  font-size: clamp(18px, 2.2vw, 26px);
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #ff3838 0%, #d90000 42%, #ffaaa0 50%, #a80000 76%, #670000 100%);
+  box-shadow: 0 14px 34px rgba(210, 0, 0, 0.32);
+}
+
+.secure-checkout-page .checkout-options__note {
+  color: #5d5141;
+  font-weight: 700;
 }
 
 .secure-checkout-support {
   margin: 0;
-  color: rgba(255, 248, 232, 0.74);
+  color: #565656;
   font-size: clamp(13px, 1.5vw, 15px);
+  font-weight: 700;
   line-height: 1.8;
   text-align: center;
 }
 
 .secure-checkout-support a {
-  color: #a6f7b7;
+  color: #04a83b;
   font-weight: 900;
   text-decoration: none;
 }
@@ -3407,5 +3505,46 @@ img {
   .mobile-sticky-cta a {
     min-height: 42px;
     font-size: 14px;
+  }
+}
+
+@media (max-width: 620px) {
+  .secure-checkout-shell {
+    gap: 18px;
+    padding: 14px 12px 28px;
+  }
+
+  .secure-checkout-hero h1 {
+    font-size: clamp(30px, 10vw, 44px);
+  }
+
+  .secure-checkout-hero img {
+    width: min(420px, 100%);
+  }
+
+  .secure-checkout-options {
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .secure-checkout-plan-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .secure-checkout-plan-card {
+    min-height: 0;
+    padding: 7px 7px 14px;
+    border-radius: 14px;
+  }
+
+  .secure-checkout-plan-card img {
+    border-radius: 10px;
+  }
+
+  .secure-checkout-plan-card em {
+    width: min(330px, 92%);
+    min-height: 52px;
+    font-size: 19px;
   }
 }
