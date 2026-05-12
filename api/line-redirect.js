@@ -1,4 +1,4 @@
-const LINE_URL = "https://lin.ee/Qi4NUTn";
+const LINE_URL = "https://lin.ee/6xr7cz7";
 
 function cleanText(value, maxLength = 500) {
   if (value === undefined || value === null) return "";

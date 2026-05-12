@@ -1,5 +1,5 @@
 (function () {
-  const LINE_URL = "https://lin.ee/Qi4NUTn";
+  const LINE_URL = "https://lin.ee/6xr7cz7";
   const STORAGE_KEY = "vulkit.analytics.events";
   const MAX_LOCAL_EVENTS = 500;
   const VISITED_SECTIONS = new Set();
