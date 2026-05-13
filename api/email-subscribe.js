@@ -94,6 +94,7 @@ function welcomeEmailHtml(email) {
             <strong style="display:block;margin-bottom:8px;color:#8a5d00;">迷惑メール対策のお願い</strong>
             <p style="margin:0;">大切なお知らせを確実に受け取れるよう、<strong>ikemen@kamacrafy.com</strong> からのメールを受信許可リストに追加してください。迷惑メールフォルダやプロモーションタブに振り分けられる場合があります。</p>
           </div>
+          <p style="margin:0 0 16px;">先行販売ページ：<a href="https://vulkit.kamacrafy.com/" style="color:#8a5d00;font-weight:700;">https://vulkit.kamacrafy.com/</a></p>
           <p style="margin:0;">101個限定の先行販売に向けて、準備が整い次第ご案内します。今しばらく楽しみにお待ちください。</p>
         </div>
       </div>
@@ -112,6 +113,8 @@ function welcomeEmailText(email) {
     "迷惑メール対策のお願い",
     "大切なお知らせを確実に受け取れるよう、ikemen@kamacrafy.com からのメールを受信許可リストに追加してください。",
     "迷惑メールフォルダやプロモーションタブに振り分けられる場合があります。",
+    "",
+    "先行販売ページ：https://vulkit.kamacrafy.com/",
     "",
     "101個限定の先行販売に向けて、準備が整い次第ご案内します。",
     "今しばらく楽しみにお待ちください。",
