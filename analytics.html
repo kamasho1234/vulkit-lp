@@ -331,6 +331,54 @@
         </section>
       </section>
 
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <p class="eyebrow">EMAIL</p>
+            <h2>メール通知登録者</h2>
+          </div>
+          <span>LP上のメール通知CTAから登録されたメールアドレスを管理します。</span>
+          <button id="export-emails-button" type="button">メールCSV出力</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>メールアドレス</th>
+                <th>LP</th>
+                <th>登録位置</th>
+                <th>キャンペーン</th>
+                <th>広告素材</th>
+                <th>登録日時</th>
+              </tr>
+            </thead>
+            <tbody id="email-subscriber-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <p class="eyebrow">EMAIL CTA</p>
+            <h2>メール登録CTA別</h2>
+          </div>
+          <span>ファーストビュー下、フッターなど、どのメール通知CTAから登録されたか確認します。</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>登録位置</th>
+                <th>メール登録</th>
+                <th>総イベント</th>
+              </tr>
+            </thead>
+            <tbody id="email-cta-table"></tbody>
+          </table>
+        </div>
+      </section>
+
       <section class="dictionary">
         <h2>用語の見方</h2>
         <dl>

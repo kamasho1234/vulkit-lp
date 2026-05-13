@@ -52,6 +52,7 @@ function groupBy(events, keys) {
     row.roulette_start = (row.roulette_start || 0) + (event.event_name === "roulette_start" ? 1 : 0);
     row.roulette_win = (row.roulette_win || 0) + (event.event_name === "roulette_win" ? 1 : 0);
     row.coupon_modal_view = (row.coupon_modal_view || 0) + (event.event_name === "coupon_modal_view" ? 1 : 0);
+    row.email_subscribe = (row.email_subscribe || 0) + (event.event_name === "email_subscribe" ? 1 : 0);
     row.cvr = row.page_view ? row.line_click / row.page_view : 0;
     rows.set(id, row);
   });
@@ -68,6 +69,7 @@ function summarize(events) {
     roulette_start: 0,
     roulette_win: 0,
     coupon_modal_view: 0,
+    email_subscribe: 0,
   };
 
   events.forEach((event) => {
@@ -77,7 +79,19 @@ function summarize(events) {
   });
 
   totals.line_click_cvr = totals.page_view ? totals.line_click / totals.page_view : 0;
+  totals.email_subscribe_cvr = totals.page_view ? totals.email_subscribe / totals.page_view : 0;
   totals.roulette_win_rate = totals.roulette_start ? totals.roulette_win / totals.roulette_start : 0;
+
+  const emailRows = new Map();
+  events
+    .filter((event) => event.event_name === "email_subscribe" && event.result_target)
+    .forEach((event) => {
+      const email = String(event.result_target || "").toLowerCase();
+      const existing = emailRows.get(email);
+      if (!existing || new Date(event.occurred_at) > new Date(existing.occurred_at)) {
+        emailRows.set(email, event);
+      }
+    });
 
   return {
     totals,
@@ -89,6 +103,8 @@ function summarize(events) {
     by_lp_cta: groupBy(events, ["lp_variant", "cta_location"]),
     by_section: groupBy(events, ["section_id"]),
     by_lp_section: groupBy(events, ["lp_variant", "section_id"]),
+    by_email_cta: groupBy(events.filter((event) => event.event_name === "email_subscribe"), ["cta_location"]),
+    email_subscribers: [...emailRows.values()].sort((a, b) => new Date(b.occurred_at) - new Date(a.occurred_at)),
     recent: events.slice(0, 100),
   };
 }

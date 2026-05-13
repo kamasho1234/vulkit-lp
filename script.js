@@ -6,6 +6,7 @@ const countdownBlocks = [...document.querySelectorAll("[data-countdown-target]")
 const stockAlerts = [...document.querySelectorAll("[data-benefit-stock-remaining]")];
 const checkoutEntryLinks = [...document.querySelectorAll("[data-checkout-entry]")];
 const checkoutButtons = [...document.querySelectorAll("[data-checkout-plan]")];
+const emailSignupForms = [...document.querySelectorAll("[data-email-signup]")];
 let activeTop = 0;
 let floatingCouponTimer;
 let floatingCouponDrag;
@@ -311,6 +312,53 @@ checkoutButtons.forEach((button) => {
       });
       if (label) label.textContent = originalText;
       window.alert("決済画面の準備に失敗しました。時間をおいて再度お試しください。");
+    }
+  });
+});
+
+emailSignupForms.forEach((form) => {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const input = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button[type="submit"]');
+    const message = form.querySelector("[data-email-signup-message]");
+    const email = input?.value.trim() || "";
+    const originalText = button?.textContent || "";
+
+    if (!email) {
+      if (message) message.textContent = "メールアドレスを入力してください。";
+      return;
+    }
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = "登録中...";
+    }
+    if (message) message.textContent = "";
+
+    try {
+      const response = await fetch("/api/email-subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...getTrackingParams(),
+          email,
+          cta_location: form.dataset.ctaLocation || "email_signup",
+          section_id: form.dataset.sectionId || "email_signup",
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.error || "subscribe failed");
+      form.classList.add("is-success");
+      if (message) message.textContent = "登録ありがとうございます。先行販売情報をメールでお届けします。";
+      if (input) input.value = "";
+    } catch (error) {
+      if (message) message.textContent = "登録に失敗しました。時間をおいて再度お試しください。";
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
     }
   });
 });

@@ -19,6 +19,7 @@ const statusCard = document.querySelector("#status-card");
 const daysSelect = document.querySelector("#days-select");
 const refreshButton = document.querySelector("#refresh-button");
 const exportButton = document.querySelector("#export-button");
+const exportEmailsButton = document.querySelector("#export-emails-button");
 const sourceInput = document.querySelector("#source-input");
 const lpInput = document.querySelector("#lp-input");
 const campaignInput = document.querySelector("#campaign-input");
@@ -32,11 +33,15 @@ const savePresetButton = document.querySelector("#save-preset-button");
 const presetList = document.querySelector("#preset-list");
 
 let latestRows = [];
+let latestEmailRows = [];
 
 const CTA_LABELS = {
   header: "ヘッダーのLINE登録ボタン",
   footer: "最下部のLINEで情報GETボタン",
   roulette_coupon: "ルーレット当たり後のクーポン獲得ボタン",
+  hero_email_signup: "FV下のメール通知フォーム",
+  footer_email_signup: "フッターのメール通知フォーム",
+  email_signup: "メール通知フォーム",
   "(未設定)": "ボタン位置なし",
   unknown: "不明なLINE登録ボタン",
 };
@@ -246,6 +251,7 @@ function groupBy(events, keys) {
     row.roulette_start = (row.roulette_start || 0) + (event.event_name === "roulette_start" ? 1 : 0);
     row.roulette_win = (row.roulette_win || 0) + (event.event_name === "roulette_win" ? 1 : 0);
     row.coupon_modal_view = (row.coupon_modal_view || 0) + (event.event_name === "coupon_modal_view" ? 1 : 0);
+    row.email_subscribe = (row.email_subscribe || 0) + (event.event_name === "email_subscribe" ? 1 : 0);
     row.section_view = (row.section_view || 0) + (event.event_name === "section_view" ? 1 : 0);
     row.cvr = row.page_view ? row.line_click / row.page_view : 0;
     rows.set(id, row);
@@ -262,12 +268,14 @@ function summarizeLocal(events) {
     roulette_start: 0,
     roulette_win: 0,
     coupon_modal_view: 0,
+    email_subscribe: 0,
   };
 
   events.forEach((event) => {
     if (Object.prototype.hasOwnProperty.call(totals, event.event_name)) totals[event.event_name] += 1;
   });
   totals.line_click_cvr = totals.page_view ? totals.line_click / totals.page_view : 0;
+  totals.email_subscribe_cvr = totals.page_view ? totals.email_subscribe / totals.page_view : 0;
   totals.roulette_start_rate = totals.page_view ? totals.roulette_start / totals.page_view : 0;
   totals.coupon_view_rate = totals.roulette_win ? totals.coupon_modal_view / totals.roulette_win : 0;
 
@@ -284,6 +292,8 @@ function summarizeLocal(events) {
     by_lp_cta: groupBy(events, ["lp_variant", "cta_location"]),
     by_section: groupBy(events, ["section_id"]),
     by_lp_section: groupBy(events, ["lp_variant", "section_id"]),
+    by_email_cta: groupBy(events.filter((event) => event.event_name === "email_subscribe"), ["cta_location"]),
+    email_subscribers: events.filter((event) => event.event_name === "email_subscribe" && event.result_target),
     recent: events.slice(-100).reverse(),
   };
 }
@@ -305,7 +315,9 @@ function renderKpis(totals) {
   document.querySelector("#kpi-grid").innerHTML = [
     ["LP訪問", int(totals.page_view), "広告からLPに到達した回数"],
     ["LINEクリック", int(totals.line_click), "LINE登録ボタンを押した回数"],
+    ["メール登録", int(totals.email_subscribe), "メール通知CTAから登録された件数"],
     ["LINEクリックCVR", pct(totals.line_click_cvr || 0), "LINEクリック ÷ LP訪問"],
+    ["メール登録CVR", pct(totals.email_subscribe_cvr || 0), "メール登録 ÷ LP訪問"],
     ["ルーレット開始", int(totals.roulette_start), "抽選ボタンが押された回数"],
     ["当たり表示", int(totals.roulette_win), "2回目当たりまで到達した回数"],
     ["クーポン表示", int(totals.coupon_modal_view), "クーポン画面が表示された回数"],
@@ -453,6 +465,26 @@ function render(data) {
   `, 3);
 
   latestRows = data.recent || [];
+  latestEmailRows = data.email_subscribers || [];
+
+  renderRows("#email-subscriber-table", latestEmailRows, (row) => `
+    <tr>
+      ${cell(row.result_target)}
+      ${cell(row.lp_variant)}
+      ${cell(ctaLabel(row.cta_location))}
+      ${cell(row.utm_campaign || "(未設定)")}
+      ${cell(row.utm_content || "(未設定)")}
+      ${cell(new Date(row.occurred_at).toLocaleString("ja-JP"))}
+    </tr>
+  `, 6);
+
+  renderRows("#email-cta-table", data.by_email_cta || [], (row) => `
+    <tr>
+      ${cell(ctaLabel(row.cta_location))}
+      ${cell(int(row.email_subscribe), "positive")}
+      ${cell(int(row.events))}
+    </tr>
+  `, 3);
 }
 
 function updateGeneratedUrl() {
@@ -529,6 +561,18 @@ function exportCsv() {
   URL.revokeObjectURL(url);
 }
 
+function exportEmailCsv() {
+  const headers = ["email", "lp_variant", "cta_location", "utm_campaign", "utm_content", "occurred_at"];
+  const rows = latestEmailRows.map((row) => headers.map((key) => `"${String(key === "email" ? row.result_target : row[key] || "").replace(/"/g, '""')}"`).join(","));
+  const blob = new Blob([[headers.join(","), ...rows].join("\n")], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `vulkit-email-subscribers-${new Date().toISOString().slice(0, 10)}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 [sourceInput, lpInput, campaignInput, contentInput, adsetInput, adInput].filter(Boolean).forEach((input) => {
   input.addEventListener("input", updateGeneratedUrl);
   input.addEventListener("change", updateGeneratedUrl);
@@ -539,6 +583,7 @@ presetList.addEventListener("click", handlePresetClick);
 refreshButton.addEventListener("click", load);
 daysSelect.addEventListener("change", load);
 exportButton.addEventListener("click", exportCsv);
+exportEmailsButton?.addEventListener("click", exportEmailCsv);
 
 updateGeneratedUrl();
 renderPresets();
