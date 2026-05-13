@@ -2148,6 +2148,35 @@ img {
   font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
+.footer-video-section {
+  width: 100vw;
+  margin: -1px 0 0 calc(50% - 50vw);
+  padding: clamp(30px, 5vw, 64px) clamp(14px, 5vw, 72px);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(225, 177, 74, 0.12), transparent 42%),
+    linear-gradient(180deg, #050505 0%, #0a0906 55%, #050505 100%);
+}
+
+.footer-video-frame {
+  width: min(430px, 94vw);
+  margin: 0 auto;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid rgba(232, 195, 111, 0.42);
+  border-radius: 10px;
+  background: #050505;
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.48),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+.footer-video-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .footer-conversion-inner {
   display: grid;
   justify-items: center;
