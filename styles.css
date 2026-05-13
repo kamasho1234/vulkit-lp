@@ -1587,6 +1587,15 @@ img {
   text-align: center;
 }
 
+.vulkit-story-products img {
+  display: block;
+  width: min(100%, 920px);
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid rgba(213, 173, 88, 0.36);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+}
+
 .vulkit-story-products p {
   margin: 0 0 16px;
   color: #d7b464;
