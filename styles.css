@@ -323,6 +323,15 @@ img {
   line-height: 1.65;
 }
 
+.email-signup-note {
+  grid-column: 1 / -1;
+  display: block;
+  margin: -2px 0 0;
+  color: rgba(255, 226, 162, 0.86);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 .email-signup-form input {
   width: 100%;
   min-height: 48px;
@@ -371,6 +380,70 @@ img {
 
 .email-signup-form.is-success {
   border-color: rgba(100, 255, 145, 0.5);
+}
+
+.site-popup {
+  position: fixed;
+  right: clamp(14px, 3vw, 28px);
+  bottom: clamp(18px, 4vw, 36px);
+  z-index: 80;
+  width: min(420px, calc(100vw - 28px));
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.site-popup.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.site-popup__card {
+  position: relative;
+  padding: 20px 46px 20px 20px;
+  border: 1px solid rgba(224, 190, 108, 0.58);
+  border-radius: 14px;
+  color: #fffaf0;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255, 226, 139, 0.22), transparent 42%),
+    linear-gradient(145deg, rgba(8, 8, 8, 0.98), rgba(25, 15, 6, 0.96));
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.site-popup.is-error .site-popup__card {
+  border-color: rgba(255, 118, 118, 0.68);
+}
+
+.site-popup__card strong {
+  display: block;
+  color: #ffe5a6;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.site-popup__card p {
+  margin: 8px 0 0;
+  color: rgba(255, 248, 232, 0.88);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.site-popup__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(255, 226, 162, 0.4);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
 }
 
 .hero-image-duo {
@@ -3280,6 +3353,12 @@ img {
   .email-signup-form input,
   .email-signup-form button {
     width: 100%;
+  }
+
+  .site-popup {
+    right: 12px;
+    bottom: 92px;
+    width: calc(100vw - 24px);
   }
 
   .launch-countdown {

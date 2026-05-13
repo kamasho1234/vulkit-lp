@@ -11,6 +11,36 @@ let activeTop = 0;
 let floatingCouponTimer;
 let floatingCouponDrag;
 let floatingCouponWasDragged = false;
+let sitePopupTimer;
+
+function isValidEmailInput(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim());
+}
+
+function showSitePopup(type, title, text) {
+  let popup = document.querySelector("[data-site-popup]");
+  if (!popup) {
+    popup = document.createElement("div");
+    popup.className = "site-popup";
+    popup.dataset.sitePopup = "";
+    popup.innerHTML = `
+      <div class="site-popup__card" role="status" aria-live="polite">
+        <button class="site-popup__close" type="button" aria-label="閉じる">×</button>
+        <strong></strong>
+        <p></p>
+      </div>
+    `;
+    document.body.appendChild(popup);
+    popup.querySelector("button")?.addEventListener("click", () => popup.classList.remove("is-visible"));
+  }
+
+  popup.classList.remove("is-success", "is-error");
+  popup.classList.add(type === "error" ? "is-error" : "is-success", "is-visible");
+  popup.querySelector("strong").textContent = title;
+  popup.querySelector("p").textContent = text;
+  window.clearTimeout(sitePopupTimer);
+  sitePopupTimer = window.setTimeout(() => popup.classList.remove("is-visible"), 6400);
+}
 
 function showTop(index) {
   topVisuals[activeTop]?.classList.remove("is-active");
@@ -325,8 +355,10 @@ emailSignupForms.forEach((form) => {
     const email = input?.value.trim() || "";
     const originalText = button?.textContent || "";
 
-    if (!email) {
-      if (message) message.textContent = "メールアドレスを入力してください。";
+    if (!email || !isValidEmailInput(email)) {
+      const errorText = "メールアドレスの形式を確認してください。";
+      if (message) message.textContent = errorText;
+      showSitePopup("error", "登録できませんでした", errorText);
       return;
     }
 
@@ -350,10 +382,14 @@ emailSignupForms.forEach((form) => {
       const data = await response.json();
       if (!response.ok || !data.ok) throw new Error(data.error || "subscribe failed");
       form.classList.add("is-success");
-      if (message) message.textContent = "登録ありがとうございます。先行販売情報をメールでお届けします。";
+      const successText = "登録ありがとうございます。先行販売情報をメールでお届けします。迷惑メール対策として ikemen@kamacrafy.com を受信許可してください。";
+      if (message) message.textContent = successText;
+      showSitePopup("success", "メール通知登録が完了しました", successText);
       if (input) input.value = "";
     } catch (error) {
-      if (message) message.textContent = "登録に失敗しました。時間をおいて再度お試しください。";
+      const errorText = "登録に失敗しました。時間をおいて再度お試しください。";
+      if (message) message.textContent = errorText;
+      showSitePopup("error", "登録に失敗しました", errorText);
     } finally {
       if (button) {
         button.disabled = false;

@@ -35,7 +35,8 @@ function normalizeEmail(value) {
 }
 
 function isValidEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  if (!value || value.length > 254) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
 }
 
 async function insertSupabase(event) {
@@ -59,6 +60,90 @@ async function insertSupabase(event) {
   }
 
   return { configured: true };
+}
+
+function welcomeEmailHtml(email) {
+  const escapedEmail = email.replace(/[<>&"]/g, (char) => ({
+    "<": "&lt;",
+    ">": "&gt;",
+    "&": "&amp;",
+    "\"": "&quot;",
+  })[char]);
+
+  return `<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VULKIT VBP101 メール通知登録完了</title>
+  </head>
+  <body style="margin:0;background:#f7f3ea;color:#161616;font-family:'Yu Mincho','Hiragino Mincho ProN',serif;">
+    <div style="max-width:640px;margin:0 auto;padding:28px 18px;">
+      <div style="background:#ffffff;border:1px solid #dbc17d;border-radius:14px;overflow:hidden;box-shadow:0 18px 42px rgba(0,0,0,.08);">
+        <div style="background:#070707;color:#f4d37a;padding:28px 24px;text-align:center;">
+          <div style="font-size:24px;letter-spacing:.18em;font-weight:700;">VULKIT</div>
+          <div style="margin-top:10px;color:#fff;font-size:18px;">VBP101 先行販売通知</div>
+        </div>
+        <div style="padding:28px 24px;line-height:1.9;">
+          <h1 style="margin:0 0 16px;font-size:24px;line-height:1.45;color:#141414;">メール通知登録ありがとうございます。</h1>
+          <p style="margin:0 0 16px;">VULKIT VBP101の先行販売開始・在庫情報・特典情報を、こちらのメールアドレスへお届けします。</p>
+          <p style="margin:0 0 16px;">登録メールアドレス：<strong>${escapedEmail}</strong></p>
+          <div style="margin:24px 0;padding:18px;border:1px solid #d8bd72;background:#fffaf0;border-radius:10px;">
+            <strong style="display:block;margin-bottom:8px;color:#8a5d00;">迷惑メール対策のお願い</strong>
+            <p style="margin:0;">大切なお知らせを確実に受け取れるよう、<strong>ikemen@kamacrafy.com</strong> からのメールを受信許可リストに追加してください。迷惑メールフォルダやプロモーションタブに振り分けられる場合があります。</p>
+          </div>
+          <p style="margin:0;">101個限定の先行販売に向けて、準備が整い次第ご案内します。今しばらく楽しみにお待ちください。</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>`;
+}
+
+function welcomeEmailText(email) {
+  return [
+    "VULKIT VBP101 メール通知登録ありがとうございます。",
+    "",
+    "VULKIT VBP101の先行販売開始・在庫情報・特典情報を、こちらのメールアドレスへお届けします。",
+    `登録メールアドレス：${email}`,
+    "",
+    "迷惑メール対策のお願い",
+    "大切なお知らせを確実に受け取れるよう、ikemen@kamacrafy.com からのメールを受信許可リストに追加してください。",
+    "迷惑メールフォルダやプロモーションタブに振り分けられる場合があります。",
+    "",
+    "101個限定の先行販売に向けて、準備が整い次第ご案内します。",
+    "今しばらく楽しみにお待ちください。",
+    "",
+    "KamaCrafy / VULKIT VBP101",
+  ].join("\n");
+}
+
+async function sendWelcomeEmail(email) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return { configured: false, sent: false };
+
+  const from = process.env.EMAIL_FROM || "KamaCrafy <ikemen@kamacrafy.com>";
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: [email],
+      reply_to: "ikemen@kamacrafy.com",
+      subject: "【VULKIT VBP101】メール通知登録が完了しました",
+      html: welcomeEmailHtml(email),
+      text: welcomeEmailText(email),
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return { configured: true, sent: true };
 }
 
 module.exports = async function handler(req, res) {
@@ -103,9 +188,17 @@ module.exports = async function handler(req, res) {
     };
 
     const storage = await insertSupabase(event);
+    let mail = { configured: false, sent: false };
+    try {
+      mail = await sendWelcomeEmail(email);
+    } catch (mailError) {
+      console.error("Welcome email failed", mailError);
+    }
     send(res, storage.configured ? 201 : 202, {
       ok: true,
       stored: storage.configured,
+      email_sent: mail.sent,
+      email_configured: mail.configured,
     });
   } catch (error) {
     send(res, 500, {
