@@ -1,3 +1,5 @@
+const RESEND_API_KEY_ENV = "RESEND_API_KEY";
+
 function send(res, status, body) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.statusCode = status;
@@ -119,7 +121,7 @@ function welcomeEmailText(email) {
 }
 
 async function sendWelcomeEmail(email) {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env[RESEND_API_KEY_ENV];
   if (!apiKey) return { configured: false, sent: false };
 
   const from = process.env.EMAIL_FROM || "KamaCrafy <ikemen@kamacrafy.com>";
@@ -188,7 +190,7 @@ module.exports = async function handler(req, res) {
     };
 
     const storage = await insertSupabase(event);
-    let mail = { configured: false, sent: false };
+    let mail = { configured: Boolean(process.env[RESEND_API_KEY_ENV]), sent: false };
     try {
       mail = await sendWelcomeEmail(email);
     } catch (mailError) {
