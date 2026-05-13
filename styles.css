@@ -352,16 +352,16 @@ img {
 .email-signup-form button {
   min-height: 48px;
   padding: 12px 22px;
-  border: 1px solid rgba(255, 190, 174, 0.78);
+  border: 1px solid rgba(176, 216, 255, 0.95);
   border-radius: 999px;
-  color: #fff;
-  background: linear-gradient(135deg, #ff4b4b 0%, #d80000 52%, #770000 100%);
+  color: #07324f;
+  background: linear-gradient(135deg, #eef8ff 0%, #bfe4ff 48%, #82c8f3 100%);
   font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
   font-size: clamp(14px, 1.35vw, 17px);
   font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 12px 30px rgba(220, 0, 0, 0.28);
+  box-shadow: 0 12px 30px rgba(86, 174, 230, 0.28);
 }
 
 .email-signup-form button:disabled {
