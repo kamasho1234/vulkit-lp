@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /analytics.html
 Disallow: /api/
 
 Sitemap: https://vulkit.kamacrafy.com/sitemap.xml

@@ -1,8 +1,5 @@
 (function () {
   const LINE_URL = "https://lin.ee/6xr7cz7";
-  const STORAGE_KEY = "vulkit.analytics.events";
-  const MAX_LOCAL_EVENTS = 500;
-  const VISITED_SECTIONS = new Set();
   const GOOGLE_ADS_ID = "AW-18159426814";
   const TIKTOK_PIXEL_ID = "D82KNMRC77U1B74FLJ8G";
   const GOOGLE_CONVERSIONS = {
@@ -145,41 +142,6 @@
     return context;
   }
 
-  function readLocalEvents() {
-    try {
-      return JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]");
-    } catch (error) {
-      return [];
-    }
-  }
-
-  function writeLocalEvent(event) {
-    try {
-      const events = readLocalEvents();
-      events.push(event);
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(events.slice(-MAX_LOCAL_EVENTS)));
-    } catch (error) {
-      // localStorage can be unavailable in private contexts. Network tracking still runs.
-    }
-  }
-
-  function sendToServer(event) {
-    if (!/^https?:$/.test(window.location.protocol)) return;
-
-    const body = JSON.stringify(event);
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon("/api/track", new Blob([body], { type: "application/json" }));
-      return;
-    }
-
-    window.fetch("/api/track", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body,
-      keepalive: true,
-    }).catch(() => {});
-  }
-
   function sendGoogleConversion(eventName, payload) {
     const sendTo = GOOGLE_CONVERSIONS[eventName];
     if (!sendTo || !window.gtag) return;
@@ -249,7 +211,7 @@
     }
   }
 
-  function track(eventName, details = {}, options = {}) {
+  function track(eventName, details = {}) {
     const event = {
       event_id: window.crypto?.randomUUID ? window.crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
       event_name: eventName,
@@ -258,8 +220,6 @@
       ...details,
     };
 
-    writeLocalEvent(event);
-    if (!options.skipServer) sendToServer(event);
     sendToAdTools(eventName, event);
 
     return event;
@@ -280,15 +240,6 @@
       link.href = buildLineRedirectUrl();
       link.addEventListener("click", () => {
         track("line_click", { cta_location: ctaLocation });
-      });
-    });
-  }
-
-  function setupCtaLinks() {
-    document.querySelectorAll("[data-cta-location]").forEach((link) => {
-      const ctaLocation = link.dataset.ctaLocation || "unknown";
-      link.addEventListener("click", () => {
-        track("cta_click", { cta_location: ctaLocation });
       });
     });
   }
@@ -322,36 +273,10 @@
     });
   }
 
-  function setupSectionTracking() {
-    if (!("IntersectionObserver" in window)) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const section = entry.target;
-          const sectionId = section.id || section.className.toString().split(" ")[0] || "section";
-          if (VISITED_SECTIONS.has(sectionId)) return;
-          VISITED_SECTIONS.add(sectionId);
-          track("section_view", {
-            section_id: sectionId,
-          });
-        });
-      },
-      { threshold: 0.45 },
-    );
-
-    document.querySelectorAll("main > section[id], main > section[class]").forEach((section) => {
-      observer.observe(section);
-    });
-  }
-
   window.VulkitAnalytics = {
     buildLineRedirectUrl,
     lineUrl: LINE_URL,
-    localStorageKey: STORAGE_KEY,
     openLine,
-    readLocalEvents,
     track,
   };
 
@@ -360,9 +285,6 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     setupLineLinks();
-    setupCtaLinks();
-    setupSectionTracking();
     setupPurchaseSuccessTracking();
-    track("page_view");
   });
 })();

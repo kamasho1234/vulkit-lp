@@ -110,7 +110,7 @@ module.exports = async function handler(req, res) {
     const session = event.data?.object || {};
     const metadata = session.metadata || {};
     const baseEvent = {
-      event_name: "checkout_completed",
+      event_name: "stock_reserved",
       occurred_at: new Date((event.created || Date.now() / 1000) * 1000).toISOString(),
       lp_variant: cleanText(metadata.lp_variant, 80) || "control",
       cta_location: cleanText(metadata.cta_location, 80) || "stripe_checkout",
@@ -131,13 +131,7 @@ module.exports = async function handler(req, res) {
 
     await insertSupabase(
       buildCheckoutEvent(baseEvent, {
-        event_id: cleanText(session.id || event.id, 80),
-      })
-    );
-    await insertSupabase(
-      buildCheckoutEvent(baseEvent, {
         event_id: cleanText(`stock_${session.id || event.id}`, 80),
-        event_name: "stock_reserved",
       })
     );
 

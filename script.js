@@ -291,7 +291,7 @@ checkoutEntryLinks.forEach((link) => {
       window.VulkitAnalytics.track("reserve_click", {
         ...getTrackingParams(),
         cta_location: link.dataset.ctaLocation || "reserve",
-      }, { skipServer: true });
+      });
     }
 
     window.setTimeout(() => {
@@ -299,24 +299,6 @@ checkoutEntryLinks.forEach((link) => {
     }, 350);
   });
 });
-
-async function trackCheckoutEvent(eventName, payload) {
-  try {
-    await fetch("/api/track", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      keepalive: true,
-      body: JSON.stringify({
-        event_id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-        event_name: eventName,
-        occurred_at: new Date().toISOString(),
-        ...payload,
-      }),
-    });
-  } catch (error) {
-    // Analytics must never block checkout.
-  }
-}
 
 checkoutButtons.forEach((button) => {
   button.addEventListener("click", async () => {
@@ -335,9 +317,8 @@ checkoutButtons.forEach((button) => {
     if (label) label.textContent = "決済画面を準備中...";
 
     if (window.VulkitAnalytics) {
-      window.VulkitAnalytics.track("reserve_click", payload, { skipServer: true });
+      window.VulkitAnalytics.track("reserve_click", payload);
     }
-    await trackCheckoutEvent("checkout_start", payload);
 
     try {
       const response = await fetch("/api/create-checkout-session", {
@@ -351,7 +332,6 @@ checkoutButtons.forEach((button) => {
       }
       window.location.href = data.url;
     } catch (error) {
-      await trackCheckoutEvent("checkout_error", payload);
       checkoutButtons.forEach((item) => {
         item.disabled = false;
         item.classList.remove("is-loading");
