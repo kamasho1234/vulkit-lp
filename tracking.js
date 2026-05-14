@@ -3,6 +3,33 @@
   const STORAGE_KEY = "vulkit.analytics.events";
   const MAX_LOCAL_EVENTS = 500;
   const VISITED_SECTIONS = new Set();
+  const GOOGLE_ADS_ID = "AW-18159426814";
+  const GOOGLE_CONVERSIONS = {
+    line_click: "AW-18159426814/aM9yCMiBzKwcEP65i9ND",
+    reserve_click: "AW-18159426814/19LbCMuu46wcEP65i9ND",
+    email_subscribe_success: "AW-18159426814/PZYwCOS146wcEP65i9ND",
+    purchase_success: "AW-18159426814/1aq7CK3w5awcEP65i9ND",
+  };
+
+  function initGoogleTag() {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () {
+      window.dataLayer.push(arguments);
+    };
+
+    if (!document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}"]`)) {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`;
+      document.head.appendChild(script);
+    }
+
+    if (!window.__vulkitGoogleAdsConfigured) {
+      window.gtag("js", new Date());
+      window.gtag("config", GOOGLE_ADS_ID);
+      window.__vulkitGoogleAdsConfigured = true;
+    }
+  }
 
   function getQuery() {
     return new URLSearchParams(window.location.search);
@@ -84,7 +111,31 @@
     }).catch(() => {});
   }
 
+  function sendGoogleConversion(eventName, payload) {
+    const sendTo = GOOGLE_CONVERSIONS[eventName];
+    if (!sendTo || !window.gtag) return;
+
+    const conversionPayload = {
+      send_to: sendTo,
+    };
+
+    if (eventName === "purchase_success") {
+      const value = Number(payload.value || 0);
+      if (Number.isFinite(value) && value > 0) {
+        conversionPayload.value = value;
+      }
+      conversionPayload.currency = payload.currency || "JPY";
+      if (payload.transaction_id) {
+        conversionPayload.transaction_id = String(payload.transaction_id);
+      }
+    }
+
+    window.gtag("event", "conversion", conversionPayload);
+  }
+
   function sendToAdTools(eventName, payload) {
+    sendGoogleConversion(eventName, payload);
+
     if (window.gtag) {
       window.gtag("event", eventName, payload);
     }
@@ -147,6 +198,35 @@
     });
   }
 
+  function setupPurchaseSuccessTracking() {
+    const successPage = document.body.classList.contains("checkout-success-page");
+    if (!successPage) return;
+
+    const params = getQuery();
+    const sessionId = params.get("session_id") || "";
+    if (!sessionId) return;
+
+    const storageKey = `vulkit.google_ads.purchase.${sessionId}`;
+    try {
+      if (window.localStorage.getItem(storageKey)) return;
+      window.localStorage.setItem(storageKey, "1");
+    } catch (error) {
+      // If storage is unavailable, still track the purchase once for this load.
+    }
+
+    const plan = params.get("plan") || "single";
+    const planValues = { single: 29800, double: 54600 };
+    const value = Number(params.get("value") || planValues[plan] || 0);
+
+    track("purchase_success", {
+      cta_location: "checkout_success",
+      result_target: plan,
+      transaction_id: sessionId,
+      value,
+      currency: "JPY",
+    });
+  }
+
   function setupSectionTracking() {
     if (!("IntersectionObserver" in window)) return;
 
@@ -180,10 +260,13 @@
     track,
   };
 
+  initGoogleTag();
+
   document.addEventListener("DOMContentLoaded", () => {
     setupLineLinks();
     setupCtaLinks();
     setupSectionTracking();
+    setupPurchaseSuccessTracking();
     track("page_view");
   });
 })();

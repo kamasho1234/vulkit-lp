@@ -282,8 +282,21 @@ function buildSecureCheckoutUrl(link) {
 }
 
 checkoutEntryLinks.forEach((link) => {
-  link.addEventListener("click", () => {
-    link.href = buildSecureCheckoutUrl(link);
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    const destination = buildSecureCheckoutUrl(link);
+    link.href = destination;
+
+    if (window.VulkitAnalytics) {
+      window.VulkitAnalytics.track("reserve_click", {
+        ...getTrackingParams(),
+        cta_location: link.dataset.ctaLocation || "reserve",
+      }, { skipServer: true });
+    }
+
+    window.setTimeout(() => {
+      window.location.href = destination;
+    }, 350);
   });
 });
 
@@ -321,6 +334,9 @@ checkoutButtons.forEach((button) => {
     const label = button.querySelector("em");
     if (label) label.textContent = "決済画面を準備中...";
 
+    if (window.VulkitAnalytics) {
+      window.VulkitAnalytics.track("reserve_click", payload, { skipServer: true });
+    }
     await trackCheckoutEvent("checkout_start", payload);
 
     try {
@@ -385,6 +401,12 @@ emailSignupForms.forEach((form) => {
       const successText = "登録ありがとうございます。先行販売情報をメールでお届けします。迷惑メール対策として ikemen@kamacrafy.com を受信許可してください。";
       if (message) message.textContent = successText;
       showSitePopup("success", "メール通知登録が完了しました", successText);
+      if (window.VulkitAnalytics) {
+        window.VulkitAnalytics.track("email_subscribe_success", {
+          cta_location: form.dataset.ctaLocation || "email_signup",
+          section_id: form.dataset.sectionId || "email_signup",
+        });
+      }
       if (input) input.value = "";
     } catch (error) {
       const errorText = "登録に失敗しました。時間をおいて再度お試しください。";

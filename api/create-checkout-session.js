@@ -78,7 +78,7 @@ async function createStripeSession({ req, plan, body }) {
   const baseUrl = getBaseUrl(req);
   const successUrl =
     process.env.STRIPE_SUCCESS_URL ||
-    `${baseUrl}/checkout-success.html?session_id={CHECKOUT_SESSION_ID}`;
+    `${baseUrl}/checkout-success.html?session_id={CHECKOUT_SESSION_ID}&plan=${encodeURIComponent(body.plan || "single")}&value=${plan.unitAmount}`;
   const cancelUrl =
     process.env.STRIPE_CANCEL_URL ||
     `${baseUrl}/checkout-cancel.html?plan=${encodeURIComponent(body.plan || "single")}`;
