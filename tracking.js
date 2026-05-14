@@ -4,11 +4,18 @@
   const MAX_LOCAL_EVENTS = 500;
   const VISITED_SECTIONS = new Set();
   const GOOGLE_ADS_ID = "AW-18159426814";
+  const TIKTOK_PIXEL_ID = "D82KNMRC77U1B74FLJ8G";
   const GOOGLE_CONVERSIONS = {
     line_click: "AW-18159426814/aM9yCMiBzKwcEP65i9ND",
     reserve_click: "AW-18159426814/19LbCMuu46wcEP65i9ND",
     email_subscribe_success: "AW-18159426814/PZYwCOS146wcEP65i9ND",
     purchase_success: "AW-18159426814/1aq7CK3w5awcEP65i9ND",
+  };
+  const TIKTOK_EVENTS = {
+    line_click: "Contact",
+    reserve_click: "InitiateCheckout",
+    email_subscribe_success: "CompleteRegistration",
+    purchase_success: "CompletePayment",
   };
 
   function initGoogleTag() {
@@ -29,6 +36,68 @@
       window.gtag("config", GOOGLE_ADS_ID);
       window.__vulkitGoogleAdsConfigured = true;
     }
+  }
+
+  function initTikTokPixel() {
+    if (window.__vulkitTikTokConfigured) return;
+
+    (function (w, d, t) {
+      w.TiktokAnalyticsObject = t;
+      const ttq = (w[t] = w[t] || []);
+      ttq.methods = [
+        "page",
+        "track",
+        "identify",
+        "instances",
+        "debug",
+        "on",
+        "off",
+        "once",
+        "ready",
+        "alias",
+        "group",
+        "enableCookie",
+        "disableCookie",
+        "holdConsent",
+        "revokeConsent",
+        "grantConsent",
+      ];
+      ttq.setAndDefer = function (target, method) {
+        target[method] = function () {
+          target.push([method].concat(Array.prototype.slice.call(arguments, 0)));
+        };
+      };
+      for (let i = 0; i < ttq.methods.length; i += 1) {
+        ttq.setAndDefer(ttq, ttq.methods[i]);
+      }
+      ttq.instance = function (pixelId) {
+        const instance = ttq._i[pixelId] || [];
+        for (let i = 0; i < ttq.methods.length; i += 1) {
+          ttq.setAndDefer(instance, ttq.methods[i]);
+        }
+        return instance;
+      };
+      ttq.load = function (pixelId, options) {
+        const url = "https://analytics.tiktok.com/i18n/pixel/events.js";
+        const script = d.createElement("script");
+        ttq._i = ttq._i || {};
+        ttq._i[pixelId] = [];
+        ttq._i[pixelId]._u = url;
+        ttq._t = ttq._t || {};
+        ttq._t[pixelId] = +new Date();
+        ttq._o = ttq._o || {};
+        ttq._o[pixelId] = options || {};
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = `${url}?sdkid=${pixelId}&lib=${t}`;
+        const firstScript = d.getElementsByTagName("script")[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+      };
+      ttq.load(TIKTOK_PIXEL_ID);
+      ttq.page();
+    })(window, document, "ttq");
+
+    window.__vulkitTikTokConfigured = true;
   }
 
   function getQuery() {
@@ -133,8 +202,34 @@
     window.gtag("event", "conversion", conversionPayload);
   }
 
+  function sendTikTokEvent(eventName, payload) {
+    const tiktokEventName = TIKTOK_EVENTS[eventName];
+    if (!tiktokEventName || !window.ttq) return;
+
+    const eventPayload = {
+      content_name: "VULKIT VBP101",
+      content_type: "product",
+      lp_variant: payload.lp_variant,
+      cta_location: payload.cta_location,
+    };
+
+    if (eventName === "purchase_success") {
+      const value = Number(payload.value || 0);
+      if (Number.isFinite(value) && value > 0) {
+        eventPayload.value = value;
+      }
+      eventPayload.currency = payload.currency || "JPY";
+      if (payload.transaction_id) {
+        eventPayload.order_id = String(payload.transaction_id);
+      }
+    }
+
+    window.ttq.track(tiktokEventName, eventPayload);
+  }
+
   function sendToAdTools(eventName, payload) {
     sendGoogleConversion(eventName, payload);
+    sendTikTokEvent(eventName, payload);
 
     if (window.gtag) {
       window.gtag("event", eventName, payload);
@@ -261,6 +356,7 @@
   };
 
   initGoogleTag();
+  initTikTokPixel();
 
   document.addEventListener("DOMContentLoaded", () => {
     setupLineLinks();
