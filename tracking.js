@@ -2,6 +2,8 @@
   const LINE_URL = "https://lin.ee/6xr7cz7";
   const GOOGLE_ADS_ID = "AW-18159426814";
   const TIKTOK_PIXEL_ID = "D82KNMRC77U1B74FLJ8G";
+  const PRODUCT_ID = "VULKIT-VBP101";
+  const PRODUCT_NAME = "VULKIT VBP101";
   const GOOGLE_CONVERSIONS = {
     line_click: "AW-18159426814/aM9yCMiBzKwcEP65i9ND",
     reserve_click: "AW-18159426814/19LbCMuu46wcEP65i9ND",
@@ -169,7 +171,9 @@
     if (!tiktokEventName || !window.ttq) return;
 
     const eventPayload = {
-      content_name: "VULKIT VBP101",
+      content_id: PRODUCT_ID,
+      content_ids: [PRODUCT_ID],
+      content_name: PRODUCT_NAME,
       content_type: "product",
       lp_variant: payload.lp_variant,
       cta_location: payload.cta_location,
