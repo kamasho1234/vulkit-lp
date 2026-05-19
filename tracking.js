@@ -12,6 +12,7 @@
   };
   const TIKTOK_EVENTS = {
     line_click: "Contact",
+    reserve_cta_click: "ClickButton",
     reserve_click: "InitiateCheckout",
     email_subscribe_success: "CompleteRegistration",
     purchase_success: "CompletePayment",
