@@ -287,13 +287,6 @@ checkoutEntryLinks.forEach((link) => {
     const destination = buildSecureCheckoutUrl(link);
     link.href = destination;
 
-    if (window.VulkitAnalytics) {
-      window.VulkitAnalytics.track("reserve_click", {
-        ...getTrackingParams(),
-        cta_location: link.dataset.ctaLocation || "reserve",
-      });
-    }
-
     window.setTimeout(() => {
       window.location.href = destination;
     }, 350);
