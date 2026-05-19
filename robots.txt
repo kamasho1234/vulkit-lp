@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /email-admin.html
 Disallow: /api/
 
 Sitemap: https://vulkit.kamacrafy.com/sitemap.xml

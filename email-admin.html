@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>メール通知登録者一覧 | VULKIT VBP101</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #151515;
+        --muted: #6f6a60;
+        --line: #e6ddca;
+        --gold: #b9892e;
+        --gold-dark: #7a5315;
+        --paper: #fffaf0;
+        --bg: #f6f0e4;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, rgba(212, 178, 101, .24), transparent 34rem),
+          linear-gradient(180deg, #fffdf8 0%, var(--bg) 100%);
+        color: var(--ink);
+        font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      }
+
+      main {
+        width: min(1180px, calc(100% - 28px));
+        margin: 0 auto;
+        padding: 34px 0 46px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 18px;
+        padding: 26px;
+        border: 1px solid rgba(185, 137, 46, .34);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .82);
+        box-shadow: 0 22px 70px rgba(70, 48, 12, .12);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--gold-dark);
+        font-family: "Times New Roman", "Yu Mincho", serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+        font-size: clamp(28px, 4vw, 48px);
+        letter-spacing: .04em;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 10px;
+        align-items: center;
+        margin-top: 6px;
+      }
+
+      input,
+      button {
+        min-height: 44px;
+        border-radius: 999px;
+        font: inherit;
+      }
+
+      input {
+        width: 100%;
+        border: 1px solid var(--line);
+        padding: 0 16px;
+        background: #fff;
+      }
+
+      button {
+        border: 0;
+        padding: 0 18px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .primary {
+        background: linear-gradient(135deg, #b80d1b, #e02a38);
+        color: #fff;
+      }
+
+      .secondary {
+        border: 1px solid var(--gold);
+        background: #fff8e4;
+        color: var(--gold-dark);
+      }
+
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 18px 0;
+      }
+
+      .summary article {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, .86);
+      }
+
+      .summary span {
+        display: block;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .summary strong {
+        display: block;
+        margin-top: 6px;
+        color: var(--gold-dark);
+        font-family: "Times New Roman", serif;
+        font-size: 34px;
+      }
+
+      .panel {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .9);
+        box-shadow: 0 16px 56px rgba(58, 39, 8, .08);
+      }
+
+      .panel-head {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .panel-head h2 {
+        margin: 0;
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+        font-size: 20px;
+      }
+
+      .status {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        min-width: 1040px;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #eee6d6;
+        text-align: left;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: #17130d;
+        color: #f5dc97;
+        font-size: 12px;
+        letter-spacing: .08em;
+      }
+
+      td.email {
+        font-weight: 700;
+      }
+
+      .empty {
+        padding: 28px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .error {
+        color: #b80d1b;
+      }
+
+      @media (max-width: 760px) {
+        main {
+          width: min(100% - 18px, 1180px);
+          padding-top: 18px;
+        }
+
+        .hero {
+          padding: 18px;
+        }
+
+        .controls {
+          grid-template-columns: 1fr;
+        }
+
+        .summary {
+          grid-template-columns: 1fr;
+        }
+
+        .panel-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">VULKIT VBP101</p>
+        <h1>メール通知登録者一覧</h1>
+        <p class="lead">LPのメール通知フォームから登録されたメールアドレスを確認できます。管理キーをURLに付けるか、下の入力欄に入れて読み込んでください。</p>
+        <div class="controls">
+          <input id="admin-key" type="password" autocomplete="off" placeholder="管理キーを入力">
+          <button class="primary" id="load-button" type="button">一覧を読み込む</button>
+          <button class="secondary" id="csv-button" type="button" disabled>CSVダウンロード</button>
+        </div>
+      </section>
+
+      <section class="summary" aria-label="登録状況">
+        <article>
+          <span>ユニークメール</span>
+          <strong id="unique-count">-</strong>
+        </article>
+        <article>
+          <span>登録イベント総数</span>
+          <strong id="total-count">-</strong>
+        </article>
+        <article>
+          <span>最終更新</span>
+          <strong id="updated-at" style="font-size:20px;">-</strong>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>登録者リスト</h2>
+          <p class="status" id="status">未読み込み</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>登録日時</th>
+                <th>メール</th>
+                <th>登録回数</th>
+                <th>LP</th>
+                <th>CTA</th>
+                <th>流入元</th>
+                <th>キャンペーン</th>
+                <th>広告素材</th>
+                <th>端末</th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr><td class="empty" colspan="9">管理キーを入力して読み込んでください。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const keyInput = document.querySelector("#admin-key");
+      const loadButton = document.querySelector("#load-button");
+      const csvButton = document.querySelector("#csv-button");
+      const statusEl = document.querySelector("#status");
+      const rowsEl = document.querySelector("#rows");
+      const uniqueCountEl = document.querySelector("#unique-count");
+      const totalCountEl = document.querySelector("#total-count");
+      const updatedAtEl = document.querySelector("#updated-at");
+      let currentRows = [];
+
+      keyInput.value = params.get("key") || window.localStorage.getItem("vulkit.emailAdminKey") || "";
+
+      function formatDate(value) {
+        if (!value) return "";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return value;
+        return new Intl.DateTimeFormat("ja-JP", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(date);
+      }
+
+      function escapeHtml(value) {
+        return String(value || "").replace(/[&<>"']/g, (char) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          "\"": "&quot;",
+          "'": "&#39;",
+        })[char]);
+      }
+
+      function renderRows(rows) {
+        if (!rows.length) {
+          rowsEl.innerHTML = '<tr><td class="empty" colspan="9">登録データはまだありません。</td></tr>';
+          return;
+        }
+
+        rowsEl.innerHTML = rows.map((row) => `
+          <tr>
+            <td>${escapeHtml(formatDate(row.registered_at))}</td>
+            <td class="email">${escapeHtml(row.email)}</td>
+            <td>${escapeHtml(row.registrations || 1)}</td>
+            <td>${escapeHtml(row.lp_variant)}</td>
+            <td>${escapeHtml(row.cta_location)}</td>
+            <td>${escapeHtml(row.utm_source || row.utm_medium)}</td>
+            <td>${escapeHtml(row.utm_campaign)}</td>
+            <td>${escapeHtml(row.utm_content || row.creative || row.ad)}</td>
+            <td>${escapeHtml(row.device)}</td>
+          </tr>
+        `).join("");
+      }
+
+      async function loadSubscribers() {
+        const key = keyInput.value.trim();
+        if (!key) {
+          statusEl.textContent = "管理キーを入力してください。";
+          statusEl.classList.add("error");
+          return;
+        }
+
+        statusEl.textContent = "読み込み中...";
+        statusEl.classList.remove("error");
+        loadButton.disabled = true;
+        csvButton.disabled = true;
+
+        try {
+          const response = await fetch(`/api/email-subscribers?key=${encodeURIComponent(key)}&limit=2000`, {
+            cache: "no-store",
+          });
+          const data = await response.json();
+          if (!response.ok || !data.ok) throw new Error(data.error || "load failed");
+
+          window.localStorage.setItem("vulkit.emailAdminKey", key);
+          currentRows = data.unique_rows || [];
+          renderRows(currentRows);
+          uniqueCountEl.textContent = String(data.unique_emails || currentRows.length);
+          totalCountEl.textContent = String(data.total_registrations || 0);
+          updatedAtEl.textContent = formatDate(data.updated_at);
+          statusEl.textContent = `${currentRows.length}件を表示中`;
+          csvButton.disabled = currentRows.length === 0;
+        } catch (error) {
+          currentRows = [];
+          renderRows([]);
+          uniqueCountEl.textContent = "-";
+          totalCountEl.textContent = "-";
+          updatedAtEl.textContent = "-";
+          statusEl.textContent = "読み込みに失敗しました。管理キーを確認してください。";
+          statusEl.classList.add("error");
+        } finally {
+          loadButton.disabled = false;
+        }
+      }
+
+      function downloadCsv() {
+        const headers = ["registered_at", "email", "registrations", "lp_variant", "cta_location", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "utm_id", "adset", "ad", "creative", "device", "page_path", "referrer"];
+        const lines = [headers.join(",")].concat(currentRows.map((row) => headers.map((key) => {
+          const value = row[key] === undefined || row[key] === null ? "" : String(row[key]);
+          return `"${value.replace(/"/g, '""')}"`;
+        }).join(",")));
+        const blob = new Blob(["\ufeff", lines.join("\n")], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `vulkit-email-subscribers-${new Date().toISOString().slice(0, 10)}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      loadButton.addEventListener("click", loadSubscribers);
+      csvButton.addEventListener("click", downloadCsv);
+      if (params.get("key")) loadSubscribers();
+    </script>
+  </body>
+</html>
