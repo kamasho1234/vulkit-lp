@@ -2683,7 +2683,7 @@ img {
 
 .secure-checkout-confirm {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(10px, 1.5vw, 16px);
   width: 100%;
 }
@@ -2712,6 +2712,19 @@ img {
   font-size: clamp(12.5px, 1.4vw, 14px);
   font-weight: 800;
   line-height: 1.65;
+}
+
+.secure-checkout-payment-card {
+  grid-column: 1 / -1;
+  min-height: 0;
+  padding: clamp(8px, 1.5vw, 14px);
+}
+
+.secure-checkout-payment-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
 }
 
 .secure-checkout-prefill {
