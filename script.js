@@ -6,6 +6,7 @@ const countdownBlocks = [...document.querySelectorAll("[data-countdown-target]")
 const stockAlerts = [...document.querySelectorAll("[data-benefit-stock-remaining]")];
 const checkoutEntryLinks = [...document.querySelectorAll("[data-checkout-entry]")];
 const checkoutButtons = [...document.querySelectorAll("[data-checkout-plan]")];
+const checkoutPrefillForm = document.querySelector("[data-checkout-prefill]");
 const emailSignupForms = [...document.querySelectorAll("[data-email-signup]")];
 const youtubeFrames = [...document.querySelectorAll('iframe[src*="youtube.com/embed"]')];
 let activeTop = 0;
@@ -30,6 +31,37 @@ function forceMuteEmbeddedMedia() {
 
 function isValidEmailInput(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim());
+}
+
+function getCheckoutCustomerPrefill() {
+  if (!checkoutPrefillForm) return null;
+
+  if (!checkoutPrefillForm.reportValidity()) {
+    return false;
+  }
+
+  const data = new FormData(checkoutPrefillForm);
+  const customer = {
+    name: String(data.get("name") || "").trim(),
+    phone: String(data.get("phone") || "").trim(),
+    email: String(data.get("email") || "").trim(),
+    address: {
+      country: "JP",
+      postal_code: String(data.get("postal_code") || "").trim(),
+      state: String(data.get("state") || "").trim(),
+      city: String(data.get("city") || "").trim(),
+      line1: String(data.get("line1") || "").trim(),
+      line2: String(data.get("line2") || "").trim(),
+    },
+  };
+
+  if (customer.email && !isValidEmailInput(customer.email)) {
+    checkoutPrefillForm.querySelector('input[name="email"]')?.focus();
+    window.alert("メールアドレスの形式を確認してください。");
+    return false;
+  }
+
+  return customer;
 }
 
 function showSitePopup(type, title, text) {
@@ -325,10 +357,14 @@ checkoutEntryLinks.forEach((link) => {
 checkoutButtons.forEach((button) => {
   button.addEventListener("click", async () => {
     const originalText = button.querySelector("em")?.textContent || "";
+    const customer = getCheckoutCustomerPrefill();
+    if (customer === false) return;
+
     const payload = {
       ...getTrackingParams(),
       plan: button.dataset.checkoutPlan || "single",
       cta_location: button.dataset.ctaLocation || "checkout",
+      customer,
     };
 
     checkoutButtons.forEach((item) => {

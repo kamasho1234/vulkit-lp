@@ -27,6 +27,48 @@
         <img src="/assets/lp/checkout/secure-checkout-product.webp" alt="VULKIT VBP101" width="1254" height="1254" decoding="async" fetchpriority="high">
       </section>
 
+      <section class="secure-checkout-prefill" aria-label="Shipping information">
+        <div class="secure-checkout-prefill__header">
+          <p>SHIPPING INFORMATION</p>
+          <h2>&#12362;&#23626;&#12369;&#20808;&#24773;&#22577;</h2>
+          <span>Stripe&#30011;&#38754;&#12398;&#20303;&#25152;&#27404;&#12395;&#20107;&#21069;&#20837;&#21147;&#12373;&#12428;&#12414;&#12377;&#12290;</span>
+        </div>
+        <form class="checkout-prefill-form" data-checkout-prefill>
+          <label>
+            <span>&#12362;&#21517;&#21069;</span>
+            <input type="text" name="name" autocomplete="name" required placeholder="&#23665;&#30000; &#22826;&#37070;">
+          </label>
+          <label>
+            <span>&#38651;&#35441;&#30058;&#21495;</span>
+            <input type="tel" name="phone" autocomplete="tel" required placeholder="09012345678">
+          </label>
+          <label>
+            <span>&#12513;&#12540;&#12523;&#12450;&#12489;&#12524;&#12473;&#65288;&#20219;&#24847;&#65289;</span>
+            <input type="email" name="email" autocomplete="email" placeholder="name@example.com">
+          </label>
+          <label>
+            <span>&#37109;&#20415;&#30058;&#21495;</span>
+            <input type="text" name="postal_code" autocomplete="postal-code" inputmode="numeric" required placeholder="1234567">
+          </label>
+          <label>
+            <span>&#37117;&#36947;&#24220;&#30476;</span>
+            <input type="text" name="state" autocomplete="address-level1" required placeholder="&#26481;&#20140;&#37117;">
+          </label>
+          <label>
+            <span>&#24066;&#21306;&#30010;&#26449;</span>
+            <input type="text" name="city" autocomplete="address-level2" required placeholder="&#28171;&#35895;&#21306;">
+          </label>
+          <label class="checkout-prefill-form__wide">
+            <span>&#30010;&#21517;&#12539;&#30058;&#22320;</span>
+            <input type="text" name="line1" autocomplete="address-line1" required placeholder="1-2-3">
+          </label>
+          <label class="checkout-prefill-form__wide">
+            <span>&#24314;&#29289;&#21517;&#12539;&#37096;&#23627;&#30058;&#21495;&#65288;&#20219;&#24847;&#65289;</span>
+            <input type="text" name="line2" autocomplete="address-line2" placeholder="VULKIT&#12510;&#12531;&#12471;&#12519;&#12531;101">
+          </label>
+        </form>
+      </section>
+
       <section class="checkout-options secure-checkout-options" id="checkout-options" aria-label="Secure checkout plan selection">
         <div class="checkout-plan-grid secure-checkout-plan-grid">
           <button class="checkout-plan-card secure-checkout-plan-card" type="button" data-checkout-plan="single" data-cta-location="secure_checkout_single" aria-label="Reserve one item">

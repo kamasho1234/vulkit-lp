@@ -2681,6 +2681,90 @@ img {
   filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.14));
 }
 
+.secure-checkout-prefill {
+  display: grid;
+  gap: clamp(16px, 2.4vw, 24px);
+  width: 100%;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(185, 128, 24, 0.22);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 244, 235, 0.9)),
+    radial-gradient(circle at top, rgba(220, 177, 87, 0.18), transparent 48%);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.09);
+}
+
+.secure-checkout-prefill__header {
+  display: grid;
+  gap: 5px;
+  text-align: center;
+}
+
+.secure-checkout-prefill__header p,
+.secure-checkout-prefill__header h2,
+.secure-checkout-prefill__header span {
+  margin: 0;
+}
+
+.secure-checkout-prefill__header p {
+  color: #b27b18;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(11px, 1.3vw, 13px);
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.secure-checkout-prefill__header h2 {
+  color: #141414;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(24px, 3.2vw, 38px);
+  letter-spacing: 0.08em;
+}
+
+.secure-checkout-prefill__header span {
+  color: #625947;
+  font-size: clamp(13px, 1.6vw, 15px);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.checkout-prefill-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.8vw, 18px);
+}
+
+.checkout-prefill-form label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  color: #2a2722;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.checkout-prefill-form__wide {
+  grid-column: 1 / -1;
+}
+
+.checkout-prefill-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  color: #171717;
+  font: inherit;
+  font-weight: 700;
+  border: 1px solid rgba(143, 104, 40, 0.24);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.checkout-prefill-form input:focus {
+  outline: 2px solid rgba(191, 133, 20, 0.26);
+  border-color: rgba(176, 116, 10, 0.58);
+}
+
 .secure-checkout-options {
   width: 100%;
   margin-bottom: 0;
@@ -4151,6 +4235,21 @@ img {
 
   .secure-checkout-hero img {
     width: min(420px, 100%);
+  }
+
+  .secure-checkout-prefill {
+    gap: 14px;
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+
+  .checkout-prefill-form {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .checkout-prefill-form input {
+    min-height: 46px;
   }
 
   .secure-checkout-options {

@@ -69,6 +69,75 @@ function buildProductDescription(plan) {
   return `\u901a\u5e38\u4fa1\u683c${regularAmount}\u5186\u304b\u3089\u5148\u884c\u4e88\u7d04\u7279\u5178${discountAmount}\u5186\u5272\u5f15\u3092\u9069\u7528\u3002${plan.quantity}\u500b\u306e\u5148\u884c\u4e88\u7d04\u3002`;
 }
 
+function normalizeCustomerPrefill(customer) {
+  if (!customer || typeof customer !== "object") return null;
+
+  const address = customer.address && typeof customer.address === "object" ? customer.address : {};
+  const normalized = {
+    name: cleanText(customer.name, 120),
+    email: cleanText(customer.email, 180),
+    phone: cleanText(customer.phone, 40),
+    address: {
+      country: "JP",
+      postal_code: cleanText(address.postal_code, 20),
+      state: cleanText(address.state, 80),
+      city: cleanText(address.city, 100),
+      line1: cleanText(address.line1, 180),
+      line2: cleanText(address.line2, 180),
+    },
+  };
+
+  if (
+    !normalized.name ||
+    !normalized.phone ||
+    !normalized.address.postal_code ||
+    !normalized.address.state ||
+    !normalized.address.city ||
+    !normalized.address.line1
+  ) {
+    return null;
+  }
+
+  return normalized;
+}
+
+async function createStripeCustomer(secretKey, customer) {
+  const params = new URLSearchParams();
+  appendParam(params, "name", customer.name);
+  appendParam(params, "email", customer.email);
+  appendParam(params, "phone", customer.phone);
+  appendParam(params, "address[country]", customer.address.country);
+  appendParam(params, "address[postal_code]", customer.address.postal_code);
+  appendParam(params, "address[state]", customer.address.state);
+  appendParam(params, "address[city]", customer.address.city);
+  appendParam(params, "address[line1]", customer.address.line1);
+  appendParam(params, "address[line2]", customer.address.line2);
+  appendParam(params, "shipping[name]", customer.name);
+  appendParam(params, "shipping[phone]", customer.phone);
+  appendParam(params, "shipping[address][country]", customer.address.country);
+  appendParam(params, "shipping[address][postal_code]", customer.address.postal_code);
+  appendParam(params, "shipping[address][state]", customer.address.state);
+  appendParam(params, "shipping[address][city]", customer.address.city);
+  appendParam(params, "shipping[address][line1]", customer.address.line1);
+  appendParam(params, "shipping[address][line2]", customer.address.line2);
+
+  const response = await fetch("https://api.stripe.com/v1/customers", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${secretKey}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: params.toString(),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data?.error?.message || `Stripe customer error: ${response.status}`);
+  }
+
+  return data;
+}
+
 async function createStripeSession({ req, plan, body }) {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   if (!secretKey) {
@@ -84,6 +153,15 @@ async function createStripeSession({ req, plan, body }) {
     `${baseUrl}/checkout-cancel.html?plan=${encodeURIComponent(body.plan || "single")}`;
 
   const params = new URLSearchParams();
+  const customer = normalizeCustomerPrefill(body.customer);
+  if (customer) {
+    const stripeCustomer = await createStripeCustomer(secretKey, customer);
+    appendParam(params, "customer", stripeCustomer.id);
+    appendParam(params, "customer_update[address]", "auto");
+    appendParam(params, "customer_update[name]", "auto");
+    appendParam(params, "customer_update[shipping]", "auto");
+  }
+
   appendParam(params, "mode", "payment");
   appendParam(params, "success_url", successUrl);
   appendParam(params, "cancel_url", cancelUrl);
