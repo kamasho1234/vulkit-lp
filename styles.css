@@ -2681,6 +2681,39 @@ img {
   filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.14));
 }
 
+.secure-checkout-confirm {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.5vw, 16px);
+  width: 100%;
+}
+
+.secure-checkout-confirm div {
+  display: grid;
+  gap: 8px;
+  min-height: 116px;
+  padding: clamp(15px, 2vw, 20px);
+  border: 1px solid rgba(179, 122, 20, 0.24);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 239, 0.94));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.08);
+}
+
+.secure-checkout-confirm strong {
+  color: #191919;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(18px, 2vw, 24px);
+  letter-spacing: 0.06em;
+}
+
+.secure-checkout-confirm span {
+  color: #5e5545;
+  font-size: clamp(12.5px, 1.4vw, 14px);
+  font-weight: 800;
+  line-height: 1.65;
+}
+
 .secure-checkout-prefill {
   display: grid;
   gap: clamp(16px, 2.4vw, 24px);
@@ -2778,12 +2811,48 @@ img {
 }
 
 .secure-checkout-options {
+  display: grid;
+  gap: clamp(16px, 2.4vw, 24px);
   width: 100%;
   margin-bottom: 0;
   padding: 0;
   border: 0;
   background: transparent;
   box-shadow: none;
+}
+
+.secure-checkout-decision {
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+
+.secure-checkout-decision p,
+.secure-checkout-decision h2,
+.secure-checkout-decision span {
+  margin: 0;
+}
+
+.secure-checkout-decision p {
+  color: #b27b18;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(11px, 1.3vw, 13px);
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.secure-checkout-decision h2 {
+  color: #141414;
+  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(25px, 3.4vw, 40px);
+  letter-spacing: 0.08em;
+}
+
+.secure-checkout-decision span {
+  color: #554c3c;
+  font-size: clamp(13px, 1.6vw, 16px);
+  font-weight: 800;
+  line-height: 1.75;
 }
 
 .secure-checkout-plan-grid {
@@ -2825,8 +2894,10 @@ img {
   min-height: clamp(52px, 5.4vw, 64px);
   margin: 0 auto clamp(6px, 1vw, 10px);
   color: #fff;
-  font-size: clamp(18px, 2.2vw, 26px);
+  font-size: clamp(16px, 1.8vw, 22px);
   letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-align: center;
   background: linear-gradient(135deg, #ff3838 0%, #d90000 42%, #ffaaa0 50%, #a80000 76%, #670000 100%);
   box-shadow:
     0 14px 34px rgba(210, 0, 0, 0.32),
@@ -2851,7 +2922,25 @@ img {
   font-weight: 700;
 }
 
+.secure-checkout-stripe-note {
+  margin: 0;
+  padding: clamp(15px, 2vw, 20px);
+  color: #2a251c;
+  font-size: clamp(13px, 1.5vw, 15px);
+  font-weight: 900;
+  line-height: 1.7;
+  text-align: center;
+  border: 1px solid rgba(16, 16, 16, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
 .secure-checkout-support {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   margin: 0;
   color: #565656;
   font-size: clamp(13px, 1.5vw, 15px);
@@ -2861,9 +2950,17 @@ img {
 }
 
 .secure-checkout-support a {
-  color: #04a83b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 18px;
+  color: #fff;
   font-weight: 900;
   text-decoration: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #06c755, #04a83b);
+  box-shadow: 0 12px 24px rgba(4, 168, 59, 0.24);
 }
 
 .checkout-status {
@@ -4249,6 +4346,16 @@ img {
     width: min(420px, 100%);
   }
 
+  .secure-checkout-confirm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .secure-checkout-confirm div {
+    min-height: 0;
+    padding: 14px 12px;
+  }
+
   .secure-checkout-prefill {
     gap: 14px;
     padding: 18px 14px;
@@ -4287,6 +4394,16 @@ img {
   .secure-checkout-plan-card em {
     width: min(330px, 92%);
     min-height: 52px;
-    font-size: 19px;
+    font-size: 16px;
+  }
+
+  .secure-checkout-support {
+    display: grid;
+    gap: 10px;
+  }
+
+  .secure-checkout-support a {
+    width: min(320px, 100%);
+    margin: 0 auto;
   }
 }
