@@ -35,12 +35,70 @@ function isValidEmailInput(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim());
 }
 
+function setCheckoutFieldError(input, hasError) {
+  if (!input) return;
+  input.classList.toggle("is-field-error", Boolean(hasError));
+  input.closest("label")?.classList.toggle("is-field-error", Boolean(hasError));
+}
+
+function clearCheckoutFieldErrors() {
+  checkoutPrefillForm?.querySelectorAll(".is-field-error").forEach((item) => {
+    item.classList.remove("is-field-error");
+  });
+}
+
+function validateCheckoutPrefill() {
+  if (!checkoutPrefillForm) return true;
+  clearCheckoutFieldErrors();
+
+  const requiredFields = [
+    ["name", "お名前"],
+    ["phone", "電話番号"],
+    ["postal_code", "郵便番号"],
+    ["state", "都道府県"],
+    ["city", "市区町村"],
+    ["line1", "町名・番地"],
+  ];
+  const missingLabels = [];
+  let firstInvalidInput = null;
+
+  requiredFields.forEach(([name, label]) => {
+    const input = checkoutPrefillForm.querySelector(`[name="${name}"]`);
+    const value = String(input?.value || "").trim();
+    const isInvalid = !value || (name === "postal_code" && value.replace(/\D/g, "").length !== 7);
+    setCheckoutFieldError(input, isInvalid);
+    if (isInvalid) {
+      missingLabels.push(label);
+      firstInvalidInput ||= input;
+    }
+  });
+
+  const emailInput = checkoutPrefillForm.querySelector('input[name="email"]');
+  const email = String(emailInput?.value || "").trim();
+  if (email && !isValidEmailInput(email)) {
+    setCheckoutFieldError(emailInput, true);
+    missingLabels.push("メールアドレスの形式");
+    firstInvalidInput ||= emailInput;
+  }
+
+  if (missingLabels.length) {
+    showSitePopup(
+      "error",
+      "お届け先情報を確認してください",
+      `不足または修正が必要な項目: ${missingLabels.join("、")}`
+    );
+    firstInvalidInput?.scrollIntoView({ behavior: "smooth", block: "center" });
+    window.setTimeout(() => firstInvalidInput?.focus(), 320);
+    return false;
+  }
+
+  return true;
+}
+
 function getCheckoutCustomerPrefill() {
   if (!checkoutPrefillForm) return null;
 
-  if (!checkoutPrefillForm.reportValidity()) {
-    return false;
-  }
+  if (!validateCheckoutPrefill()) return false;
 
   const data = new FormData(checkoutPrefillForm);
   const customer = {
@@ -58,8 +116,9 @@ function getCheckoutCustomerPrefill() {
   };
 
   if (customer.email && !isValidEmailInput(customer.email)) {
+    setCheckoutFieldError(checkoutPrefillForm.querySelector('input[name="email"]'), true);
     checkoutPrefillForm.querySelector('input[name="email"]')?.focus();
-    window.alert("メールアドレスの形式を確認してください。");
+    showSitePopup("error", "お届け先情報を確認してください", "メールアドレスの形式を確認してください。");
     return false;
   }
 
@@ -456,6 +515,13 @@ checkoutButtons.forEach((button) => {
 
 if (checkoutPrefillForm) {
   const zipInput = checkoutPrefillForm.querySelector('input[name="postal_code"]');
+  checkoutPrefillForm.querySelectorAll("input").forEach((input) => {
+    input.addEventListener("input", () => {
+      if (input.value.trim()) {
+        setCheckoutFieldError(input, false);
+      }
+    });
+  });
   zipInput?.addEventListener("input", () => {
     window.clearTimeout(checkoutAddressTimer);
     checkoutAddressTimer = window.setTimeout(autofillCheckoutAddress, 360);

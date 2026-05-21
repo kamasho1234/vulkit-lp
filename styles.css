@@ -2776,6 +2776,10 @@ img {
   font-weight: 900;
 }
 
+.checkout-prefill-form label.is-field-error span {
+  color: #b51616;
+}
+
 .checkout-address-status {
   min-height: 1.4em;
   color: #8a631d;
@@ -2808,6 +2812,19 @@ img {
 .checkout-prefill-form input:focus {
   outline: 2px solid rgba(191, 133, 20, 0.26);
   border-color: rgba(176, 116, 10, 0.58);
+}
+
+.checkout-prefill-form input.is-field-error {
+  border-color: #e01919;
+  background: #fff6f6;
+  box-shadow:
+    0 0 0 3px rgba(224, 25, 25, 0.13),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.checkout-prefill-form input.is-field-error:focus {
+  outline: 2px solid rgba(224, 25, 25, 0.24);
+  border-color: #cf0d0d;
 }
 
 .secure-checkout-options {
