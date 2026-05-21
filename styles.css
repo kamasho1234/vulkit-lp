@@ -2738,20 +2738,6 @@ img {
   line-height: 1.65;
 }
 
-.secure-checkout-payment-card {
-  display: block;
-  grid-column: 1 / -1;
-  min-height: 0;
-  padding: clamp(8px, 1.5vw, 14px);
-}
-
-.secure-checkout-payment-card img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-}
-
 .secure-checkout-prefill {
   display: grid;
   gap: clamp(16px, 2.4vw, 24px);
@@ -2978,16 +2964,57 @@ img {
 }
 
 .secure-checkout-stripe-note {
+  display: grid;
+  gap: clamp(14px, 2vw, 20px);
   margin: 0;
-  padding: clamp(15px, 2vw, 20px);
-  color: #2a251c;
-  font-size: clamp(13px, 1.5vw, 15px);
-  font-weight: 900;
-  line-height: 1.7;
-  text-align: center;
+  padding: clamp(18px, 2.6vw, 28px);
+  color: #1d1d1d;
   border: 1px solid rgba(16, 16, 16, 0.08);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+}
+
+.secure-checkout-stripe-note__text {
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+
+.secure-checkout-stripe-note__text p,
+.secure-checkout-stripe-note__text h2,
+.secure-checkout-stripe-note__text span {
+  margin: 0;
+}
+
+.secure-checkout-stripe-note__text p {
+  color: #8b6318;
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  font-size: clamp(11px, 1.3vw, 13px);
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.secure-checkout-stripe-note__text h2 {
+  color: #141414;
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.secure-checkout-stripe-note__text span {
+  color: #555;
+  font-size: clamp(13px, 1.55vw, 15px);
+  font-weight: 800;
+  line-height: 1.75;
+}
+
+.secure-checkout-stripe-note img {
+  display: block;
+  width: 100%;
+  height: auto;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.72);
 }
 
 .secure-checkout-support {
