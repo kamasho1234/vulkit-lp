@@ -22,6 +22,7 @@ let floatingCouponWasDragged = false;
 let sitePopupTimer;
 let checkoutAddressTimer;
 let lastCheckoutAddressZip = "";
+let chatbotLogCounter = 0;
 
 function forceMuteEmbeddedMedia() {
   document.querySelectorAll("video").forEach((video) => {
@@ -210,22 +211,22 @@ function showSitePopup(type, title, text) {
 
 const chatbotAnswers = [
   {
-    keywords: ["配送", "発送", "いつ", "届", "納期", "6月"],
+    keywords: ["配送", "発送", "いつ", "届", "納期", "6月", "送料", "運送", "宅配"],
     title: "発送予定について",
-    text: "2026年6月22日より順次発送予定です。送料は全国一律無料で、当社指定の配送業者でお届けします。",
+    text: "送料は全国一律無料です。発送は2026年6月22日より順次予定しており、ヤマト運輸・佐川急便・日本郵便など当社指定の配送業者でお届けします。",
   },
   {
-    keywords: ["支払い", "決済", "カード", "paypay", "銀行", "stripe"],
+    keywords: ["支払い", "決済", "カード", "paypay", "銀行", "stripe", "visa", "master", "jcb", "amex", "discover", "diners"],
     title: "お支払い方法について",
-    text: "先行予約ボタンを押すと、Stripeの安全な決済画面へ移動します。クレジット・デビットカード、銀行振込、PayPayなどから選択できます。",
+    text: "先行予約ボタンを押すと、SSL暗号化通信に対応したStripeの安全な決済画面へ移動します。クレジット・デビットカード、銀行振込、PayPayから選択できます。決済情報はStripeで安全に処理されます。",
   },
   {
     keywords: ["返品", "交換", "不良", "破損", "キャンセル", "保証"],
     title: "返品・初期不良について",
-    text: "商品到着後10日以内にメールまたはLINEでご連絡ください。未使用品の返品・交換、初期不良や配送時破損は内容確認のうえ対応します。注文後のキャンセルはお受けできません。",
+    text: "返品・交換は商品到着後10日以内にメール（ikemen@kamacrafy.com）またはLINEで事前連絡があった未使用品のみ対応します。初期不良や配送時破損は良品交換または返金で対応します。注文後のキャンセルはお受けできません。",
   },
   {
-    keywords: ["機内", "飛行機", "持ち込み", "航空", "lcc"],
+    keywords: ["機内", "飛行機", "持ち込み", "航空", "lcc", "jal", "ana", "peach", "jetstar"],
     title: "機内持ち込みについて",
     text: "外寸は49×32×15〜20cmで、一般的な機内持ち込み目安に対応しています。ただし航空会社・座席種別・拡張時の厚みにより規定が異なるため、搭乗前に各社規定をご確認ください。",
   },
@@ -235,7 +236,7 @@ const chatbotAnswers = [
     text: "13〜17インチのPC収納に対応しています。背面側の独立PCポケットに、衝撃吸収素材ありで収納できます。",
   },
   {
-    keywords: ["圧縮", "真空", "容量", "60l", "32l", "拡張"],
+    keywords: ["圧縮", "真空", "容量", "60l", "32l", "拡張", "マチ", "荷物", "収納", "入る"],
     title: "真空圧縮・容量について",
     text: "普段使いは約32L、拡張時は最大約60Lです。圧縮スペースに衣類を入れて密閉し、Type-C充電後に圧縮ボタンを押すと圧縮が開始されます。",
   },
@@ -243,6 +244,86 @@ const chatbotAnswers = [
     keywords: ["雨", "防水", "濡", "撥水"],
     title: "雨の日の使用について",
     text: "防水性のある高密度オックスフォード生地が水を弾きます。移動中に雨が降ってきても、通り雨程度なら問題ありません。",
+  },
+  {
+    keywords: ["価格", "値段", "金額", "クーポン", "割引", "5000", "15000", "29800", "54600"],
+    title: "価格・特典割引について",
+    text: "通常価格は34,800円です。特典適用で1個購入は5,000円OFFの29,800円、2個購入は15,000円OFFの54,600円です。先着55個限定の特典枠はなくなり次第終了します。",
+  },
+  {
+    keywords: ["予約", "販売", "発売", "開始", "5月31", "21時", "先行"],
+    title: "先行販売について",
+    text: "VBP101は2026年5月31日21:00に先行販売開始予定です。先行予約ページから購入内容とお届け先を確認し、Stripe決済画面へ進めます。",
+  },
+  {
+    keywords: ["101", "限定", "ロット", "受注", "生産", "なぜ"],
+    title: "101個限定の理由について",
+    text: "初回販売分は、品質を守りながら確実にお届けするため、数量を限定した受注生産形式で用意しています。VBP101の名にちなみ、初回ロットは101個限定です。",
+  },
+  {
+    keywords: ["amazon", "楽天", "他で", "買え", "独占", "ページ限定"],
+    title: "販売ページについて",
+    text: "VBP101はこのページ限定の先行販売です。Amazon・楽天では購入できません。先行予約はLP内の赤いCTAボタン、またはSECURE CHECKOUTページから進めます。",
+  },
+  {
+    keywords: ["サイズ", "外寸", "寸法", "大きさ", "49", "32", "15", "20"],
+    title: "サイズについて",
+    text: "外寸は49×32×15〜20cmです。拡張により厚みが変わるため、荷物量や航空会社の規定に合わせてご確認ください。",
+  },
+  {
+    keywords: ["重さ", "重量", "軽い", "1.7"],
+    title: "重量について",
+    text: "重量は約1.7kgです。大容量・圧縮・TSAロック・PC収納などの機能を備えつつ、出張や旅行で持ち運びやすい設計です。",
+  },
+  {
+    keywords: ["素材", "オックスフォード", "生地", "高密度"],
+    title: "素材について",
+    text: "素材は防水性のある高密度オックスフォード素材です。水を弾きやすく、移動中の通り雨程度であれば中身を気にしにくい仕様です。",
+  },
+  {
+    keywords: ["tsa", "ロック", "鍵", "盗難", "セキュリティ"],
+    title: "TSAロック・セキュリティについて",
+    text: "TSAロックを搭載しており、移動中の荷物の不安を減らします。セキュリティポケットやPC収納も備え、出張時の貴重品管理をサポートします。",
+  },
+  {
+    keywords: ["スーツケース", "キャリー", "ベルト", "固定"],
+    title: "スーツケースベルトについて",
+    text: "背面のスーツケースベルトでキャリーケースにしっかり固定できます。空港や駅での移動をスムーズにするための機能です。",
+  },
+  {
+    keywords: ["背負", "肩", "疲れ", "人間工学", "快適", "リュック紐"],
+    title: "背負い心地について",
+    text: "背負い心地に配慮したショルダー設計で、出張や旅行の長時間移動でも疲れにくい使用感を目指しています。",
+  },
+  {
+    keywords: ["傘", "ボトル", "スマホ", "フロント", "ポケット", "取り出"],
+    title: "細かな収納について",
+    text: "フロント収納、ボトル・傘収納、スマホ収納、セキュリティポケットなど、移動中に必要なものをすぐ取り出せる収納を備えています。",
+  },
+  {
+    keywords: ["usb", "type-c", "充電", "バッテリー", "電源"],
+    title: "圧縮機能の電源について",
+    text: "真空圧縮はType-C充電した状態で圧縮ボタンを押すと開始されます。圧縮スペースを密閉し、ある程度バルブから空気を抜いてから操作してください。",
+  },
+  {
+    keywords: ["ブランド", "vulkit", "物語", "ストーリー", "開発", "なぜ作った"],
+    title: "ブランド・開発ストーリーについて",
+    text: "VBP101は、出張時のスーツケース運搬、荷物整理、盗難不安、PC携帯、雨の日の備えをリュック1つで解決するために企画されたバックパックです。移動の負担を減らし、到着後すぐ動けることを目指しています。",
+  },
+  {
+    keywords: ["会社", "販売業者", "住所", "代表", "連絡先", "メール"],
+    title: "販売者情報について",
+    text: "販売業者はKamaCrafy、運営責任者は鎌倉 匠吾です。所在地は埼玉県新座市菅沢1-3-36、連絡先はikemen@kamacrafy.comです。",
+  },
+  {
+    keywords: ["中国", "製造国", "製造"],
+    title: "製造国について",
+    text: "製造国は中国です。初回販売分は製品状態を丁寧に確認しながら、数量を限定した受注生産形式でお届けします。",
+  },
+  {
+    keywords: ["メール", "通知", "登録", "迷惑", "受信許可"],
+    title: "メール通知について",
+    text: "LINEを使わない方はメール通知登録をご利用ください。販売開始や特典情報をメールでお知らせします。受信漏れ防止のため「ikemen@kamacrafy.com」を受信許可設定してください。",
   },
   {
     keywords: ["line", "相談", "問い合わせ", "質問", "連絡"],
@@ -274,11 +355,48 @@ function findChatbotAnswer(question) {
   );
 }
 
+function getChatbotSessionId() {
+  const storageKey = "vulkit.chatbot.session";
+  try {
+    const existing = window.sessionStorage.getItem(storageKey);
+    if (existing) return existing;
+    const created = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    window.sessionStorage.setItem(storageKey, created);
+    return created;
+  } catch (error) {
+    if (!window.__vulkitChatbotSessionId) {
+      window.__vulkitChatbotSessionId = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    }
+    return window.__vulkitChatbotSessionId;
+  }
+}
+
+function logChatbotMessage(question, answer) {
+  chatbotLogCounter += 1;
+  const payload = {
+    ...getTrackingParams(),
+    chat_session_id: getChatbotSessionId(),
+    message_index: chatbotLogCounter,
+    cta_location: "chatbot",
+    question: String(question || "").slice(0, 500),
+    answer_title: String(answer?.title || "").slice(0, 120),
+    answer_text: String(answer?.text || "").slice(0, 600),
+  };
+
+  fetch("/api/chatbot-log", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    keepalive: true,
+  }).catch(() => {});
+}
+
 function askChatbot(question) {
   const trimmed = String(question || "").trim();
   if (!trimmed) return;
   appendChatbotMessage("user", "質問", trimmed);
   const answer = findChatbotAnswer(trimmed);
+  logChatbotMessage(trimmed, answer);
   window.setTimeout(() => appendChatbotMessage("bot", answer.title, answer.text), 180);
   if (window.VulkitAnalytics) {
     window.VulkitAnalytics.track("chatbot_question", {
