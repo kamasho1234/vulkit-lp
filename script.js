@@ -14,6 +14,8 @@ let floatingCouponTimer;
 let floatingCouponDrag;
 let floatingCouponWasDragged = false;
 let sitePopupTimer;
+let checkoutAddressTimer;
+let lastCheckoutAddressZip = "";
 
 function forceMuteEmbeddedMedia() {
   document.querySelectorAll("video").forEach((video) => {
@@ -62,6 +64,58 @@ function getCheckoutCustomerPrefill() {
   }
 
   return customer;
+}
+
+function setCheckoutAddressStatus(text, isError = false) {
+  const status = checkoutPrefillForm?.querySelector("[data-address-status]");
+  if (!status) return;
+  status.textContent = text || "";
+  status.classList.toggle("is-error", Boolean(isError));
+}
+
+async function autofillCheckoutAddress() {
+  if (!checkoutPrefillForm) return;
+  const zipInput = checkoutPrefillForm.querySelector('input[name="postal_code"]');
+  const stateInput = checkoutPrefillForm.querySelector('input[name="state"]');
+  const cityInput = checkoutPrefillForm.querySelector('input[name="city"]');
+  const line1Input = checkoutPrefillForm.querySelector('input[name="line1"]');
+  const zip = String(zipInput?.value || "").replace(/\D/g, "");
+
+  if (zipInput && zipInput.value !== zip) {
+    zipInput.value = zip;
+  }
+
+  if (zip.length < 7) {
+    setCheckoutAddressStatus("");
+    return;
+  }
+
+  if (zip === lastCheckoutAddressZip) return;
+  lastCheckoutAddressZip = zip;
+  setCheckoutAddressStatus("住所を検索しています...");
+
+  try {
+    const response = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${encodeURIComponent(zip)}`);
+    const data = await response.json();
+    const address = data?.results?.[0];
+
+    if (!address) {
+      setCheckoutAddressStatus("住所が見つかりませんでした。手入力してください。", true);
+      return;
+    }
+
+    if (stateInput) stateInput.value = address.address1 || "";
+    if (cityInput) cityInput.value = address.address2 || "";
+    if (line1Input && !line1Input.value.trim()) {
+      line1Input.value = address.address3 || "";
+      line1Input.focus();
+    }
+
+    setCheckoutAddressStatus("住所を自動入力しました。番地以降を入力してください。");
+  } catch (error) {
+    lastCheckoutAddressZip = "";
+    setCheckoutAddressStatus("住所検索に失敗しました。手入力してください。", true);
+  }
 }
 
 function showSitePopup(type, title, text) {
@@ -399,6 +453,15 @@ checkoutButtons.forEach((button) => {
     }
   });
 });
+
+if (checkoutPrefillForm) {
+  const zipInput = checkoutPrefillForm.querySelector('input[name="postal_code"]');
+  zipInput?.addEventListener("input", () => {
+    window.clearTimeout(checkoutAddressTimer);
+    checkoutAddressTimer = window.setTimeout(autofillCheckoutAddress, 360);
+  });
+  zipInput?.addEventListener("blur", autofillCheckoutAddress);
+}
 
 emailSignupForms.forEach((form) => {
   form.addEventListener("submit", async (event) => {

@@ -2743,6 +2743,18 @@ img {
   font-weight: 900;
 }
 
+.checkout-address-status {
+  min-height: 1.4em;
+  color: #8a631d;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.checkout-address-status.is-error {
+  color: #a3271b;
+}
+
 .checkout-prefill-form__wide {
   grid-column: 1 / -1;
 }
