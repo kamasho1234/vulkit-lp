@@ -7,11 +7,26 @@ const stockAlerts = [...document.querySelectorAll("[data-benefit-stock-remaining
 const checkoutEntryLinks = [...document.querySelectorAll("[data-checkout-entry]")];
 const checkoutButtons = [...document.querySelectorAll("[data-checkout-plan]")];
 const emailSignupForms = [...document.querySelectorAll("[data-email-signup]")];
+const youtubeFrames = [...document.querySelectorAll('iframe[src*="youtube.com/embed"]')];
 let activeTop = 0;
 let floatingCouponTimer;
 let floatingCouponDrag;
 let floatingCouponWasDragged = false;
 let sitePopupTimer;
+
+function forceMuteEmbeddedMedia() {
+  document.querySelectorAll("video").forEach((video) => {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+    video.setAttribute("muted", "");
+  });
+
+  youtubeFrames.forEach((frame) => {
+    frame.contentWindow?.postMessage(JSON.stringify({ event: "command", func: "mute", args: [] }), "https://www.youtube.com");
+    frame.contentWindow?.postMessage(JSON.stringify({ event: "command", func: "setVolume", args: [0] }), "https://www.youtube.com");
+  });
+}
 
 function isValidEmailInput(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim());
@@ -147,6 +162,13 @@ floatingCoupon?.addEventListener(
 
 if (topVisuals.length > 1) {
   window.setInterval(() => showTop(activeTop + 1), 2500);
+}
+
+if (youtubeFrames.length) {
+  forceMuteEmbeddedMedia();
+  window.setInterval(forceMuteEmbeddedMedia, 3000);
+  window.addEventListener("focus", forceMuteEmbeddedMedia);
+  document.addEventListener("visibilitychange", forceMuteEmbeddedMedia);
 }
 
 function updateCountdown(block) {
