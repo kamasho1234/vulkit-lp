@@ -3565,6 +3565,17 @@ img {
     linear-gradient(135deg, rgba(24, 185, 255, 0.95) 0%, rgba(54, 69, 255, 0.95) 100%);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 0 26px rgba(45, 146, 255, 0.42);
   cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+
+.lp-chatbot.is-dragging {
+  cursor: grabbing;
+}
+
+.lp-chatbot.is-dragging .lp-chatbot__launcher {
+  cursor: grabbing;
+  transform: scale(1.03);
 }
 
 .lp-chatbot__launcher img {

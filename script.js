@@ -19,6 +19,8 @@ let activeTop = 0;
 let floatingCouponTimer;
 let floatingCouponDrag;
 let floatingCouponWasDragged = false;
+let chatbotDrag;
+let chatbotWasDragged = false;
 let sitePopupTimer;
 let checkoutAddressTimer;
 let lastCheckoutAddressZip = "";
@@ -417,6 +419,115 @@ function setChatbotOpen(isOpen) {
     }
   }
 }
+
+function keepElementInViewport(left, top, width, height, padding = 8) {
+  const maxLeft = Math.max(padding, window.innerWidth - width - padding);
+  const maxTop = Math.max(padding, window.innerHeight - height - padding);
+
+  return {
+    left: Math.min(Math.max(padding, left), maxLeft),
+    top: Math.min(Math.max(padding, top), maxTop),
+  };
+}
+
+function applyChatbotPosition(left, top) {
+  if (!chatbot) return;
+  const rect = chatbot.getBoundingClientRect();
+  const position = keepElementInViewport(left, top, rect.width, rect.height);
+  chatbot.classList.add("is-positioned");
+  chatbot.style.left = `${position.left}px`;
+  chatbot.style.top = `${position.top}px`;
+  chatbot.style.right = "auto";
+  chatbot.style.bottom = "auto";
+}
+
+function saveChatbotPosition() {
+  if (!chatbot) return;
+  const rect = chatbot.getBoundingClientRect();
+  try {
+    window.localStorage.setItem(
+      "vulkit.chatbot.position",
+      JSON.stringify({ left: Math.round(rect.left), top: Math.round(rect.top) })
+    );
+  } catch (error) {}
+}
+
+function restoreChatbotPosition() {
+  if (!chatbot) return;
+  try {
+    const saved = JSON.parse(window.localStorage.getItem("vulkit.chatbot.position") || "null");
+    if (saved && Number.isFinite(saved.left) && Number.isFinite(saved.top)) {
+      applyChatbotPosition(saved.left, saved.top);
+    }
+  } catch (error) {}
+}
+
+restoreChatbotPosition();
+
+chatbotToggle?.addEventListener("pointerdown", (event) => {
+  if (!chatbot) return;
+  const rect = chatbot.getBoundingClientRect();
+  chatbotDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    offsetX: event.clientX - rect.left,
+    offsetY: event.clientY - rect.top,
+    width: rect.width,
+    height: rect.height,
+    moved: false,
+  };
+  chatbotToggle.setPointerCapture?.(event.pointerId);
+  chatbot.classList.add("is-dragging");
+});
+
+chatbotToggle?.addEventListener("pointermove", (event) => {
+  if (!chatbot || !chatbotDrag || chatbotDrag.pointerId !== event.pointerId) return;
+
+  const deltaX = event.clientX - chatbotDrag.startX;
+  const deltaY = event.clientY - chatbotDrag.startY;
+  if (Math.hypot(deltaX, deltaY) < 6 && !chatbotDrag.moved) return;
+
+  event.preventDefault();
+  chatbotDrag.moved = true;
+  chatbotWasDragged = true;
+
+  applyChatbotPosition(event.clientX - chatbotDrag.offsetX, event.clientY - chatbotDrag.offsetY);
+});
+
+function endChatbotDrag(event) {
+  if (!chatbotDrag || chatbotDrag.pointerId !== event.pointerId) return;
+  chatbotToggle?.releasePointerCapture?.(event.pointerId);
+  chatbot?.classList.remove("is-dragging");
+  if (chatbotDrag.moved) saveChatbotPosition();
+  chatbotDrag = null;
+
+  if (chatbotWasDragged) {
+    window.setTimeout(() => {
+      chatbotWasDragged = false;
+    }, 0);
+  }
+}
+
+chatbotToggle?.addEventListener("pointerup", endChatbotDrag);
+chatbotToggle?.addEventListener("pointercancel", endChatbotDrag);
+
+chatbotToggle?.addEventListener(
+  "click",
+  (event) => {
+    if (!chatbotWasDragged) return;
+    event.preventDefault();
+    event.stopPropagation();
+  },
+  true
+);
+
+window.addEventListener("resize", () => {
+  if (!chatbot?.classList.contains("is-positioned")) return;
+  const rect = chatbot.getBoundingClientRect();
+  applyChatbotPosition(rect.left, rect.top);
+  saveChatbotPosition();
+});
 
 chatbotToggle?.addEventListener("click", () => {
   setChatbotOpen(!chatbot?.classList.contains("is-open"));
