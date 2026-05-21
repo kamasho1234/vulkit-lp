@@ -402,35 +402,35 @@ img {
 
 .site-popup__card {
   position: relative;
-  padding: 20px 46px 20px 20px;
-  border: 1px solid rgba(224, 190, 108, 0.58);
-  border-radius: 14px;
-  color: #fffaf0;
-  background:
-    radial-gradient(circle at 15% 0%, rgba(255, 226, 139, 0.22), transparent 42%),
-    linear-gradient(145deg, rgba(8, 8, 8, 0.98), rgba(25, 15, 6, 0.96));
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.38),
-    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  padding: 16px 42px 16px 16px;
+  border: 1px solid rgba(30, 30, 30, 0.1);
+  border-left: 4px solid #111;
+  border-radius: 10px;
+  color: #171717;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.16);
 }
 
 .site-popup.is-error .site-popup__card {
-  border-color: rgba(255, 118, 118, 0.68);
+  border-color: rgba(30, 30, 30, 0.1);
+  border-left-color: #d71919;
 }
 
 .site-popup__card strong {
   display: block;
-  color: #ffe5a6;
-  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  font-size: 18px;
+  color: #151515;
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 900;
   line-height: 1.35;
 }
 
 .site-popup__card p {
-  margin: 8px 0 0;
-  color: rgba(255, 248, 232, 0.88);
+  margin: 6px 0 0;
+  color: #4b4b4b;
   font-size: 13px;
-  line-height: 1.65;
+  font-weight: 700;
+  line-height: 1.55;
 }
 
 .site-popup__close {
@@ -439,10 +439,10 @@ img {
   right: 10px;
   width: 28px;
   height: 28px;
-  border: 1px solid rgba(255, 226, 162, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 50%;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  color: #444;
+  background: #f5f5f5;
   cursor: pointer;
 }
 
@@ -2675,10 +2675,10 @@ img {
 
 .secure-checkout-hero img {
   display: block;
-  width: min(660px, 100%);
+  width: min(430px, 74vw);
   height: auto;
   margin-top: clamp(6px, 1.6vw, 14px);
-  filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.14));
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.12));
 }
 
 .secure-checkout-confirm {
@@ -2690,9 +2690,11 @@ img {
 
 .secure-checkout-confirm div {
   display: grid;
-  gap: 8px;
-  min-height: 116px;
-  padding: clamp(15px, 2vw, 20px);
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 8px 12px;
+  min-height: 112px;
+  padding: clamp(14px, 1.8vw, 18px);
   border: 1px solid rgba(179, 122, 20, 0.24);
   border-radius: 14px;
   background:
@@ -2700,10 +2702,32 @@ img {
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.08);
 }
 
+.secure-checkout-confirm__icon {
+  display: grid;
+  place-items: center;
+  grid-row: span 2;
+  width: 42px;
+  height: 42px;
+  color: #a36d12;
+  border: 1px solid rgba(163, 109, 18, 0.24);
+  border-radius: 50%;
+  background: #fffaf0;
+}
+
+.secure-checkout-confirm__icon svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .secure-checkout-confirm strong {
   color: #191919;
   font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  font-size: clamp(18px, 2vw, 24px);
+  font-size: clamp(17px, 1.8vw, 22px);
   letter-spacing: 0.06em;
 }
 
@@ -2715,6 +2739,7 @@ img {
 }
 
 .secure-checkout-payment-card {
+  display: block;
   grid-column: 1 / -1;
   min-height: 0;
   padding: clamp(8px, 1.5vw, 14px);
@@ -2731,13 +2756,11 @@ img {
   display: grid;
   gap: clamp(16px, 2.4vw, 24px);
   width: 100%;
-  padding: clamp(22px, 3vw, 34px);
-  border: 1px solid rgba(185, 128, 24, 0.22);
-  border-radius: 18px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 244, 235, 0.9)),
-    radial-gradient(circle at top, rgba(220, 177, 87, 0.18), transparent 48%);
-  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.09);
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(18, 18, 18, 0.08);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
 }
 
 .secure-checkout-prefill__header {
@@ -2753,8 +2776,8 @@ img {
 }
 
 .secure-checkout-prefill__header p {
-  color: #b27b18;
-  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  color: #8b6318;
+  font-family: "Noto Sans JP", system-ui, sans-serif;
   font-size: clamp(11px, 1.3vw, 13px);
   font-weight: 900;
   letter-spacing: 0.18em;
@@ -2762,9 +2785,10 @@ img {
 
 .secure-checkout-prefill__header h2 {
   color: #141414;
-  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  font-size: clamp(24px, 3.2vw, 38px);
-  letter-spacing: 0.08em;
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  font-size: clamp(23px, 3vw, 34px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
 }
 
 .secure-checkout-prefill__header span {
@@ -2782,10 +2806,10 @@ img {
 
 .checkout-prefill-form label {
   display: grid;
-  gap: 7px;
+  gap: 8px;
   min-width: 0;
   color: #2a2722;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 900;
 }
 
@@ -2811,20 +2835,21 @@ img {
 
 .checkout-prefill-form input {
   width: 100%;
-  min-height: 48px;
-  padding: 12px 14px;
+  min-height: 50px;
+  padding: 13px 14px;
   color: #171717;
   font: inherit;
   font-weight: 700;
-  border: 1px solid rgba(143, 104, 40, 0.24);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 8px;
+  background: #fbfbfb;
+  box-shadow: none;
 }
 
 .checkout-prefill-form input:focus {
-  outline: 2px solid rgba(191, 133, 20, 0.26);
-  border-color: rgba(176, 116, 10, 0.58);
+  outline: 3px solid rgba(191, 133, 20, 0.18);
+  border-color: rgba(176, 116, 10, 0.68);
+  background: #fff;
 }
 
 .checkout-prefill-form input.is-field-error {
@@ -4373,7 +4398,7 @@ img {
   }
 
   .secure-checkout-hero img {
-    width: min(420px, 100%);
+    width: min(320px, 78vw);
   }
 
   .secure-checkout-confirm {
