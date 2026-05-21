@@ -9,6 +9,12 @@ const checkoutButtons = [...document.querySelectorAll("[data-checkout-plan]")];
 const checkoutPrefillForm = document.querySelector("[data-checkout-prefill]");
 const emailSignupForms = [...document.querySelectorAll("[data-email-signup]")];
 const youtubeFrames = [...document.querySelectorAll('iframe[src*="youtube.com/embed"]')];
+const chatbot = document.querySelector("[data-chatbot]");
+const chatbotToggle = document.querySelector("[data-chatbot-toggle]");
+const chatbotClose = document.querySelector("[data-chatbot-close]");
+const chatbotMessages = document.querySelector("[data-chatbot-messages]");
+const chatbotForm = document.querySelector("[data-chatbot-form]");
+const chatbotInput = document.querySelector("[data-chatbot-input]");
 let activeTop = 0;
 let floatingCouponTimer;
 let floatingCouponDrag;
@@ -201,6 +207,114 @@ function showSitePopup(type, title, text) {
   window.clearTimeout(sitePopupTimer);
   sitePopupTimer = window.setTimeout(() => popup.classList.remove("is-visible"), 6400);
 }
+
+const chatbotAnswers = [
+  {
+    keywords: ["配送", "発送", "いつ", "届", "納期", "6月"],
+    title: "発送予定について",
+    text: "2026年6月22日より順次発送予定です。送料は全国一律無料で、当社指定の配送業者でお届けします。",
+  },
+  {
+    keywords: ["支払い", "決済", "カード", "paypay", "銀行", "stripe"],
+    title: "お支払い方法について",
+    text: "先行予約ボタンを押すと、Stripeの安全な決済画面へ移動します。クレジット・デビットカード、銀行振込、PayPayなどから選択できます。",
+  },
+  {
+    keywords: ["返品", "交換", "不良", "破損", "キャンセル", "保証"],
+    title: "返品・初期不良について",
+    text: "商品到着後10日以内にメールまたはLINEでご連絡ください。未使用品の返品・交換、初期不良や配送時破損は内容確認のうえ対応します。注文後のキャンセルはお受けできません。",
+  },
+  {
+    keywords: ["機内", "飛行機", "持ち込み", "航空", "lcc"],
+    title: "機内持ち込みについて",
+    text: "外寸は49×32×15〜20cmで、一般的な機内持ち込み目安に対応しています。ただし航空会社・座席種別・拡張時の厚みにより規定が異なるため、搭乗前に各社規定をご確認ください。",
+  },
+  {
+    keywords: ["pc", "パソコン", "ノート", "インチ"],
+    title: "PC収納について",
+    text: "13〜17インチのPC収納に対応しています。背面側の独立PCポケットに、衝撃吸収素材ありで収納できます。",
+  },
+  {
+    keywords: ["圧縮", "真空", "容量", "60l", "32l", "拡張"],
+    title: "真空圧縮・容量について",
+    text: "普段使いは約32L、拡張時は最大約60Lです。圧縮スペースに衣類を入れて密閉し、Type-C充電後に圧縮ボタンを押すと圧縮が開始されます。",
+  },
+  {
+    keywords: ["雨", "防水", "濡", "撥水"],
+    title: "雨の日の使用について",
+    text: "防水性のある高密度オックスフォード生地が水を弾きます。移動中に雨が降ってきても、通り雨程度なら問題ありません。",
+  },
+  {
+    keywords: ["line", "相談", "問い合わせ", "質問", "連絡"],
+    title: "LINE相談について",
+    text: "細かい確認や個別相談は、チャット内の「LINEで相談」ボタンからVULKIT VBP101公式LINEへお進みください。",
+  },
+];
+
+function appendChatbotMessage(role, title, text) {
+  if (!chatbotMessages) return;
+  const message = document.createElement("article");
+  message.className = `lp-chatbot__message lp-chatbot__message--${role}`;
+  const heading = document.createElement("strong");
+  const body = document.createElement("span");
+  heading.textContent = title;
+  body.textContent = text;
+  message.append(heading, body);
+  chatbotMessages.appendChild(message);
+  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
+
+function findChatbotAnswer(question) {
+  const normalized = String(question || "").toLowerCase();
+  return (
+    chatbotAnswers.find((answer) => answer.keywords.some((keyword) => normalized.includes(String(keyword).toLowerCase()))) || {
+      title: "個別に確認します",
+      text: "その内容はLINEでご相談いただくと確実です。画面下の「LINEで相談」からお問い合わせください。先行予約前の不安もそのまま送っていただけます。",
+    }
+  );
+}
+
+function askChatbot(question) {
+  const trimmed = String(question || "").trim();
+  if (!trimmed) return;
+  appendChatbotMessage("user", "質問", trimmed);
+  const answer = findChatbotAnswer(trimmed);
+  window.setTimeout(() => appendChatbotMessage("bot", answer.title, answer.text), 180);
+  if (window.VulkitAnalytics) {
+    window.VulkitAnalytics.track("chatbot_question", {
+      cta_location: "chatbot",
+      question: trimmed.slice(0, 80),
+      answer_title: answer.title,
+    });
+  }
+}
+
+function setChatbotOpen(isOpen) {
+  chatbot?.classList.toggle("is-open", Boolean(isOpen));
+  chatbotToggle?.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  if (isOpen) {
+    window.setTimeout(() => chatbotInput?.focus(), 120);
+    if (window.VulkitAnalytics) {
+      window.VulkitAnalytics.track("chatbot_open", { cta_location: "chatbot" });
+    }
+  }
+}
+
+chatbotToggle?.addEventListener("click", () => {
+  setChatbotOpen(!chatbot?.classList.contains("is-open"));
+});
+
+chatbotClose?.addEventListener("click", () => setChatbotOpen(false));
+
+document.querySelectorAll("[data-chatbot-question]").forEach((button) => {
+  button.addEventListener("click", () => askChatbot(button.dataset.chatbotQuestion || button.textContent));
+});
+
+chatbotForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  askChatbot(chatbotInput?.value || "");
+  if (chatbotInput) chatbotInput.value = "";
+});
 
 function showTop(index) {
   topVisuals[activeTop]?.classList.remove("is-active");

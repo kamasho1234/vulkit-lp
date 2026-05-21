@@ -602,6 +602,47 @@
       <a class="mobile-sticky-line" href="https://lin.ee/6xr7cz7" target="_blank" rel="noopener noreferrer" data-line-cta="mobile_fixed_line">LINE通知</a>
     </nav>
 
+    <aside class="lp-chatbot" data-chatbot aria-label="購入前相談チャット">
+      <button class="lp-chatbot__launcher" type="button" data-chatbot-toggle aria-expanded="false" aria-controls="lp-chatbot-panel">
+        <span>?</span>
+        <strong>相談する</strong>
+      </button>
+      <section class="lp-chatbot__panel" id="lp-chatbot-panel" aria-live="polite">
+        <header class="lp-chatbot__header">
+          <div>
+            <p>VULKIT SUPPORT</p>
+            <strong>購入前の不安を解消</strong>
+          </div>
+          <button type="button" data-chatbot-close aria-label="チャットを閉じる">×</button>
+        </header>
+        <div class="lp-chatbot__messages" data-chatbot-messages>
+          <article class="lp-chatbot__message lp-chatbot__message--bot">
+            <strong>ご質問を選ぶか、入力してください。</strong>
+            <span>配送・返品・支払い・機内持ち込み・圧縮機能などにすぐ回答します。</span>
+          </article>
+        </div>
+        <div class="lp-chatbot__quick" aria-label="よくある質問">
+          <button type="button" data-chatbot-question="配送はいつですか？">配送</button>
+          <button type="button" data-chatbot-question="支払い方法は？">支払い</button>
+          <button type="button" data-chatbot-question="返品できますか？">返品</button>
+          <button type="button" data-chatbot-question="機内持ち込みできますか？">機内持込</button>
+          <button type="button" data-chatbot-question="PCは入りますか？">PC収納</button>
+          <button type="button" data-chatbot-question="LINEで相談したい">LINE相談</button>
+        </div>
+        <form class="lp-chatbot__form" data-chatbot-form>
+          <label>
+            <span class="sr-only">質問を入力</span>
+            <input type="text" data-chatbot-input placeholder="例：雨の日でも使えますか？" autocomplete="off">
+          </label>
+          <button type="submit">送信</button>
+        </form>
+        <div class="lp-chatbot__actions">
+          <a href="/secure-checkout.html" data-checkout-entry data-cta-location="chatbot_reserve">先行予約へ進む</a>
+          <a href="https://lin.ee/6xr7cz7" target="_blank" rel="noopener noreferrer" data-line-cta="chatbot_line">LINEで相談</a>
+        </div>
+      </section>
+    </aside>
+
     <button class="scroll-button" type="button" aria-label="次の画像へ移動">↓</button>
 
     <script src="tracking.js"></script>
