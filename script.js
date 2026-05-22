@@ -699,13 +699,9 @@ document.addEventListener("keydown", (event) => {
 });
 
 instantOfferClose?.addEventListener("click", () => {
-  instantOfferPopup?.classList.add("is-hidden");
-  instantOfferPopup?.classList.remove("is-visible", "is-expanded");
-  setInstantOfferDetailOpen(false);
-  closeInstantOfferLightbox();
+  moveInstantOfferToHeaderTimer();
   window.clearTimeout(instantOfferShowTimer);
-  window.clearInterval(instantOfferTimer);
-  trackInstantOffer("popup_close");
+  trackInstantOffer("popup_minimize_to_countdown");
 });
 
 instantOfferPopup?.addEventListener("pointerdown", (event) => {
