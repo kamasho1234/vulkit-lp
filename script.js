@@ -616,6 +616,18 @@ function moveInstantOfferToHeaderTimer() {
   instantOfferPopup.style.transform = "";
 }
 
+function expandInstantOfferFromHeaderTimer() {
+  if (!instantOfferPopup?.classList.contains("is-countdown-only")) return;
+  instantOfferPopup.classList.remove("is-countdown-only", "is-positioned", "is-dragging");
+  instantOfferPopup.style.left = "";
+  instantOfferPopup.style.top = "";
+  instantOfferPopup.style.right = "";
+  instantOfferPopup.style.bottom = "";
+  instantOfferPopup.style.transform = "";
+  setInstantOfferDetailOpen(false);
+  trackInstantOffer("countdown_expand_popup");
+}
+
 function promptCheckoutShippingFields() {
   if (!checkoutPrefillForm) return;
   clearCheckoutFieldErrors();
@@ -719,7 +731,12 @@ instantOfferPopup?.addEventListener("pointerdown", (event) => {
     moved: false,
   };
   instantOfferPopup.setPointerCapture?.(event.pointerId);
-  instantOfferPopup.classList.add("is-dragging");
+  instantOfferPopup.classList.add("is-dragging", "is-positioned");
+  instantOfferPopup.style.left = `${rect.left}px`;
+  instantOfferPopup.style.top = `${rect.top}px`;
+  instantOfferPopup.style.right = "auto";
+  instantOfferPopup.style.bottom = "auto";
+  instantOfferPopup.style.transform = "none";
 });
 
 instantOfferPopup?.addEventListener("pointermove", (event) => {
@@ -773,6 +790,13 @@ instantOfferPopup?.addEventListener(
   },
   true
 );
+
+instantOfferPopup?.addEventListener("click", (event) => {
+  if (instantOfferWasDragged) return;
+  if (!instantOfferPopup.classList.contains("is-countdown-only")) return;
+  if (!event.target.closest("[data-instant-offer-countdown]")) return;
+  expandInstantOfferFromHeaderTimer();
+});
 
 if (instantOfferPopup) {
   setInstantOfferDetailOpen(false);

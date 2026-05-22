@@ -3151,8 +3151,13 @@ img {
   display: none;
 }
 
+.instant-offer-popup.is-countdown-only .instant-offer-popup__close {
+  display: none;
+}
+
 .instant-offer-popup.is-countdown-only .instant-offer-popup__countdown {
   padding: 17px 10px 10px;
+  cursor: pointer;
 }
 
 .instant-offer-popup.is-countdown-only .instant-offer-popup__countdown strong {
