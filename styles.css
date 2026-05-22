@@ -3107,11 +3107,16 @@ img {
 
 .instant-offer-popup {
   position: fixed;
-  right: clamp(10px, 2vw, 24px);
-  bottom: clamp(86px, 8vw, 116px);
+  left: 50%;
+  bottom: clamp(18px, 4vh, 34px);
   z-index: 92;
-  width: min(360px, calc(100vw - 22px));
+  display: none;
+  width: min(306px, calc(100vw - 22px));
   font-family: "Noto Sans JP", system-ui, sans-serif;
+}
+
+.instant-offer-popup.is-visible {
+  display: block;
   animation: instantOfferIn 0.55s cubic-bezier(0.2, 1.25, 0.35, 1) both;
 }
 
@@ -3213,6 +3218,10 @@ img {
   animation: instantOfferDetailOpen 0.34s ease both;
 }
 
+.instant-offer-popup__detail[hidden] {
+  display: none;
+}
+
 .instant-offer-popup__detail-close {
   justify-self: end;
   min-height: 34px;
@@ -3234,15 +3243,15 @@ img {
 @keyframes instantOfferIn {
   0% {
     opacity: 0;
-    transform: translateY(24px) scale(0.82) rotate(-2deg);
+    transform: translate(-50%, 24px) scale(0.82) rotate(-2deg);
   }
   72% {
     opacity: 1;
-    transform: translateY(-4px) scale(1.03) rotate(1deg);
+    transform: translate(-50%, -4px) scale(1.03) rotate(1deg);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1) rotate(0);
+    transform: translate(-50%, 0) scale(1) rotate(0);
   }
 }
 
@@ -5031,9 +5040,8 @@ img {
   }
 
   .instant-offer-popup {
-    right: 10px;
-    bottom: calc(86px + env(safe-area-inset-bottom));
-    width: min(330px, calc(100vw - 20px));
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    width: min(286px, calc(100vw - 20px));
   }
 
   .instant-offer-popup__card {

@@ -32,6 +32,7 @@ let checkoutAddressTimer;
 let lastCheckoutAddressZip = "";
 let chatbotLogCounter = 0;
 let instantOfferTimer;
+let instantOfferShowTimer;
 
 function forceMuteEmbeddedMedia() {
   document.querySelectorAll("video").forEach((video) => {
@@ -570,6 +571,7 @@ function setInstantOfferDetailOpen(isOpen) {
 
 function startInstantOfferCountdown() {
   if (!instantOfferPopup || !instantOfferTime) return;
+  window.clearInterval(instantOfferTimer);
 
   const endsAt = Date.now() + 10 * 60 * 1000;
   const update = () => {
@@ -590,6 +592,14 @@ function startInstantOfferCountdown() {
   instantOfferTimer = window.setInterval(update, 1000);
 }
 
+function showInstantOfferPopup() {
+  if (!instantOfferPopup || instantOfferPopup.classList.contains("is-hidden")) return;
+  instantOfferPopup.classList.add("is-visible");
+  setInstantOfferDetailOpen(false);
+  startInstantOfferCountdown();
+  trackInstantOffer("popup_show");
+}
+
 instantOfferTrigger?.addEventListener("click", () => {
   const shouldOpen = Boolean(instantOfferDetail?.hidden);
   setInstantOfferDetailOpen(shouldOpen);
@@ -604,11 +614,17 @@ instantOfferDetailClose?.addEventListener("click", (event) => {
 
 instantOfferClose?.addEventListener("click", () => {
   instantOfferPopup?.classList.add("is-hidden");
+  instantOfferPopup?.classList.remove("is-visible", "is-expanded");
+  setInstantOfferDetailOpen(false);
+  window.clearTimeout(instantOfferShowTimer);
   window.clearInterval(instantOfferTimer);
   trackInstantOffer("popup_close");
 });
 
-startInstantOfferCountdown();
+if (instantOfferPopup) {
+  setInstantOfferDetailOpen(false);
+  instantOfferShowTimer = window.setTimeout(showInstantOfferPopup, 2000);
+}
 
 function showTop(index) {
   topVisuals[activeTop]?.classList.remove("is-active");
