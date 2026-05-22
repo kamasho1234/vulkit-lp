@@ -20,6 +20,7 @@ const instantOfferClose = document.querySelector("[data-instant-offer-close]");
 const instantOfferTrigger = document.querySelector("[data-instant-offer-trigger]");
 const instantOfferDetail = document.querySelector("[data-instant-offer-detail]");
 const instantOfferDetailClose = document.querySelector("[data-instant-offer-detail-close]");
+const instantOfferZoom = document.querySelector("[data-instant-offer-zoom]");
 const instantOfferTime = document.querySelector("[data-instant-offer-time]");
 let activeTop = 0;
 let floatingCouponTimer;
@@ -602,6 +603,38 @@ function showInstantOfferPopup() {
   trackInstantOffer("popup_show");
 }
 
+function closeInstantOfferLightbox() {
+  const lightbox = document.querySelector("[data-instant-offer-lightbox]");
+  if (!lightbox) return;
+  lightbox.classList.remove("is-visible");
+  document.body.classList.remove("has-instant-offer-lightbox");
+  window.setTimeout(() => lightbox.remove(), 180);
+}
+
+function openInstantOfferLightbox() {
+  const image = instantOfferZoom?.querySelector("img");
+  if (!image) return;
+  closeInstantOfferLightbox();
+
+  const lightbox = document.createElement("div");
+  lightbox.className = "instant-offer-lightbox is-visible";
+  lightbox.dataset.instantOfferLightbox = "";
+  lightbox.innerHTML = `
+    <div class="instant-offer-lightbox__backdrop" data-instant-offer-lightbox-close></div>
+    <section class="instant-offer-lightbox__panel" role="dialog" aria-modal="true" aria-label="即決特典の詳細拡大画像">
+      <button class="instant-offer-lightbox__close" type="button" data-instant-offer-lightbox-close aria-label="拡大画像を閉じる">×</button>
+      <img src="${image.currentSrc || image.src}" alt="${image.alt || "即決特典の詳細"}" width="941" height="1672">
+      <p>背景または×で閉じる</p>
+    </section>
+  `;
+  document.body.appendChild(lightbox);
+  document.body.classList.add("has-instant-offer-lightbox");
+  lightbox.querySelectorAll("[data-instant-offer-lightbox-close]").forEach((element) => {
+    element.addEventListener("click", closeInstantOfferLightbox);
+  });
+  trackInstantOffer("detail_zoom_open");
+}
+
 instantOfferTrigger?.addEventListener("click", () => {
   const shouldOpen = Boolean(instantOfferDetail?.hidden);
   setInstantOfferDetailOpen(shouldOpen);
@@ -614,10 +647,22 @@ instantOfferDetailClose?.addEventListener("click", (event) => {
   trackInstantOffer("detail_close");
 });
 
+instantOfferZoom?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  openInstantOfferLightbox();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeInstantOfferLightbox();
+  }
+});
+
 instantOfferClose?.addEventListener("click", () => {
   instantOfferPopup?.classList.add("is-hidden");
   instantOfferPopup?.classList.remove("is-visible", "is-expanded");
   setInstantOfferDetailOpen(false);
+  closeInstantOfferLightbox();
   window.clearTimeout(instantOfferShowTimer);
   window.clearInterval(instantOfferTimer);
   trackInstantOffer("popup_close");

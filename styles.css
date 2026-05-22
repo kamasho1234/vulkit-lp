@@ -3250,9 +3250,106 @@ img {
   font-weight: 900;
 }
 
+.instant-offer-popup__zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.instant-offer-popup__zoom::after {
+  content: "タップで拡大";
+  display: block;
+  margin: 6px auto 0;
+  color: #6c4a0e;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
 .instant-offer-popup__detail img {
   border-radius: 12px;
   box-shadow: 0 12px 30px rgba(20, 15, 8, 0.18);
+}
+
+body.has-instant-offer-lightbox {
+  overflow: hidden;
+}
+
+.instant-offer-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 28px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.instant-offer-lightbox.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.instant-offer-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 5, 8, 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.instant-offer-lightbox__panel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  width: min(560px, 96vw);
+  max-height: 94vh;
+  padding: 10px;
+  overflow: auto;
+  border: 1px solid rgba(235, 184, 75, 0.55);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fffaf0, #fff);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.45);
+}
+
+.instant-offer-lightbox__close {
+  position: sticky;
+  top: 0;
+  justify-self: end;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg, #d90000, #ff4c1d);
+  box-shadow: 0 8px 18px rgba(160, 0, 0, 0.3);
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.instant-offer-lightbox__panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.instant-offer-lightbox__panel p {
+  margin: 0;
+  color: #80600f;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
 }
 
 @keyframes instantOfferIn {
@@ -5082,5 +5179,21 @@ img {
 
   .instant-offer-popup__detail {
     max-height: 48vh;
+  }
+
+  .instant-offer-lightbox {
+    padding: 8px;
+  }
+
+  .instant-offer-lightbox__panel {
+    width: 100%;
+    max-height: 92vh;
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .instant-offer-lightbox__close {
+    width: 36px;
+    height: 36px;
   }
 }
