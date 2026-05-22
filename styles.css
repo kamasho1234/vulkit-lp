@@ -781,6 +781,17 @@ img {
   background: #050505;
 }
 
+.hero-gif-section iframe {
+  display: block;
+  width: 100vw;
+  max-width: none;
+  height: min(56.25vw, 100svh);
+  min-height: min(640px, 56.25vw);
+  margin: 0;
+  border: 0;
+  background: #050505;
+}
+
 .feature-demo-gif-section img,
 .feature-demo-gif-section video {
   display: block;
