@@ -3124,6 +3124,15 @@ img {
   display: none;
 }
 
+.instant-offer-popup.is-positioned {
+  transform: none;
+}
+
+.instant-offer-popup.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
 .instant-offer-popup__card {
   position: relative;
   display: grid;
@@ -3161,8 +3170,14 @@ img {
   border-radius: 13px;
   background: transparent;
   cursor: pointer;
+  touch-action: none;
   overflow: hidden;
   animation: instantOfferPulse 2.1s ease-in-out infinite;
+}
+
+.instant-offer-popup.is-dragging .instant-offer-popup__trigger {
+  cursor: grabbing;
+  animation-play-state: paused;
 }
 
 .instant-offer-popup__trigger img,

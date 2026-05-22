@@ -27,6 +27,8 @@ let floatingCouponDrag;
 let floatingCouponWasDragged = false;
 let chatbotDrag;
 let chatbotWasDragged = false;
+let instantOfferDrag;
+let instantOfferWasDragged = false;
 let sitePopupTimer;
 let checkoutAddressTimer;
 let lastCheckoutAddressZip = "";
@@ -620,6 +622,76 @@ instantOfferClose?.addEventListener("click", () => {
   window.clearInterval(instantOfferTimer);
   trackInstantOffer("popup_close");
 });
+
+instantOfferPopup?.addEventListener("pointerdown", (event) => {
+  if (event.target.closest("[data-instant-offer-close], [data-instant-offer-detail-close], [data-instant-offer-detail]")) return;
+
+  const rect = instantOfferPopup.getBoundingClientRect();
+  instantOfferDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    offsetX: event.clientX - rect.left,
+    offsetY: event.clientY - rect.top,
+    width: rect.width,
+    height: rect.height,
+    moved: false,
+  };
+  instantOfferPopup.setPointerCapture?.(event.pointerId);
+  instantOfferPopup.classList.add("is-dragging");
+});
+
+instantOfferPopup?.addEventListener("pointermove", (event) => {
+  if (!instantOfferDrag || instantOfferDrag.pointerId !== event.pointerId) return;
+
+  const deltaX = event.clientX - instantOfferDrag.startX;
+  const deltaY = event.clientY - instantOfferDrag.startY;
+  if (Math.hypot(deltaX, deltaY) < 6 && !instantOfferDrag.moved) return;
+
+  event.preventDefault();
+  instantOfferDrag.moved = true;
+  instantOfferWasDragged = true;
+
+  const position = keepCouponInViewport(
+    event.clientX - instantOfferDrag.offsetX,
+    event.clientY - instantOfferDrag.offsetY,
+    instantOfferDrag.width,
+    instantOfferDrag.height
+  );
+
+  instantOfferPopup.classList.add("is-positioned");
+  instantOfferPopup.style.left = `${position.left}px`;
+  instantOfferPopup.style.top = `${position.top}px`;
+  instantOfferPopup.style.right = "auto";
+  instantOfferPopup.style.bottom = "auto";
+  instantOfferPopup.style.transform = "none";
+});
+
+function endInstantOfferDrag(event) {
+  if (!instantOfferDrag || instantOfferDrag.pointerId !== event.pointerId) return;
+  instantOfferPopup?.releasePointerCapture?.(event.pointerId);
+  instantOfferPopup?.classList.remove("is-dragging");
+  instantOfferDrag = null;
+
+  if (instantOfferWasDragged) {
+    window.setTimeout(() => {
+      instantOfferWasDragged = false;
+    }, 120);
+  }
+}
+
+instantOfferPopup?.addEventListener("pointerup", endInstantOfferDrag);
+instantOfferPopup?.addEventListener("pointercancel", endInstantOfferDrag);
+
+instantOfferPopup?.addEventListener(
+  "click",
+  (event) => {
+    if (!instantOfferWasDragged) return;
+    event.preventDefault();
+    event.stopPropagation();
+  },
+  true
+);
 
 if (instantOfferPopup) {
   setInstantOfferDetailOpen(false);
