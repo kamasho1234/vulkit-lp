@@ -14,6 +14,7 @@
       })(window, document, "clarity", "script", "wqhshb9x6n");
     </script>
     <link rel="preload" as="image" href="/assets/lp/checkout/secure-checkout-product.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="/assets/lp/checkout/instant-offer-popup.webp" type="image/webp">
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body class="secure-checkout-page">
@@ -125,7 +126,26 @@
       <p class="secure-checkout-support">&#27770;&#28168;&#21069;&#12395;&#19981;&#23433;&#12394;&#28857;&#12364;&#12354;&#12428;&#12400;&#12289;
         <a href="https://lin.ee/6xr7cz7" target="_blank" rel="noopener noreferrer">VULKIT VBP101&#20844;&#24335;LINE</a>
         &#12363;&#12425;&#12377;&#12368;&#12395;&#30456;&#35527;&#12391;&#12365;&#12414;&#12377;&#12290;</p>
+      <p class="secure-checkout-line-benefit">LINEに登録しておけば、あとからでも即決特典の案内を受け取れます。</p>
     </main>
+
+    <div class="instant-offer-popup" data-instant-offer-popup aria-live="polite">
+      <section class="instant-offer-popup__card" aria-label="即決特典">
+        <button class="instant-offer-popup__close" type="button" data-instant-offer-close aria-label="即決特典を閉じる">×</button>
+        <button class="instant-offer-popup__trigger" type="button" data-instant-offer-trigger aria-expanded="false">
+          <img src="/assets/lp/checkout/instant-offer-popup.webp" alt="即決特典。このまま即購入でプレゼント。詳細はタップ。" width="1254" height="1254" decoding="async">
+        </button>
+        <div class="instant-offer-popup__countdown" data-instant-offer-countdown>
+          <span>即決特典終了まで</span>
+          <strong data-instant-offer-time>10:00</strong>
+          <small>今だけの購入特典です</small>
+        </div>
+        <div class="instant-offer-popup__detail" data-instant-offer-detail hidden>
+          <button class="instant-offer-popup__detail-close" type="button" data-instant-offer-detail-close>詳細を閉じる</button>
+          <img src="/assets/lp/checkout/instant-offer-detail.webp" alt="高機能RFID/NFCブロックポーチの詳細" width="941" height="1672" loading="lazy" decoding="async">
+        </div>
+      </section>
+    </div>
 
     <aside class="lp-chatbot" data-chatbot aria-label="購入前相談チャット">
       <button class="lp-chatbot__launcher" type="button" data-chatbot-toggle aria-expanded="false" aria-controls="lp-chatbot-panel">

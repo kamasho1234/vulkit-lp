@@ -15,6 +15,12 @@ const chatbotClose = document.querySelector("[data-chatbot-close]");
 const chatbotMessages = document.querySelector("[data-chatbot-messages]");
 const chatbotForm = document.querySelector("[data-chatbot-form]");
 const chatbotInput = document.querySelector("[data-chatbot-input]");
+const instantOfferPopup = document.querySelector("[data-instant-offer-popup]");
+const instantOfferClose = document.querySelector("[data-instant-offer-close]");
+const instantOfferTrigger = document.querySelector("[data-instant-offer-trigger]");
+const instantOfferDetail = document.querySelector("[data-instant-offer-detail]");
+const instantOfferDetailClose = document.querySelector("[data-instant-offer-detail-close]");
+const instantOfferTime = document.querySelector("[data-instant-offer-time]");
 let activeTop = 0;
 let floatingCouponTimer;
 let floatingCouponDrag;
@@ -25,6 +31,7 @@ let sitePopupTimer;
 let checkoutAddressTimer;
 let lastCheckoutAddressZip = "";
 let chatbotLogCounter = 0;
+let instantOfferTimer;
 
 function forceMuteEmbeddedMedia() {
   document.querySelectorAll("video").forEach((video) => {
@@ -544,6 +551,64 @@ chatbotForm?.addEventListener("submit", (event) => {
   askChatbot(chatbotInput?.value || "");
   if (chatbotInput) chatbotInput.value = "";
 });
+
+function trackInstantOffer(action) {
+  if (!window.VulkitAnalytics) return;
+  window.VulkitAnalytics.track?.("instant_offer_interaction", {
+    action,
+    cta_location: "secure_checkout_instant_offer",
+    ...getTrackingParams(),
+  });
+}
+
+function setInstantOfferDetailOpen(isOpen) {
+  if (!instantOfferDetail || !instantOfferTrigger) return;
+  instantOfferDetail.hidden = !isOpen;
+  instantOfferTrigger.setAttribute("aria-expanded", String(isOpen));
+  instantOfferPopup?.classList.toggle("is-expanded", isOpen);
+}
+
+function startInstantOfferCountdown() {
+  if (!instantOfferPopup || !instantOfferTime) return;
+
+  const endsAt = Date.now() + 10 * 60 * 1000;
+  const update = () => {
+    const remaining = Math.max(0, endsAt - Date.now());
+    const minutes = Math.floor(remaining / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+    instantOfferTime.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    instantOfferPopup.classList.toggle("is-ending", remaining <= 60000 && remaining > 0);
+
+    if (remaining <= 0) {
+      instantOfferPopup.classList.remove("is-ending");
+      instantOfferPopup.classList.add("is-expired");
+      window.clearInterval(instantOfferTimer);
+    }
+  };
+
+  update();
+  instantOfferTimer = window.setInterval(update, 1000);
+}
+
+instantOfferTrigger?.addEventListener("click", () => {
+  const shouldOpen = Boolean(instantOfferDetail?.hidden);
+  setInstantOfferDetailOpen(shouldOpen);
+  trackInstantOffer(shouldOpen ? "detail_open" : "detail_close");
+});
+
+instantOfferDetailClose?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  setInstantOfferDetailOpen(false);
+  trackInstantOffer("detail_close");
+});
+
+instantOfferClose?.addEventListener("click", () => {
+  instantOfferPopup?.classList.add("is-hidden");
+  window.clearInterval(instantOfferTimer);
+  trackInstantOffer("popup_close");
+});
+
+startInstantOfferCountdown();
 
 function showTop(index) {
   topVisuals[activeTop]?.classList.remove("is-active");
