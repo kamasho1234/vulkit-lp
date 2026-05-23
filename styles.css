@@ -3138,16 +3138,19 @@ img {
 }
 
 .instant-offer-popup.is-countdown-only {
-  top: max(10px, env(safe-area-inset-top));
+  top: max(8px, env(safe-area-inset-top));
   bottom: auto;
-  width: min(360px, calc(100vw - 20px));
+  width: min(292px, calc(100vw - 18px));
   z-index: 122;
 }
 
 .instant-offer-popup.is-countdown-only .instant-offer-popup__card {
-  padding: 4px;
+  gap: 4px;
+  padding: 4px 5px 5px;
   border-color: rgba(255, 235, 120, 0.92);
-  background: rgba(16, 0, 0, 0.8);
+  border-radius: 15px;
+  background: rgba(10, 0, 0, 0.88);
+  box-shadow: 0 12px 30px rgba(110, 0, 0, 0.34), 0 0 18px rgba(255, 209, 82, 0.24);
 }
 
 .instant-offer-popup.is-countdown-only .instant-offer-popup__trigger,
@@ -3160,17 +3163,36 @@ img {
 }
 
 .instant-offer-popup.is-countdown-only .instant-offer-popup__countdown {
-  padding: 17px 10px 10px;
+  gap: 2px;
+  padding: 13px 8px 7px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
 .instant-offer-popup.is-countdown-only .instant-offer-popup__countdown strong {
-  min-height: 48px;
-  font-size: clamp(34px, 8vw, 48px);
+  width: 100%;
+  min-height: 44px;
+  font-size: clamp(36px, 12vw, 50px);
+  letter-spacing: 0.04em;
 }
 
 .instant-offer-popup.is-countdown-only .instant-offer-popup__countdown-buy {
   display: inline-flex;
+  min-height: 38px;
+  font-size: 14px;
+  box-shadow: 0 9px 18px rgba(194, 0, 0, 0.28), 0 0 14px rgba(255, 202, 73, 0.24);
+}
+
+.instant-offer-popup.is-countdown-only .instant-offer-popup__countdown span,
+.instant-offer-popup.is-countdown-only .instant-offer-popup__countdown small {
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+
+.instant-offer-popup.is-countdown-only .instant-offer-popup__countdown::before {
+  min-width: 58px;
+  padding: 2px 10px 3px;
+  font-size: 9px;
 }
 
 .instant-offer-popup__card {
@@ -5312,7 +5334,7 @@ body.has-instant-offer-lightbox {
   }
 
   .instant-offer-popup__countdown {
-    padding: 17px 9px 10px;
+    padding: 14px 9px 8px;
   }
 
   .instant-offer-popup__countdown span,
@@ -5321,8 +5343,8 @@ body.has-instant-offer-lightbox {
   }
 
   .instant-offer-popup__countdown strong {
-    min-height: 48px;
-    font-size: 34px;
+    min-height: 42px;
+    font-size: 38px;
   }
 
   .instant-offer-popup__detail {
