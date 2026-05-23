@@ -20,6 +20,7 @@ const instantOfferClose = document.querySelector("[data-instant-offer-close]");
 const instantOfferTrigger = document.querySelector("[data-instant-offer-trigger]");
 const instantOfferDetail = document.querySelector("[data-instant-offer-detail]");
 const instantOfferBuy = document.querySelector("[data-instant-offer-buy]");
+const instantOfferCountdownBuy = document.querySelector("[data-instant-offer-countdown-buy]");
 const instantOfferZoom = document.querySelector("[data-instant-offer-zoom]");
 const instantOfferTime = document.querySelector("[data-instant-offer-time]");
 let activeTop = 0;
@@ -629,7 +630,7 @@ function expandInstantOfferFromHeaderTimer() {
 }
 
 function promptCheckoutShippingFields() {
-  if (!checkoutPrefillForm) return;
+  if (!checkoutPrefillForm) return false;
   clearCheckoutFieldErrors();
 
   const requiredFields = ["name", "phone", "postal_code", "state", "city", "line1"];
@@ -647,11 +648,12 @@ function promptCheckoutShippingFields() {
     showSitePopup("error", "まずはこちらを入力してください", "お届け先情報の必須項目を入力すると、先行予約に進めます。");
     firstInvalidInput.scrollIntoView({ behavior: "smooth", block: "center" });
     window.setTimeout(() => firstInvalidInput.focus(), 320);
-    return;
+    return false;
   }
 
   document.querySelector("#checkout-options")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  showSitePopup("success", "入力ありがとうございます", "購入内容を選択して、Stripe決済画面へお進みください。");
+  showSitePopup("success", "購入内容を選択", "1個購入または2個購入のどちらかを選択してください。");
+  return true;
 }
 
 function closeInstantOfferLightbox() {
@@ -706,6 +708,12 @@ instantOfferTrigger?.addEventListener("click", () => {
 instantOfferBuy?.addEventListener("click", (event) => {
   event.stopPropagation();
   handleInstantOfferBuyNow();
+});
+
+instantOfferCountdownBuy?.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  handleInstantOfferBuyNow("countdown_buy_now");
 });
 
 instantOfferZoom?.addEventListener("click", (event) => {
