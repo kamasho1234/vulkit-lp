@@ -3105,6 +3105,10 @@ img {
   text-align: center;
 }
 
+.secure-checkout-page .lp-chatbot {
+  display: none !important;
+}
+
 .instant-offer-popup {
   position: fixed;
   left: 50%;
