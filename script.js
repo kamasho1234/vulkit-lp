@@ -662,6 +662,12 @@ function closeInstantOfferLightbox() {
   window.setTimeout(() => lightbox.remove(), 180);
 }
 
+function handleInstantOfferBuyNow(action = "buy_now_prompt_shipping") {
+  moveInstantOfferToHeaderTimer();
+  promptCheckoutShippingFields();
+  trackInstantOffer(action);
+}
+
 function openInstantOfferLightbox() {
   const image = instantOfferZoom?.querySelector("img");
   if (!image) return;
@@ -675,13 +681,18 @@ function openInstantOfferLightbox() {
     <section class="instant-offer-lightbox__panel" role="dialog" aria-modal="true" aria-label="即決特典の詳細拡大画像">
       <button class="instant-offer-lightbox__close" type="button" data-instant-offer-lightbox-close aria-label="拡大画像を閉じる">×</button>
       <img src="${image.currentSrc || image.src}" alt="${image.alt || "即決特典の詳細"}" width="941" height="1672">
-      <p>背景または×で閉じる</p>
+      <button class="instant-offer-lightbox__buy" type="button" data-instant-offer-lightbox-buy>今すぐ購入</button>
     </section>
   `;
   document.body.appendChild(lightbox);
   document.body.classList.add("has-instant-offer-lightbox");
   lightbox.querySelectorAll("[data-instant-offer-lightbox-close]").forEach((element) => {
     element.addEventListener("click", closeInstantOfferLightbox);
+  });
+  lightbox.querySelector("[data-instant-offer-lightbox-buy]")?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    closeInstantOfferLightbox();
+    handleInstantOfferBuyNow("detail_zoom_buy_now");
   });
   trackInstantOffer("detail_zoom_open");
 }
@@ -694,9 +705,7 @@ instantOfferTrigger?.addEventListener("click", () => {
 
 instantOfferBuy?.addEventListener("click", (event) => {
   event.stopPropagation();
-  moveInstantOfferToHeaderTimer();
-  promptCheckoutShippingFields();
-  trackInstantOffer("buy_now_prompt_shipping");
+  handleInstantOfferBuyNow();
 });
 
 instantOfferZoom?.addEventListener("click", (event) => {
