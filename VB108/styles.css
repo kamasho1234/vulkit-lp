@@ -302,6 +302,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .thumb{width:80px;padding:0;background:#fff;border:1px solid var(--line)}
 .thumb.is-active{border-color:var(--accent)}
 .thumb img{width:100%;aspect-ratio:1}
+.purchase-gallery:has([data-purchase-preview="black"].is-active)>img,.purchase-thumbs [data-purchase-preview="black"] img{transform:translateY(1.5%) scale(.72)}
 .purchase-panel{max-width:540px;margin:auto}
 .purchase-panel h2{font-size:var(--heading-size);margin-bottom:24px}
 .price-wrap{padding:22px 0 18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
