@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <title>発送完了メール管理 | VULKIT VB108</title>
+  <style>
+    :root{color-scheme:light;--ink:#17202a;--muted:#667085;--line:#d9e1e8;--bg:#f4f7f9;--accent:#1f384f;--gold:#b99044;--red:#c91f2c;--green:#0f7b3d}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fbfcfd,var(--bg));color:var(--ink);font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif}main{display:grid;gap:18px;width:min(1220px,calc(100% - 28px));margin:auto;padding:28px 0 46px}section{min-width:0;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 18px 48px #1f384f14}.hero{padding:24px}.eyebrow{margin:0 0 12px;color:var(--gold);font-size:12px;font-weight:900;letter-spacing:.18em}h1,h2{margin:0;line-height:1.4}h1{font-size:clamp(26px,4vw,42px)}h2{font-size:20px}p{line-height:1.7}.hint{color:var(--muted);font-size:12px}.controls,.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.controls{margin-top:16px}.key-field{flex:1;min-width:180px}.key-field label{display:block;margin-bottom:6px}input,textarea,select,button{font:inherit}input,textarea,select{width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);padding:11px 13px;min-height:44px}textarea{min-height:290px;line-height:1.7;resize:vertical}button{min-height:44px;border:0;border-radius:10px;padding:8px 16px;cursor:pointer;font-weight:700;background:#e9eef3;color:var(--accent)}button:disabled{cursor:not-allowed;opacity:.5}.primary{background:var(--red);color:#fff}:focus-visible{outline:3px solid #2178c5;outline-offset:3px}.panel-head{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:18px;border-bottom:1px solid var(--line)}.panel-body{padding:18px}.template-grid{display:grid;gap:10px}.vars{display:flex;flex-wrap:wrap;gap:6px;margin:0}.vars code{padding:4px 7px;border-radius:999px;background:#eef3f7;font-size:12px}.toolbar{padding:14px 18px;border-bottom:1px solid var(--line)}.toolbar select{width:auto}.table-wrap{overflow-x:auto}table{width:100%;min-width:1240px;border-collapse:collapse;font-size:13px}th,td{padding:12px;border-bottom:1px solid #edf1f4;text-align:left;vertical-align:top}th{background:#10202f;color:#d8bc74;font-size:12px;white-space:nowrap}td{overflow-wrap:anywhere}td.customer{min-width:210px}td.address{min-width:210px;max-width:290px}td.items{min-width:190px}.check{width:20px;height:20px;min-height:0;padding:0;accent-color:var(--accent)}.badge{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}.pending{background:#fff4dc;color:#805600}.sent{background:#e8f7ee;color:var(--green)}.review{background:#fff0ed;color:#a32d1e}.status{min-height:24px;margin:14px 0 0;white-space:pre-line;overflow-wrap:anywhere}.error{color:var(--red)}.success{color:var(--green)}#operation-results{padding:0 18px;white-space:pre-line;overflow-wrap:anywhere;max-height:220px;overflow:auto}.order-number{font-weight:700}.sub{display:block;margin-top:5px;font-size:12px;color:var(--muted)}.row-note{margin-top:6px;font-size:12px}.more{padding:18px;text-align:center}.history-table{min-width:870px}.history-table .preview{max-width:280px;white-space:pre-wrap}.tiny{min-height:34px;padding:6px 11px;font-size:12px}dialog{width:min(780px,calc(100% - 24px));max-height:86vh;border:1px solid var(--line);border-radius:16px;padding:0;color:var(--ink)}dialog::backdrop{background:#0a141e7a}.email-meta{display:grid;grid-template-columns:80px minmax(0,1fr);gap:8px 12px;font-size:13px}.email-meta dt{color:var(--muted)}.email-meta dd{margin:0;overflow-wrap:anywhere}.email-body{margin:0;padding:16px;border:1px solid var(--line);border-radius:12px;background:#f8fafc;font:14px/1.85 inherit;white-space:pre-wrap;overflow-wrap:anywhere}footer{font-size:12px;color:var(--muted);text-align:center}[hidden]{display:none!important}
+    @media(max-width:760px){main{width:calc(100% - 18px);padding-top:14px}.hero{padding:18px}.controls{align-items:stretch}.key-field{flex-basis:100%}.controls button{flex:1}.panel-head{align-items:flex-start;flex-wrap:wrap}.toolbar>*{flex:1 1 145px}.toolbar label{flex-basis:100%}.toolbar select{width:100%}.email-meta{grid-template-columns:1fr;gap:4px}.email-meta dd{margin-bottom:8px}}
+  </style>
+  <script src="/VB108/shipment-admin.js?v=black-color-v129" defer></script>
+</head>
+<body>
+<main>
+  <section class="hero" aria-labelledby="page-title">
+    <p class="eyebrow">VULKIT VB108 ADMIN</p>
+    <h1 id="page-title">発送完了メール管理</h1>
+    <p class="hint">VB108の決済済み注文専用です。注文を選んで発送完了メールを送信できます。VBP101の注文・文面・送信履歴は表示されません。</p>
+    <div class="controls">
+      <div class="key-field"><label for="admin-key">管理キー</label><input id="admin-key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="発送メール管理キーを入力"></div>
+      <button class="primary" id="load-button" type="button">読み込む</button>
+      <button id="logout-button" type="button">クリア</button>
+    </div>
+    <p class="hint">管理キーはこの画面内でのみ使用し、ブラウザーには保存しません。</p>
+    <p id="load-status" class="status" role="status" aria-live="polite">管理キーを入力して「読み込む」を押してください。</p>
+  </section>
+  <div id="admin-content" hidden>
+    <section aria-labelledby="template-title">
+      <div class="panel-head"><h2 id="template-title">発送完了メールの文面</h2><button id="save-template" type="button">文面を保存</button></div>
+      <div class="panel-body template-grid">
+        <label for="template-subject">件名（160文字以内）</label><input id="template-subject" maxlength="160" type="text">
+        <label for="template-body">本文（3,000文字以内）</label><textarea id="template-body" maxlength="3000"></textarea>
+        <p class="hint">件名・本文の両方に「VB108」を残してください。保存した文面で送信します。</p>
+        <p class="vars"><code>{{name}}</code><code>{{email}}</code><code>{{phone}}</code><code>{{address}}</code><code>{{items}}</code><code>{{plan}}</code><code>{{quantity}}</code><code>{{amount}}</code><code>{{order_number}}</code><code>{{session_id}}</code><code>{{shipped_at}}</code></p>
+        <p class="hint">お名前・メール・電話・住所・カラーと数量・注文点数・お支払い額・注文番号・決済ID・送信日に置き換わります。</p>
+        <p id="template-status" class="status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <section aria-labelledby="orders-title" style="margin-top:18px">
+      <div class="panel-head"><h2 id="orders-title">VB108 購入者一覧</h2><span id="order-count" class="hint"></span></div>
+      <div class="toolbar">
+        <label for="status-filter">表示 <select id="status-filter"><option value="all">すべて</option><option value="pending">未送信</option><option value="sent">送信済み</option><option value="review">要確認</option></select></label>
+        <button id="select-pending" type="button">未送信を選択</button><button id="clear-selection" type="button">選択解除</button>
+        <button id="send-selected" class="primary" type="button">選択した注文に送信</button><button id="hide-selected" type="button">選択した注文を非表示</button>
+      </div>
+      <div class="toolbar"><label for="csv-scope">発送用CSV <select id="csv-scope"><option value="pending">未送信</option><option value="sent">送信済み</option><option value="all">すべて</option><option value="selected">選択中</option></select></label><button id="export-csv" type="button">CSVを出力</button><span class="hint">読み込み済みの注文を対象に、カラーごとに1行で出力します。</span></div>
+      <p id="operation-results" role="status" aria-live="polite"></p>
+      <div class="table-wrap" role="region" aria-label="購入者一覧（横にスクロールできます）" tabindex="0"><table><thead><tr><th>選択</th><th>状態</th><th>注文番号／購入日</th><th>購入者</th><th>商品・カラー／SKU</th><th>点数／お支払い額</th><th>配送先</th><th>送信日時</th></tr></thead><tbody id="orders-body"></tbody></table></div>
+      <div class="more"><button id="load-more" type="button" hidden>以前の注文をさらに読み込む</button><p id="paging-note" class="hint"></p></div>
+    </section>
+    <section aria-labelledby="history-title" style="margin-top:18px">
+      <div class="panel-head"><h2 id="history-title">VB108 送信履歴</h2><span class="hint">最新500件まで</span></div>
+      <div class="table-wrap" role="region" aria-label="送信履歴（横にスクロールできます）" tabindex="0"><table class="history-table"><thead><tr><th>送信日時</th><th>注文番号／宛先</th><th>件名</th><th>本文</th><th>詳細</th></tr></thead><tbody id="history-body"></tbody></table></div>
+    </section>
+  </div>
+  <footer>VULKIT VB108 ／ KAMACRAFY 発送管理</footer>
+</main>
+<dialog id="email-dialog" aria-labelledby="email-dialog-title"><div class="panel-head"><h2 id="email-dialog-title">送信したメール</h2><button id="close-dialog" type="button">閉じる</button></div><div class="panel-body"><dl id="email-meta" class="email-meta"></dl><pre id="email-body" class="email-body"></pre></div></dialog>
+</body>
+</html>

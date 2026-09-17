@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="referrer" content="same-origin">
+    <title>配送先の入力 | VULKIT VB108</title>
+    <meta name="description" content="VULKIT VB108のご注文内容を確認し、配送先を入力してください。KAMACRAFYによる販売ページです。">
+    <link rel="stylesheet" href="/VB108/checkout.css?v=shipping-note-v103">
+    <link rel="stylesheet" href="/VB108/privacy-policy.css?v=legal-footer-v102">
+    <script src="/VB108/privacy-policy.js?v=legal-footer-v102" defer></script>
+    <script src="/VB108/checkout.js?v=black-color-v129" defer></script>
+  </head>
+  <body data-checkout-page="shipping">
+    <a class="skip-link" href="#checkout-main">本文へスキップ</a>
+    <header class="checkout-header">
+      <a class="brand" href="/VB108/" aria-label="VULKIT VB108の商品ページへ">VULKIT <span>VB108</span></a>
+      <span class="seller-label">販売：KAMACRAFY</span>
+    </header>
+    <main class="checkout-shell" id="checkout-main">
+      <a class="back-link" href="/VB108/#purchase">← 商品ページへ戻る</a>
+      <nav aria-label="ご購入の流れ"><ol class="checkout-steps"><li>商品を選ぶ</li><li aria-current="step">配送先の入力</li><li>お支払い</li></ol></nav>
+      <div class="page-heading"><p class="eyebrow">VULKIT VB108</p><h1>配送先を入力してください</h1><p>配送先・ご連絡先を入力し、ご注文内容をご確認ください。</p></div>
+      <p class="notice" data-cancel-notice hidden>お支払い手続きから戻りました。このページでは注文の完了を確認できていません。内容をご確認のうえ、再度お手続きください。</p>
+      <form id="shipping-form" data-shipping-form novalidate>
+        <fieldset data-shipping-fields><legend>配送先</legend>
+          <p class="field-intro">日本国内へのお届けです。</p>
+          <input type="hidden" name="state"><input type="hidden" name="city"><input type="hidden" name="line1">
+          <div class="checkout-fields">
+            <label class="field field-wide" for="customer-name"><span>お名前</span><input id="customer-name" type="text" name="name" autocomplete="name" maxlength="120" required aria-describedby="error-name"><small class="field-error" id="error-name" data-error-for="name"></small></label>
+            <div class="postal-field field-wide"><label class="field" for="postal-code"><span>郵便番号</span><input id="postal-code" type="text" name="postal_code" autocomplete="postal-code" inputmode="numeric" maxlength="8" placeholder="例：100-0001" required aria-describedby="error-postal_code address-status"><small class="field-error" id="error-postal_code" data-error-for="postal_code"></small></label><button class="secondary-button address-autofill" type="button" data-address-autofill>自動入力</button></div>
+            <p class="address-status field-wide" id="address-status" data-address-status role="status" aria-live="polite"></p>
+            <label class="field field-wide" for="address-full"><span>住所</span><input id="address-full" type="text" name="address_full" autocomplete="street-address" maxlength="260" placeholder="都道府県・市区町村・番地" required aria-describedby="address-help error-address_full"><small id="address-help">自動入力後は、番地以降もご入力ください。</small><small class="field-error" id="error-address_full" data-error-for="address_full"></small></label>
+            <label class="field field-wide" for="address-line2"><span>建物名・部屋番号（任意）</span><input id="address-line2" type="text" name="line2" autocomplete="address-line2" maxlength="180" placeholder="例：VULKITマンション101" aria-describedby="error-line2"><small class="field-error" id="error-line2" data-error-for="line2"></small></label>
+          </div>
+          <div class="contact-heading"><h2>ご連絡先を入力してください</h2><p>配送情報として使用します。</p></div>
+          <div class="checkout-fields">
+            <label class="field" for="customer-phone"><span>電話番号</span><input id="customer-phone" type="tel" name="phone" autocomplete="tel" maxlength="30" required aria-describedby="error-phone"><small class="field-error" id="error-phone" data-error-for="phone"></small></label>
+            <label class="field" for="customer-email"><span>メールアドレス</span><input id="customer-email" type="email" name="email" autocomplete="email" inputmode="email" maxlength="180" required aria-describedby="error-email"><small class="field-error" id="error-email" data-error-for="email"></small></label>
+          </div>
+        </fieldset>
+        <section class="order-summary" aria-labelledby="order-title">
+          <div class="section-heading"><h2 id="order-title">ご注文内容</h2><span class="order-limit">各カラー5点まで</span></div>
+          <div data-order-items></div>
+          <div class="order-additions" data-order-additions role="group" aria-label="カラーを追加"></div>
+          <p class="order-edit-status" data-order-edit-status role="status" aria-live="polite" aria-atomic="true"></p>
+          <dl class="order-totals"><div><dt>商品小計（税込）</dt><dd data-order-subtotal>—</dd></div><div><dt>送料</dt><dd data-order-shipping>—</dd></div><div class="order-total"><dt>お支払い合計（税込）</dt><dd data-order-total>—</dd></div></dl>
+          <p class="savings" data-order-savings></p><p class="fine-print" data-shipping-note>送料350円・2点以上のご購入で送料無料</p>
+          <p class="form-message" data-cart-error role="alert" hidden></p>
+        </section>
+        <p class="form-message" data-form-message role="alert" tabindex="-1" hidden></p>
+        <p class="fine-print checkout-consent">「決済に進む」を押すと、入力内容を送信してStripeの決済画面へ移動します。このページではお支払いは確定しません。</p>
+        <button class="primary-button" type="submit" data-checkout-submit disabled>決済に進む</button>
+        <p class="submit-status" data-submit-status role="status" aria-live="polite"></p>
+      </form>
+      <section class="checkout-confirm" aria-label="購入前の確認事項"><div><h2>送料</h2><p>350円<br>2点以上で送料無料</p></div><div><h2>即日発送</h2><p>土日祝は翌営業日発送</p></div><div><h2>返品・初期不良</h2><p>到着後10日以内に事前連絡</p></div></section>
+      <section class="stripe-note" aria-labelledby="stripe-title"><p class="eyebrow">SECURE PAYMENT</p><h2 id="stripe-title">安心・安全なStripe決済</h2><p>Stripeの決済画面で支払方法を選択します。</p><button class="stripe-image-button" type="submit" form="shipping-form" data-stripe-submit disabled aria-label="入力内容を確認してStripeの決済画面へ進む"><img src="/assets/lp/checkout/payment-methods.webp" alt="お支払い方法の案内：クレジット・デビットカード、Visa、Mastercard、American Express、JCB、Diners Club、Discover、銀行振込、PayPay" width="900" height="600" loading="lazy" decoding="async"></button></section>
+      <noscript><p class="notice">お手続きにはJavaScriptが必要です。ブラウザの設定で有効にしてから再読み込みしてください。</p></noscript>
+    </main>
+    <footer class="checkout-footer" id="legal-footer">
+      <div class="checkout-support-labels">
+        <button class="privacy-policy-toggle" type="button" data-checkout-legal-toggle aria-expanded="false" aria-controls="legal-commerce">特定商取引法に基づく表記<span aria-hidden="true"></span></button>
+        <button class="privacy-policy-toggle" type="button" data-privacy-toggle aria-expanded="false" aria-controls="privacy-policy">プライバシーポリシー<span aria-hidden="true"></span></button>
+      </div>
+      <p><a href="mailto:ikemen@kamacrafy.com">ikemen@kamacrafy.com</a></p>
+      <section class="privacy-policy-panel checkout-legal-panel" id="legal-commerce" aria-labelledby="legal-commerce-title" hidden>
+        <h2 id="legal-commerce-title">特定商取引法に基づく表記</h2>
+        <dl class="checkout-legal-list">
+          <div><dt>販売業者</dt><dd>KamaCrafy</dd></div>
+          <div><dt>運営責任者</dt><dd>鎌倉 匠吾</dd></div>
+          <div><dt>所在地</dt><dd>埼玉県新座市菅沢1-3-36</dd></div>
+          <div><dt>メールアドレス</dt><dd><a href="mailto:ikemen@kamacrafy.com">ikemen@kamacrafy.com</a></dd></div>
+          <div><dt>販売価格</dt><dd>定価8,620円（税込）。新規OPENキャンペーン価格6,810円（税込・21%OFF）。</dd></div>
+          <div><dt>配送料</dt><dd>350円。カラーを問わず、合計2点以上のご購入で送料無料です。</dd></div>
+          <div><dt>支払方法</dt><dd>クレジット・デビットカード（Visa、Mastercard、American Express、JCB、Diners Club、Discover）、銀行振込、PayPay</dd></div>
+          <div><dt>支払時期</dt><dd>注文確定時にお支払いが確定します。</dd></div>
+          <div><dt>配送業者</dt><dd>ヤマト運輸、佐川急便、日本郵便など当社指定の配送業者</dd></div>
+          <div><dt>発送時期</dt><dd>即日発送。土日祝は翌営業日に発送します。</dd></div>
+          <div><dt>返品</dt><dd>商品到着後10日以内にメール（ikemen@kamacrafy.com）またはLINEで事前連絡があった未使用品のみお受けします。事前連絡なし、到着後10日を超過した商品、使用済み商品は返品を承りかねます。返品商品の状態確認後、ご注文時のお支払い方法で注文金額を返金します。</dd></div>
+          <div><dt>交換</dt><dd>商品到着後10日以内にメール（ikemen@kamacrafy.com）またはLINEで事前連絡があった未使用品のみ、1注文につき1回までお受けします。初回交換手数料はかかりません。同じスタイルでサイズまたは色が異なる商品に限ります。</dd></div>
+          <div><dt>不良品</dt><dd>ご注文内容と異なる商品、配送時の破損、不良品は、在庫がある場合は良品と交換、在庫がない場合は返金にて対応します。商品到着後10日以内にメール（ikemen@kamacrafy.com）またはLINEでご連絡のうえ、不良箇所がわかる画像または動画をお送りください。不良品の返送は不要です。</dd></div>
+          <div><dt>返品・交換の送料</dt><dd>初期不良の場合は当社が負担します。お客様都合による返品・交換の当社宛送料はお客様負担、交換時に当社からお送りする新商品の送料は当社負担です。</dd></div>
+          <div><dt>受取拒否等</dt><dd>受取拒否、保管期限切れ、配送会社への受取前返送希望があった場合、返金はいたしかねます。</dd></div>
+          <div><dt>キャンセル</dt><dd>注文後のキャンセルはお受けできません。</dd></div>
+        </dl>
+      </section>
+      <section class="privacy-policy-panel" id="privacy-policy" aria-labelledby="privacy-policy-title" hidden>
+        <h2 id="privacy-policy-title">プライバシーポリシー</h2>
+        <p>KAMACRAFYでは、ご注文、お問い合わせ等に必要な範囲で、お名前、ご住所、電話番号、メールアドレス等の個人情報を取得します。</p>
+        <p>取得した情報は、ご注文内容の確認、商品の発送、お支払いの確認、お問い合わせへの対応、サービス改善のために利用します。</p>
+        <p>注文・決済・配送に必要な範囲で、決済会社や配送業者等へ個人情報の取り扱いを委託する場合があります。</p>
+        <p>法令に基づく場合を除き、ご本人の同意なく第三者へ個人情報を提供することはありません。</p>
+        <p>個人情報の開示、訂正、削除等をご希望の場合は、<a href="mailto:ikemen@kamacrafy.com">ikemen@kamacrafy.com</a>へお問い合わせください。</p>
+      </section>
+      <small>© KAMACRAFY</small>
+    </footer>
+  </body>
+</html>
