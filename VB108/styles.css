@@ -405,7 +405,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .cart-footer p{margin-top:14px;font-size:12px;color:var(--muted)}
 .cart-footer .cart-savings{margin-top:4px;color:var(--accent)}
 .cart-savings:empty{display:none}
-.cart-footer .cart-shipping-note{margin:4px 0 14px}
+.cart-footer .cart-shipping-note{margin:4px 0 14px;color:#a3472f;font-weight:700}
 .mobile-purchase-bar{display:none}
 .noscript{text-align:center;padding:24px}
 @media(hover:hover){
