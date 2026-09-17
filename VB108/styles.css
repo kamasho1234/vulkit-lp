@@ -78,7 +78,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 .story-intro-photo+p{margin-top:24px}
 .story-opening img{width:100%;aspect-ratio:1}
 .story-cafe-photo{text-align:center}
-.story-cafe-photo img{width:252px;height:auto;margin:0 auto}
+.story-cafe-images{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:center}
+.story-cafe-photo .story-cafe-images img{width:100%;height:auto;aspect-ratio:auto;margin:0}
 .editorial-detail{margin-top:32px}
 .editorial-detail img{width:100%;height:auto}
 .construction-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px;align-items:start}
@@ -409,7 +410,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
   .hero-facts{margin-top:30px}
   .story-opening{padding-top:16px;padding-bottom:34px}
   .story-opening .story-intro-photo{gap:12px}
-  .story-cafe-photo img{width:76%}
+  .story-cafe-images{gap:12px}
   .editorial-detail{margin-top:28px}
   .storage-use-photos{gap:12px}
   .material-details{margin-top:36px}
