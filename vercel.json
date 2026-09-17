@@ -1,4 +1,7 @@
 {
+  "git": {
+    "deploymentEnabled": { "codex/vb108-amazon-reviews-v115": false }
+  },
   "headers": [
     {
       "source": "/(.*)",
