@@ -165,6 +165,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .material-benefits-image img{width:100%;height:auto}
 .material-care{margin-top:18px}
 .material-care-image{margin-top:22px}
+.material-care-image+p{margin-top:22px}
 .material-care-image img{width:100%;height:auto}
 .material-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:1fr auto;row-gap:4px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:28px 0 18px;padding:20px 0;text-align:center}
 .material-facts>div{display:grid;grid-template-rows:subgrid;grid-row:span 2}
