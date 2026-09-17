@@ -133,19 +133,22 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .rfid-heading{text-align:center;margin-bottom:30px}
 .rfid-heading .section-kicker{font-size:.8125rem;letter-spacing:normal;margin-bottom:12px}
 .rfid-heading h2{font-family:var(--sans);font-size:var(--heading-size);font-weight:700;line-height:1.6;letter-spacing:normal}
-.fraud-context{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px 20px;max-width:528px;margin:0 auto 28px;padding:18px 22px;background:#f7f4ee;border-left:2px solid #b2a086;border-radius:0 6px 6px 0;color:#514a3e;text-align:left}
+.fraud-context{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px 20px;max-width:528px;margin:0 auto 28px;padding:22px 24px;background:#fbf6f2;border:1px solid #e8d9d0;border-left:3px solid #9a493d;border-radius:0 6px 6px 0;color:#514a3e;text-align:left}
 .fraud-context h3{font-family:var(--sans);font-size:.875rem;font-weight:500;line-height:1.7;letter-spacing:.015em;text-wrap:initial}
-.fraud-context-year{margin-bottom:4px;color:#6d6559;font-size:.75rem;line-height:1.6;letter-spacing:.04em}
-.fraud-context-amount{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;margin:0;line-height:1.4;letter-spacing:0}
+.fraud-context-risk{display:inline-block;margin-top:3px;color:#873f35;font-size:1.125rem;font-weight:700;line-height:1.5;letter-spacing:.03em}
+.fraud-context-year{display:inline-flex;align-items:center;gap:6px;margin-bottom:8px;padding:2px 8px;background:#f1e3dc;color:#794e42;font-size:.6875rem;line-height:1.6;letter-spacing:.04em}
+.fraud-context-year::before{content:"";width:5px;height:5px;flex:none;border-radius:50%;background:#9a493d}
+.fraud-context-amount{display:flex;flex-wrap:nowrap;align-items:baseline;gap:5px;margin:0;color:#873f35;line-height:1.15;letter-spacing:0}
 .fraud-context-amount>span{font-size:.875rem}
 .fraud-context-value{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap}
-.fraud-context-amount strong{font-family:Arial,var(--sans);font-size:1.625rem;font-weight:400;font-variant-numeric:tabular-nums}
+.fraud-context-amount strong{font-family:Arial,var(--sans);font-size:2.75rem;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.035em}
 .fraud-context-note{font-size:.75rem;line-height:1.75;letter-spacing:.01em;color:var(--muted)}
-.fraud-context-source{grid-column:1/-1;margin:0;color:#6d6559;font-size:.75rem;line-height:1.7;letter-spacing:0}
+.fraud-context-source{grid-column:1/-1;margin:0;padding-top:10px;border-top:1px solid #e8d9d0;color:#6d6559;font-size:.6875rem;line-height:1.7;letter-spacing:0}
 .fraud-context-source a{text-decoration:underline;text-underline-offset:3px}
 .fraud-context-source a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 @media(max-width:540px){
-  .fraud-context{grid-template-columns:minmax(0,1fr);gap:10px;padding:16px 18px}
+  .fraud-context{grid-template-columns:minmax(0,1fr);gap:12px;padding:18px 20px}
+  .fraud-context-amount strong{font-size:2.5rem}
 }
 .rfid-visual{width:100%;margin:0 auto}
 .rfid-visual img{aspect-ratio:auto 1200/1070}
