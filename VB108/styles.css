@@ -182,7 +182,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .scene-card p+p{margin-top:20px}
 .scene-travel-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:center}
 .scene-travel-photos img{width:100%;height:auto;aspect-ratio:auto}
-.scene-airport-photo figcaption{text-align:center}
+.scene-airport-photo figcaption,.scene-hotel-photo figcaption{text-align:center}
 .scene-travel-organizer{margin-top:24px}
 .scene-text-first>div{padding-top:0}
 .scene-holiday-photo{margin-top:24px}
