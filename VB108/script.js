@@ -189,13 +189,15 @@
                 <strong>${colorLabel}</strong>
                 <small class="cart-unit-price">単価 ${money.format(unitPrice)}（税込）</small>
                 <small class="cart-item-subtotal">小計 ${money.format(subtotal)}（税込）</small>
+              </div>
+              <div class="cart-item-actions">
                 <div class="stepper" role="group" aria-label="${colorLabel}の数量">
                   <button type="button" data-cart-action="decrease" data-color="${color}" aria-label="${colorLabel}を1点減らす">−</button>
                   <output aria-label="${colorLabel}の数量" aria-live="polite">${quantity}</output>
                   <button type="button" data-cart-action="increase" data-color="${color}" aria-label="${colorLabel}を1点増やす" ${quantity >= 5 ? "disabled" : ""}>＋</button>
                 </div>
+                <button class="cart-remove" type="button" data-cart-action="remove" data-color="${color}" aria-label="${colorLabel}をカートから削除">削除</button>
               </div>
-              <button class="cart-remove" type="button" data-cart-action="remove" data-color="${color}" aria-label="${colorLabel}をカートから削除">削除</button>
             </article>
           `;
         })
