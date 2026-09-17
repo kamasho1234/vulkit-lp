@@ -97,6 +97,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 .construction-notes>div+div{border-top:1px solid var(--line);padding-top:8px}
 .construction-notes dt{font-size:.875rem;font-weight:700;line-height:1.5;margin-bottom:3px;letter-spacing:normal}
 .construction-notes dd{font-size:.8125rem;line-height:1.6;overflow-wrap:anywhere}
+.construction-accessory-content{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:14px;align-items:center}
+.construction-accessory-content img{width:100%;height:auto;aspect-ratio:1}
 figcaption{font-size:.8125rem;font-weight:400;color:var(--muted);line-height:1.8;letter-spacing:normal;padding-top:12px}
 .reason-strip{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;padding-top:8px;padding-bottom:30px}
 .reason-strip article{display:grid;grid-template-columns:30px minmax(0,1fr);gap:18px;align-items:start}
@@ -436,6 +438,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
   .rfid-notes article{padding:18px 16px}
   .rfid-support{grid-template-columns:minmax(0,1fr);gap:20px}
   .rfid-support>figure{width:min(70%,240px);margin:0 auto}
+  .construction-accessory-content{grid-template-columns:minmax(0,1fr) 88px;gap:12px}
   .material-facts dt{font-size:14px}
   .material-facts dt span{font-size:12px}
   .scene-grid{gap:38px}
