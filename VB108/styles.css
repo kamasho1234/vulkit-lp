@@ -293,7 +293,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .faq-list summary span::before{width:14px;height:1px;top:6px;left:0}
 .faq-list summary span::after{width:1px;height:14px;left:6px;top:0}
 .faq-list details[open] summary span::after{display:none}
-.faq-list details p{font-size:1rem;line-height:1.8;padding:0 26px 16px 0}
+.faq-list details p{font-size:.875rem;line-height:1.8;padding:0 26px 16px 0}
 .purchase-section{padding-top:58px;padding-bottom:48px}
 .purchase-gallery{position:relative;border-top:1px solid var(--line);padding-top:35px}
 .status-pill{display:inline-block;border:1px solid #bdbab2;padding:5px 14px;font-size:13px}
