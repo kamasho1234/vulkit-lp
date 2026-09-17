@@ -246,7 +246,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .review-stars{display:inline-block;font-family:Arial,sans-serif;font-size:1rem;letter-spacing:.1em;color:var(--accent);line-height:1.5}
 .review-date{font-size:.75rem;color:var(--muted)}
 .review-title{margin-top:12px;font-size:1rem;font-weight:700;line-height:1.7;letter-spacing:normal}
-.review-body{margin:10px 0 0;font-size:1rem;line-height:1.85}
+.review-body{margin:10px 0 0;font-size:.875rem;line-height:1.85}
 .review-body p+p{margin-top:12px}
 .review-byline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:14px;font-size:.8125rem}
 .review-author{font-weight:500}
