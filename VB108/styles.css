@@ -199,6 +199,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .color-variants{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:28px}
 .color-variant{border:1px solid var(--line);background:#fff}
 .color-variant img{width:100%;aspect-ratio:1}
+.color-variant--black img{transform:translateY(1.5%) scale(.72)}
 .color-variant figcaption{padding:0 8px 14px;text-align:center;color:var(--ink);line-height:1.8}
 .color-variant strong{display:block;font-size:14px;font-weight:400}
 .color-variant small{display:block;font-size:14px}
