@@ -149,6 +149,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .rfid-visual img{aspect-ratio:auto 1200/1070}
 .rfid-copy{margin-top:28px}
 .rfid-copy .lead-copy{font-size:1rem;line-height:1.8;letter-spacing:normal}
+.rfid-copy .editorial-detail+.lead-copy{margin-top:24px}
 .rfid-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:26px;padding:28px;background:#f6f6f4}
 .rfid-notes h3{font-size:1rem;font-weight:700;line-height:1.6;margin-bottom:8px;letter-spacing:normal}
 .rfid-notes p{font-size:1rem;line-height:1.8;color:#50504b;letter-spacing:normal}
