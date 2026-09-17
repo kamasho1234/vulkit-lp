@@ -74,7 +74,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 .story-opening h2{margin-bottom:26px}
 .story-opening p+p{margin-top:24px}
 .story-opening figure{margin-top:36px}
-.story-opening .story-intro-photo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px}
+.story-opening .story-intro-photo{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:24px}
 .story-intro-photo+p{margin-top:24px}
 .story-opening img{width:100%;aspect-ratio:1}
 .story-cafe-photo{text-align:center}
