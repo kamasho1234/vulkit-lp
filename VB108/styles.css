@@ -206,6 +206,14 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .color-variant figcaption{padding:0 8px 14px;text-align:center;color:var(--ink);line-height:1.8}
 .color-variant strong{display:block;font-size:14px;font-weight:400}
 .color-variant small{display:block;font-size:14px}
+.everyday-colors-section .section-heading{text-align:center}
+.everyday-colors-section h2 span{display:block}
+.everyday-colors-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.everyday-colors-gallery img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+@media(max-width:540px){
+  .everyday-colors-gallery{grid-template-columns:minmax(0,1fr);gap:20px}
+  .everyday-colors-gallery img{aspect-ratio:auto;object-fit:contain}
+}
 .dimension-product{position:relative;width:min(100%,480px);margin:auto}
 .dimension-product img{width:100%;aspect-ratio:1}
 .measure{position:absolute;font-size:13px;background:#fff;line-height:1.5;padding:3px 6px}
