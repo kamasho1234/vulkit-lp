@@ -498,7 +498,14 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
   .cart-item{grid-template-columns:58px 1fr;gap:12px;padding:20px 0}
   .cart-item>img{width:58px;height:58px}
   .cart-item-info>strong{font-size:14px}
-  .cart-footer{padding:18px}
+  .cart-footer{padding:10px 14px 12px}
+  .cart-footer>div{margin-bottom:3px;font-size:12px;line-height:1.5}
+  .cart-grand-total{padding-top:5px;margin-top:5px}
+  .cart-footer strong{font-size:17px;line-height:1.4}
+  .cart-footer p{margin-top:2px;font-size:11px;line-height:1.45}
+  .cart-footer .cart-savings{margin-top:2px}
+  .cart-footer .cart-shipping-note{margin:2px 0 8px}
+  .cart-footer .button{min-height:44px;padding:9px 14px;font-size:13px;line-height:1.5}
 }
 @media(max-width:360px){
   .hero-thumbnails{grid-template-columns:repeat(3,minmax(0,1fr));width:min(100%,232px)}
