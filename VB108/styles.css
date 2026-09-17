@@ -184,7 +184,7 @@ h3{font-family:var(--sans);font-size:1rem;font-weight:700;line-height:1.6;letter
 .scene-daily-photos img{aspect-ratio:auto 1}
 .scene-pickup-photo img{aspect-ratio:auto 4/3}
 .scene-daily-photos figcaption{text-align:center}
-.scene-card p+.scene-daily-photos{margin-top:24px}
+.scene-card p+.scene-daily-photos,.scene-card p+.scene-travel-photos{margin-top:24px}
 .scene-card>div{padding-top:24px}
 .scene-card>div>span{display:block;font-size:.8125rem;line-height:1.7;letter-spacing:.07em;color:var(--muted);margin-bottom:8px}
 .scene-card h3{font-family:var(--sans);font-size:var(--heading-size);font-weight:700;line-height:1.6;letter-spacing:normal}
