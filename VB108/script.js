@@ -22,7 +22,7 @@
     },
     black: {
       name: "Black",
-      label: "黒",
+      label: "ブラック",
       number: "03",
       image: "/VB108/assets/vb108-black-v129.jpg"
     }
