@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/VB108/checkout.css?v=shipping-note-v103">
     <link rel="stylesheet" href="/VB108/privacy-policy.css?v=legal-footer-v102">
     <script src="/VB108/privacy-policy.js?v=legal-footer-v102" defer></script>
+    <script src="/VB108/clarity.js?v=clarity-v167" defer></script>
     <script src="/VB108/checkout.js?v=black-label-v151" defer></script>
   </head>
   <body data-checkout-page="shipping">
@@ -23,7 +24,7 @@
       <div class="page-heading"><p class="eyebrow">VULKIT VB108</p><h1>配送先を入力してください</h1><p>配送先・ご連絡先を入力し、ご注文内容をご確認ください。</p></div>
       <p class="notice" data-cancel-notice hidden>お支払い手続きから戻りました。このページでは注文の完了を確認できていません。内容をご確認のうえ、再度お手続きください。</p>
       <form id="shipping-form" data-shipping-form novalidate>
-        <fieldset data-shipping-fields><legend>配送先</legend>
+        <fieldset data-shipping-fields data-clarity-mask="true"><legend>配送先</legend>
           <p class="field-intro">日本国内へのお届けです。</p>
           <input type="hidden" name="state"><input type="hidden" name="city"><input type="hidden" name="line1">
           <div class="checkout-fields">
@@ -48,7 +49,7 @@
           <p class="savings" data-order-savings></p><p class="fine-print" data-shipping-note>送料350円・2点以上のご購入で送料無料</p>
           <p class="form-message" data-cart-error role="alert" hidden></p>
         </section>
-        <p class="form-message" data-form-message role="alert" tabindex="-1" hidden></p>
+        <p class="form-message" data-form-message data-clarity-mask="true" role="alert" tabindex="-1" hidden></p>
         <p class="fine-print checkout-consent">「決済に進む」を押すと、入力内容を送信してStripeの決済画面へ移動します。このページではお支払いは確定しません。</p>
         <button class="primary-button" type="submit" data-checkout-submit disabled>決済に進む</button>
         <p class="submit-status" data-submit-status role="status" aria-live="polite"></p>
@@ -90,6 +91,7 @@
         <p>取得した情報は、ご注文内容の確認、商品の発送、お支払いの確認、お問い合わせへの対応、サービス改善のために利用します。</p>
         <p>注文・決済・配送に必要な範囲で、決済会社や配送業者等へ個人情報の取り扱いを委託する場合があります。</p>
         <p>法令に基づく場合を除き、ご本人の同意なく第三者へ個人情報を提供することはありません。</p>
+        <p>当サイトでは、使いやすさの改善のためMicrosoft Clarityを利用し、クリックやスクロール等の操作情報をヒートマップやセッション再生で分析します。利用状況のデータはCookie等の技術により収集され、当方およびMicrosoftにより処理されます。配送先・連絡先の入力内容はマスクし、決済完了ページは計測しません。Microsoftによるデータの取り扱いは、<a href="https://privacy.microsoft.com/ja-jp/privacystatement" target="_blank" rel="noopener noreferrer">Microsoftのプライバシーステートメント</a>をご確認ください。</p>
         <p>個人情報の開示、訂正、削除等をご希望の場合は、<a href="mailto:ikemen@kamacrafy.com">ikemen@kamacrafy.com</a>へお問い合わせください。</p>
       </section>
       <small>© KAMACRAFY</small>
