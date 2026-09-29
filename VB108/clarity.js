@@ -1,6 +1,6 @@
 (function (root, document) {
   "use strict";
-  // Use the existing VULKIT project only on public VB108 storefront pages.
+  // Use the dedicated VB108 project only on public VB108 storefront pages.
   // Never record local/staging tests, payment results, or sensitive URL context.
   const pages = ["/VB108", "/VB108/", "/VB108/index.html", "/VB108/checkout.html"];
   if (root.location.protocol !== "https:" ||
@@ -25,7 +25,7 @@
   };
   const script = document.createElement("script");
   script.async = true;
-  script.src = "https://www.clarity.ms/tag/wqhshb9x6n";
+  script.src = "https://www.clarity.ms/tag/yps1duwgo1";
   script.referrerPolicy = "no-referrer";
   document.head.appendChild(script);
 })(window, document);
